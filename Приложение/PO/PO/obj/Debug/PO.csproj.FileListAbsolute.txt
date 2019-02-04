@@ -1,0 +1,13 @@
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\bin\Debug\PO.exe.config
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\bin\Debug\PO.exe
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\bin\Debug\PO.pdb
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.csprojAssemblyReference.cache
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.Properties.Resources.resources
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.csproj.GenerateResource.cache
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.csproj.CoreCompileInputs.cache
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.exe
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.pdb
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.Zastavka.resources
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\bin\Debug\MetroFramework.dll
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\Alex\Documents\GitHub\PDP\Приложение\PO\PO\obj\Debug\PO.csproj.CopyComplete
