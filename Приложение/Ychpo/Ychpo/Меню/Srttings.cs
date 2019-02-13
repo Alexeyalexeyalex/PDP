@@ -20,9 +20,17 @@ namespace Ychpo
 
         private void button3_Click(object sender, EventArgs e)
         {
-            RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
-            saveKey.SetValue("Polz", "");
-            saveKey.Close();
+            try
+            {
+                RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                saveKey.SetValue("Polz", "");
+                saveKey.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                Application.Exit();
+            }
 
         }
 

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Autoriz));
             this.metroToggle1 = new MetroFramework.Controls.MetroToggle();
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroTextBox2 = new MetroFramework.Controls.MetroTextBox();
@@ -131,6 +132,7 @@
             this.Controls.Add(this.metroPanel1);
             this.Controls.Add(this.metroTextBox2);
             this.Controls.Add(this.metroTextBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Autoriz";
             this.Text = "Авторизация";
             this.ResumeLayout(false);

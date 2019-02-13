@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>логотип_87358167.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
@@ -62,9 +65,9 @@
     <Compile Include="Меню\Autoriz.Designer.cs">
       <DependentUpon>Autoriz.cs</DependentUpon>
     </Compile>
-    <Compile Include="BDconnect.cs" />
+    <Compile Include="Классы\BDconnect.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="ProgressReport.cs" />
+    <Compile Include="Классы\ProgressReport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Меню\Srttings.cs">
       <SubType>Form</SubType>
@@ -112,9 +115,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <Content Include="логотип_87358167.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Классы\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

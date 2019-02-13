@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Zastavka));
             this.metroPanel1 = new MetroFramework.Controls.MetroPanel();
             this.metroProgressBar1 = new MetroFramework.Controls.MetroProgressBar();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
@@ -72,6 +73,7 @@
             this.Controls.Add(this.metroPanel1);
             this.Controls.Add(this.metroProgressBar1);
             this.Controls.Add(this.metroLabel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Zastavka";
             this.Text = "Загрузка данных";
             this.Load += new System.EventHandler(this.Zastavka_Load);

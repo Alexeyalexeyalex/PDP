@@ -40,9 +40,17 @@ namespace Ychpo
             {
                 if (metroToggle1.Checked)
                 {
-                    RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
-                    saveKey.SetValue("Polz", "Auto");
-                    saveKey.Close();
+                    try
+                    {
+                        RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                        saveKey.SetValue("Polz", "Auto");
+                        saveKey.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                        Application.Exit();
+                    }
                 }
                 Srttings srttings = new Srttings();
                 srttings.Show();
