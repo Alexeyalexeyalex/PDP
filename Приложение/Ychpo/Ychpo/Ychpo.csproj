@@ -59,6 +59,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Registr.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registr.Designer.cs">
+      <DependentUpon>Registr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Классы\DeShifrovka.cs" />
+    <Compile Include="Классы\Shifrovka.cs" />
+    <Compile Include="Меню\Glavnaya.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Меню\Glavnaya.Designer.cs">
+      <DependentUpon>Glavnaya.cs</DependentUpon>
+    </Compile>
     <Compile Include="Меню\Autoriz.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +95,9 @@
     <Compile Include="Меню\Zastavka.Designer.cs">
       <DependentUpon>Zastavka.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Registr.resx">
+      <DependentUpon>Registr.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Меню\Autoriz.resx">
       <DependentUpon>Autoriz.cs</DependentUpon>
     </EmbeddedResource>
@@ -93,6 +110,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Меню\Glavnaya.resx">
+      <DependentUpon>Glavnaya.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Меню\Srttings.resx">
       <DependentUpon>Srttings.cs</DependentUpon>
     </EmbeddedResource>

@@ -59,8 +59,8 @@ namespace Ychpo
                 readKey.Close();
                 if (loadString == "Auto")
                 {
-                    Srttings srttings = new Srttings();
-                    srttings.Show();
+                    Glavnaya glavnaya = new Glavnaya();
+                    glavnaya.Show();
                     this.Hide();
                 }
                 else

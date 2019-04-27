@@ -52,7 +52,7 @@ CREATE TABLE [DBO].[polz]
 [O_P] varchar(max) NOT NULL,
 [email] varchar(max) NOT NULL,
 [login] varchar(max) NOT NULL,
-[password] varchar(16) NOT NULL,
+[password] varchar(max) NOT NULL,
 constraint [PK_id_polz] PRIMARY KEY CLUSTERED
 	([id_polz] ASC) on [PRIMARY],
 
@@ -75,8 +75,6 @@ CREATE TABLE [DBO].[zayavka]
 (
 [id_zayavka] INT NOT NULL IDENTITY (1,1),
 [kol_zayavka] int NOT NULL,
-[naim_zayavka] varchar(max) NOT NULL,
-[vers_zayavka] varchar(max) NOT NULL,
 [status] varchar(max) NOT NULL,
 [polz_id] int NOT NULL,
 constraint [PK_id_zayavka] PRIMARY KEY CLUSTERED

@@ -13,6 +13,8 @@ using System.Net;
 using System.Net.Mail;
 using System.Web;
 using System.Net.Mime;
+using System.Security.Cryptography;
+using System.IO;
 
 namespace Ychpo
 {
@@ -21,52 +23,148 @@ namespace Ychpo
         int kodpodt;
         int popitki = 0;
         string email;
+        string idpolz;
         public Autoriz()
         {
             InitializeComponent();
         }
 
+        //метод дешифрования строки
+        public static string DeShifrovka(string ciphText, string pass,
+               string sol = "doberman", string cryptographicAlgorithm = "SHA1",
+               int passIter = 2, string initVec = "a8doSuDitOz1hZe#",
+               int keySize = 256)
+        {
+            if (string.IsNullOrEmpty(ciphText))
+                return "";
+
+            byte[] initVecB = Encoding.ASCII.GetBytes(initVec);
+            byte[] solB = Encoding.ASCII.GetBytes(sol);
+            byte[] cipherTextBytes = Convert.FromBase64String(ciphText);
+
+            PasswordDeriveBytes derivPass = new PasswordDeriveBytes(pass, solB, cryptographicAlgorithm, passIter);
+            byte[] keyBytes = derivPass.GetBytes(keySize / 8);
+
+            RijndaelManaged symmK = new RijndaelManaged();
+            symmK.Mode = CipherMode.CBC;
+
+            byte[] plainTextBytes = new byte[cipherTextBytes.Length];
+            int byteCount = 0;
+
+            using (ICryptoTransform decryptor = symmK.CreateDecryptor(keyBytes, initVecB))
+            {
+                using (MemoryStream mSt = new MemoryStream(cipherTextBytes))
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream(mSt, decryptor, CryptoStreamMode.Read))
+                    {
+                        byteCount = cryptoStream.Read(plainTextBytes, 0, plainTextBytes.Length);
+                        mSt.Close();
+                        cryptoStream.Close();
+                    }
+                }
+            }
+
+            symmK.Clear();
+            return Encoding.UTF8.GetString(plainTextBytes, 0, byteCount);
+        }
+
+        //метод шифрования строки
+        public static string Shifrovka(string ishText, string pass,
+               string sol = "doberman", string cryptographicAlgorithm = "SHA1",
+               int passIter = 2, string initVec = "a8doSuDitOz1hZe#",
+               int keySize = 256)
+        {
+            if (string.IsNullOrEmpty(ishText))
+                return "";
+
+            byte[] initVecB = Encoding.ASCII.GetBytes(initVec);
+            byte[] solB = Encoding.ASCII.GetBytes(sol);
+            byte[] ishTextB = Encoding.UTF8.GetBytes(ishText);
+
+            PasswordDeriveBytes derivPass = new PasswordDeriveBytes(pass, solB, cryptographicAlgorithm, passIter);
+            byte[] keyBytes = derivPass.GetBytes(keySize / 8);
+            RijndaelManaged symmK = new RijndaelManaged();
+            symmK.Mode = CipherMode.CBC;
+
+            byte[] cipherTextBytes = null;
+
+            using (ICryptoTransform encryptor = symmK.CreateEncryptor(keyBytes, initVecB))
+            {
+                using (MemoryStream memStream = new MemoryStream())
+                {
+                    using (CryptoStream cryptoStream = new CryptoStream(memStream, encryptor, CryptoStreamMode.Write))
+                    {
+                        cryptoStream.Write(ishTextB, 0, ishTextB.Length);
+                        cryptoStream.FlushFinalBlock();
+                        cipherTextBytes = memStream.ToArray();
+                        memStream.Close();
+                        cryptoStream.Close();
+                    }
+                }
+            }
+
+            symmK.Clear();
+            return Convert.ToBase64String(cipherTextBytes);
+        }
+
         //вход в программу
         private void metroLabel3_Click(object sender, EventArgs e)
         {
-            SqlConnection con = BDconnect.GetBDConnection();
-            con.Open();
-            SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + metroTextBox1.Text + "' and[Пароль] = '" + metroTextBox2.Text + "'and[роль]='Пользователь'", con); //выбор данных из таблицы БД 
-            SqlDataReader dr;
-            dr = sc.ExecuteReader();
-            int count = 0;
-            while (dr.Read())
+            try
             {
-                count += 1;
-            }
-            dr.Close();
-
-            if (count == 1)
-            {
-                //Автоматический вход с помощью реестра
-                if (metroToggle1.Checked)
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
+                string log = Shifrovka(metroTextBox1.Text, "YchetPO");
+                string pas = Shifrovka(metroTextBox2.Text, "YchetPO");
+                SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + log + "' and[Пароль] = '" + pas + "'", con); //выбор данных из таблицы БД 
+                SqlDataReader dr;
+                dr = sc.ExecuteReader();
+                int count = 0;
+                while (dr.Read())
                 {
-                    try
-                    {
-                        RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
-                        saveKey.SetValue("Polz", "Auto");
-                        saveKey.Close();
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Пожалуйста запустите программу от имени администратора");
-                        Application.Exit();
-                    }
+                    count += 1;
                 }
-                Srttings srttings = new Srttings();
-                srttings.Show();
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Неверный логин или пароль");
+                dr.Close();
 
+                if (count == 1)
+                {
+                    SqlCommand IP = new SqlCommand("select [I_P] from polz where[login] = '" + log + "' ", con);
+                    Program.namepolz = DeShifrovka(IP.ExecuteScalar().ToString(), "YchetPO");
+
+                    //Автоматический вход с помощью реестра
+                    if (metroToggle1.Checked)
+                    {
+                        try
+                        {
+                            RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                            saveKey.SetValue("Polz", "Auto");
+                            saveKey.SetValue("login", log);
+                            saveKey.SetValue("name", Program.namepolz);
+                            saveKey.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                            Application.Exit();
+                        }
+                    }
+  
+                    Program.loginpolz = log;
+                    Glavnaya glavnaya = new Glavnaya();
+                    glavnaya.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Неверный логин или пароль");
+
+                }
             }
+            catch
+            {
+                MessageBox.Show("Отсутствует подключение к базе данных");
+            }
+            
         }
 
         //динамическое создание элементов интерфейса
@@ -75,6 +173,7 @@ namespace Ychpo
         //диинамическое создание элементов после выбора "Забыли пароль?"
         private void metroLabel4_Click(object sender, EventArgs e)
         {
+            //Очищение формы и создание строки с текстом:
             Controls.Clear();
             Label label = new Label();
             label.AutoSize = false;
@@ -87,7 +186,7 @@ namespace Ychpo
             Controls.Add(label);
 
 
-
+            //Создание TextBox для логина пользователя
             login.Left = 96;
             login.Top = 190;
             login.Width = 211;
@@ -95,6 +194,7 @@ namespace Ychpo
             login.Font = new Font(login.Font.FontFamily, 13);
             Controls.Add(login);
 
+            //Создание кнопки отправки письма на почту
             Button buttonsend = new Button();
             buttonsend.Width = 171;
             buttonsend.Height = 30;
@@ -105,6 +205,7 @@ namespace Ychpo
             buttonsend.Click += this.buttonsend_Click;
             Controls.Add(buttonsend);
 
+            //Создание кнопки отмена
             Button cancel = new Button();
             cancel.Width = 171;
             cancel.Height = 30;
@@ -115,7 +216,7 @@ namespace Ychpo
             cancel.Click += this.cancel_Click;
             Controls.Add(cancel);
 
-            
+            //Создание кнопки выхода из приложения
             exit.Width = 22;
             exit.Height = 22;
             exit.Left = 385;
@@ -132,6 +233,7 @@ namespace Ychpo
 
         }
 
+        //Переход на форму авторизации
         public void cancel_Click(object sender, EventArgs e)
         {
             Autoriz autoriz = new Autoriz();
@@ -145,18 +247,20 @@ namespace Ychpo
             string name;
             try
             {
+                string log = Shifrovka(login.Text, "YchetPO");
+                //Запись в переменные необходимых данных о пользователе
                 SqlConnection con = BDconnect.GetBDConnection();
                 con.Open();
-                SqlCommand k = new SqlCommand("select [Email] from polz where[login] = '" + login.Text + "' ", con);
-                email = k.ExecuteScalar().ToString();
-                SqlCommand k1 = new SqlCommand("select [I_P] from polz where[login] = '" + login.Text + "' ", con);
-                name = k1.ExecuteScalar().ToString();
+                SqlCommand emaill = new SqlCommand("select [Email] from polz where[login] = '" + log + "' ", con);
+                email = DeShifrovka(emaill.ExecuteScalar().ToString(), "YchetPO");
+                SqlCommand IP = new SqlCommand("select [I_P] from polz where[login] = '" + log + "' ", con);
+                name = DeShifrovka(IP.ExecuteScalar().ToString(), "YchetPO");
+                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + log + "'",con);
+                idpolz =id.ExecuteScalar().ToString(); 
+
                 //Формирование четырехзначного кода подтверждения
                 var x = new Random();
                 kodpodt = x.Next(1000, 9999);
-
-
-
 
                 //Отправка электронного письма с кодом подтверждения на почту
                 try
@@ -170,7 +274,7 @@ namespace Ychpo
 
                     mail.IsBodyHtml = true;
                     string htmlBody;
-                    htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"Super Game!\">" + @" 
+                    htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
                 <br><br>Здравствуйте уважаемый(ая) " + name + @" !
                 <br>Вы получили это письмо, потому что вы зарегистрированы в программе учета программного обеспечения и не помните пароль к своей учетной записи.
                 <br>Высылаем Вам секретный код для активации вашего профиля.
@@ -236,8 +340,7 @@ namespace Ychpo
             }
             catch
             {
-                login.Text = "";
-                MessageBox.Show("Данного логина нет в системе");
+                MessageBox.Show("Что-то пошло не так, предполагаемые действия:\n \n 1 Проверте правильность написанного вами логина \n 2 Проверте подключение к базе данных");
             }
 
         }
@@ -338,10 +441,27 @@ namespace Ychpo
 
             if (newpass.Text == newpasssubmit.Text)
             {
-                MessageBox.Show("Ваш пароль успешно изменен");
-                Autoriz autoriz = new Autoriz();
-                autoriz.Show();
-                this.Close();
+                try
+                {
+                    string npass = Shifrovka(newpass.Text, "YchetPO");
+                    SqlConnection con = BDconnect.GetBDConnection();
+                    con.Open();
+                    SqlCommand izmenenieparolia = new SqlCommand("polzpass_edit", con);
+                    izmenenieparolia.CommandType = CommandType.StoredProcedure;
+                    izmenenieparolia.Parameters.AddWithValue("@id_polz", idpolz);
+                    izmenenieparolia.Parameters.AddWithValue("@password", npass);
+                    izmenenieparolia.ExecuteNonQuery();
+                    con.Close();
+                    MessageBox.Show("Ваш пароль успешно изменен");
+                    Autoriz autoriz = new Autoriz();
+                    autoriz.Show();
+                    this.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Отсутствует подключение к базе данных");
+                }
+
             }
             else
             {
@@ -368,7 +488,9 @@ namespace Ychpo
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            Registr registr = new Registr();
+            registr.Show();
+            this.Close();
         }
     }
 }

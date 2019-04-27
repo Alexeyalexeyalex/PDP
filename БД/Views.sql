@@ -8,15 +8,17 @@ role on role.id_role=dolj.role_id
 go
 
 create view [dbo].[zahazi]
-as select id_zayavka as 'Номер заявки',naim_zayavka as 'Название ПО', kol_zayavka as 'Количество копий',vers_zayavka as 'Версия ПО',status as 'Статус',login as 'Логин'
+as select id_zayavka as 'Номер заявки',naim_po as 'Название ПО', kol_zayavka as 'Количество копий',vers_po as 'Версия ПО',status as 'Статус',login as 'Логин'
 from
 zayavka inner join
-polz on zayavka.polz_id=polz.id_polz
+polz on zayavka.polz_id=polz.id_polz inner join
+zakaz on id_zayavka = zayavka_id inner join
+PO on id_PO=po_id 
 go
  
  create view [dbo].[rols]
 as select id_dolj as 'Номер должности',naim_dolj as 'Должность',id_role as 'Номер роли',naim_role as 'роль', polz_role as 'Доступ к пользователям',zayavka_role as 'Доступ к заявкам',po_role as'Доступ к ПО', zakaz_role as 'Доступ к заказам'
 from
 dolj  inner join
-role on role.id_role=dolj.role_id
+role on role.id_role=dolj.role_id 
 go

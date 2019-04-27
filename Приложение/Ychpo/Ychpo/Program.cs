@@ -18,5 +18,8 @@ namespace Ychpo
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Zastavka());
         }
+        //Создание глобальных переменных
+        public static string namepolz;
+        public static string loginpolz;
     }
 }

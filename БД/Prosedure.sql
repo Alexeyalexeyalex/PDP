@@ -5,7 +5,7 @@ CREATE PROCEDURE [DBO].[polz_add]
 @O_P varchar(max),
 @email varchar(max),
 @login varchar(max),
-@password varchar(16)
+@password varchar(max)
 )
 AS
 	insert into [dbo].[polz]([F_P],[I_P],[O_P],[email],[login],[password]) values((@F_P),(@I_P),(@O_P),(@email),(@login),(@password));
@@ -17,7 +17,7 @@ CREATE PROCEDURE [DBO].[polz_edit]
 @O_P varchar(max),
 @email varchar(max),
 @login varchar(max),
-@password varchar(16)
+@password varchar(max)
 AS
 	update [dbo].polz
 	set
@@ -29,6 +29,17 @@ AS
 	password=@password
 	where id_polz=@id_polz;
 go
+
+CREATE PROCEDURE [DBO].[polzpass_edit]
+@id_polz int,
+@password varchar(max)
+AS
+	update [dbo].polz
+	set
+	password=@password
+	where id_polz=@id_polz;
+go
+
 CREATE PROCEDURE [DBO].[polz_delete]
 @id_polz int
 AS
@@ -107,13 +118,11 @@ go
 CREATE PROCEDURE [DBO].[zayavka_add]
 (
 @kol_zayavka int,
-@naim_zayavka varchar(max),
-@vers_zayavka varchar(max),
 @status varchar(max),
 @polz_id int
 )
 AS
-	insert into [dbo].[zayavka]([kol_zayavka],[naim_zayavka],[vers_zayavka],[status],[polz_id]) values((@kol_zayavka),(@naim_zayavka),(@vers_zayavka),(@status),(@polz_id));
+	insert into [dbo].[zayavka]([kol_zayavka],[status],[polz_id]) values((@kol_zayavka),(@status),(@polz_id));
 go
 CREATE PROCEDURE [DBO].[zayavka_edit]
 @id_zayavka int,
@@ -126,8 +135,6 @@ AS
 	update [dbo].zayavka
 	set
 	kol_zayavka=@kol_zayavka,
-	naim_zayavka=@naim_zayavka,
-	vers_zayavka=@vers_zayavka,
 	status=@status,
 	polz_id=@polz_id
 	where id_zayavka=@id_zayavka;

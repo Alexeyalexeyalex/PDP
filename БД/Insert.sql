@@ -11,8 +11,8 @@ Values ('Ланистер','Джейми','Тайвинович','i_a.k.silaenkov@mpt.ru','Jeimi','dolgi
 INSERT into dbo.polz(F_P,I_P,O_P,email,login,password)
 Values ('Ланистер','Серсея','Тайвиновна','silaenckov2014@yandex.ru','Sersea','OgonIb');
 
-INSERT into dbo.zayavka(naim_zayavka,kol_zayavka,vers_zayavka,status,polz_id)
-Values ('Microsoft office','1','2016','В процессе','2');
+INSERT into dbo.zayavka(kol_zayavka,status,polz_id)
+Values ('1','В процессе','2');
 
 INSERT into dbo.role(naim_role,polz_role,zayavka_role,po_role,zakaz_role)
 Values ('Admin','1','1','1','1');
