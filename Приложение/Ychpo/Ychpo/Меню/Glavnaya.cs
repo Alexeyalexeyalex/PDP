@@ -29,17 +29,18 @@ namespace Ychpo
 
         private void Glavnaya_Load(object sender, EventArgs e)
         {
-            label1.Text = Program.loginpolz;
-            label3.Text = Program.namepolz;
+           
             try
             {
                 RegistryKey readKey = Registry.LocalMachine.OpenSubKey("software\\Ychpo");
                 Auto = (string)readKey.GetValue("Polz");
                 string loadlogin = (string)readKey.GetValue("login");
+                string loadname = (string)readKey.GetValue("name");
                 readKey.Close();
                 if (Auto == "Auto")
                 {
                     Program.loginpolz = loadlogin;
+                    Program.namepolz = loadname;
                 }
             }
             catch
@@ -97,10 +98,7 @@ namespace Ychpo
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-           
-        }
+
 
         private void Exit_Click(object sender, EventArgs e)
         {

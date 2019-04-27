@@ -134,19 +134,52 @@ namespace Ychpo
                     SqlCommand Polz = new SqlCommand("select [id_polz] from polz where[login] = '" + login + "' ", con);
                     string id = Polz.ExecuteScalar().ToString();
 
-                    SqlCommand sovm = new SqlCommand("sovm_add", con);
-                    sovm.Parameters.AddWithValue("@polzsovm_id", id);
-                    if (admin==1)
+                    if (admin == 1)
                     {
-                        sovm.Parameters.AddWithValue("@dolj_id", "1");
+                        SqlCommand rolep = new SqlCommand("role_add", con);
+                        rolep.Parameters.AddWithValue("@naim_role", "Пользователь");
+                        rolep.Parameters.AddWithValue("@polz_role", 1);
+                        rolep.Parameters.AddWithValue("@zayavka_role", 1);
+                        rolep.Parameters.AddWithValue("@po_role", 0);
+                        rolep.Parameters.AddWithValue("@zakaz_role", 0);
+                        rolep.CommandType = CommandType.StoredProcedure;
+                        rolep.ExecuteNonQuery();
+
+                        SqlCommand doljp = new SqlCommand("dolj_add", con);
+                        doljp.Parameters.AddWithValue("@naim_dolj", "Пользователь");
+                        doljp.Parameters.AddWithValue("@role_id", 1);
+                        doljp.CommandType = CommandType.StoredProcedure;
+                        doljp.ExecuteNonQuery();
+
+                        SqlCommand role = new SqlCommand("role_add", con);
+                        role.Parameters.AddWithValue("@naim_role", "Admin");
+                        role.Parameters.AddWithValue("@polz_role", 1);
+                        role.Parameters.AddWithValue("@zayavka_role", 1);
+                        role.Parameters.AddWithValue("@po_role", 1);
+                        role.Parameters.AddWithValue("@zakaz_role", 1);
+                        role.CommandType = CommandType.StoredProcedure;
+                        role.ExecuteNonQuery();
+
+                        SqlCommand dolj = new SqlCommand("dolj_add", con);
+                        dolj.Parameters.AddWithValue("@naim_dolj", "Admin");
+                        dolj.Parameters.AddWithValue("@role_id", 2);
+                        dolj.CommandType = CommandType.StoredProcedure;
+                        dolj.ExecuteNonQuery();
+
+                        SqlCommand sovm = new SqlCommand("sovm_add", con);
+                        sovm.Parameters.AddWithValue("@polzsovm_id", id);
+                        sovm.Parameters.AddWithValue("@dolj_id", "2");
+                        sovm.CommandType = CommandType.StoredProcedure;
+                        sovm.ExecuteNonQuery();
                     }
                     else
                     {
-                        sovm.Parameters.AddWithValue("@dolj_id", "3");
+                        SqlCommand sovm = new SqlCommand("sovm_add", con);
+                        sovm.Parameters.AddWithValue("@polzsovm_id", id);
+                        sovm.Parameters.AddWithValue("@dolj_id", "1");
+                        sovm.CommandType = CommandType.StoredProcedure;
+                        sovm.ExecuteNonQuery();
                     }
-                    
-                    sovm.CommandType = CommandType.StoredProcedure;
-                    sovm.ExecuteNonQuery();
                     con.Close();
                     MessageBox.Show("Вы успешно зарегистрировались");
                     Autoriz autoriz = new Autoriz();
