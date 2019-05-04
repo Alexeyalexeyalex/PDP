@@ -59,10 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Registr.cs">
+    <Compile Include="Меню\Registr.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registr.Designer.cs">
+    <Compile Include="Меню\Registr.Designer.cs">
       <DependentUpon>Registr.cs</DependentUpon>
     </Compile>
     <Compile Include="Классы\DeShifrovka.cs" />
@@ -95,7 +95,7 @@
     <Compile Include="Меню\Zastavka.Designer.cs">
       <DependentUpon>Zastavka.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Registr.resx">
+    <EmbeddedResource Include="Меню\Registr.resx">
       <DependentUpon>Registr.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Меню\Autoriz.resx">
@@ -109,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Меню\Glavnaya.resx">
       <DependentUpon>Glavnaya.cs</DependentUpon>
@@ -135,6 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\kissclipart-settings-wheel-clipart-belgian-cyber-security-conv-6435b8f0bb402546.png" />
+    <None Include="Resources\WMF-Ago444.png" />
     <Content Include="логотип_87358167.ico" />
   </ItemGroup>
   <ItemGroup />

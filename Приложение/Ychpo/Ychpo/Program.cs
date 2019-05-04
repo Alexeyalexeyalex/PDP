@@ -21,5 +21,6 @@ namespace Ychpo
         //Создание глобальных переменных
         public static string namepolz;
         public static string loginpolz;
+        public static string podkluchenie ;
     }
 }

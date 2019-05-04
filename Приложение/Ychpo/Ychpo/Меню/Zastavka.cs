@@ -77,6 +77,8 @@ namespace Ychpo
                 autoriz.Show();
                 this.Hide();
             }
+       
+           
 
 
         }

@@ -138,9 +138,9 @@ namespace Ychpo
                     {
                         SqlCommand rolep = new SqlCommand("role_add", con);
                         rolep.Parameters.AddWithValue("@naim_role", "Пользователь");
-                        rolep.Parameters.AddWithValue("@polz_role", 1);
+                        rolep.Parameters.AddWithValue("@polz_role", 0);
                         rolep.Parameters.AddWithValue("@zayavka_role", 1);
-                        rolep.Parameters.AddWithValue("@po_role", 0);
+                        rolep.Parameters.AddWithValue("@po_role", 1);
                         rolep.Parameters.AddWithValue("@zakaz_role", 0);
                         rolep.CommandType = CommandType.StoredProcedure;
                         rolep.ExecuteNonQuery();

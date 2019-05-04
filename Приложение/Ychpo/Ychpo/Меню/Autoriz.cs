@@ -492,5 +492,115 @@ namespace Ychpo
             registr.Show();
             this.Close();
         }
+
+
+
+
+
+        TextBox podkl = new TextBox();
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            //Очищение формы и создание строки с текстом:
+            Controls.Clear();
+            Label label = new Label();
+            label.AutoSize = false;
+            label.Left = 30;
+            label.Top = 100;
+            label.Width = 383;
+            label.Height = 50;
+            label.Text = "     Введите данные подключения";
+            label.Font = new Font(label.Font.FontFamily, 13);
+            Controls.Add(label);
+
+            //Создание TextBox для данных подключения
+            podkl.Left = 57;
+            podkl.Top = 190;
+            podkl.Width = 300;
+            podkl.Height = 30;
+            podkl.Font = new Font(login.Font.FontFamily, 13);
+            try
+            {
+                RegistryKey readKey = Registry.LocalMachine.OpenSubKey("software\\Ychpo");
+                string loadString = (string)readKey.GetValue("Podkl");
+                readKey.Close();
+                if (loadString != "")
+                {
+                    podkl.Text = loadString;
+                }
+
+            }
+            catch
+            {
+                MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+            }
+            Controls.Add(podkl);
+
+            //Создание кнопки подтверждения
+            Button buttonpodt = new Button();
+            buttonpodt.Width = 171;
+            buttonpodt.Height = 30;
+            buttonpodt.Left = 116;
+            buttonpodt.Top = 240;
+            buttonpodt.Font = new Font(buttonpodt.Font.FontFamily, 13);
+            buttonpodt.Text = "Подтвердить";
+            buttonpodt.Click += this.buttonpodt_Click;
+            Controls.Add(buttonpodt);
+
+            //Создание кнопки отмена
+            Button cancel = new Button();
+            cancel.Width = 171;
+            cancel.Height = 30;
+            cancel.Left = 116;
+            cancel.Top = 280;
+            cancel.Font = new Font(cancel.Font.FontFamily, 13);
+            cancel.Text = "Назад";
+            cancel.Click += this.cancel_Click;
+            Controls.Add(cancel);
+
+            //Создание кнопки выхода из приложения
+            exit.Width = 22;
+            exit.Height = 22;
+            exit.Left = 385;
+            exit.Top = 13;
+            exit.Font = new Font(exit.Font.FontFamily, 13);
+            exit.Text = "X";
+            exit.Cursor = Cursors.Hand;
+            exit.Click += this.exit_Click;
+            Controls.Add(exit);
+        }
+        public void buttonpodt_Click(object sender, EventArgs e)
+        {
+            if(podkl.Text == "")
+            {
+                MessageBox.Show("Введите данные подключения");
+            }
+            else
+            {
+                try
+                {
+                    RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                    saveKey.SetValue("Podkl", podkl.Text);
+                    saveKey.Close();
+
+                    Autoriz autoriz = new Autoriz();
+                    autoriz.Show();
+                    this.Close();
+                }
+                catch
+                {
+                    MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                    Application.Exit();
+                }
+            }
+
+        }
+
+        private void Autoriz_Load(object sender, EventArgs e)
+        {
+           
+              
+            
+           
+        }
     }
 }
