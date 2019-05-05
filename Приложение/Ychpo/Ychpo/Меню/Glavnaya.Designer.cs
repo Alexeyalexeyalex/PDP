@@ -93,6 +93,7 @@
             this.изменитьДанныеУчетнойЗаписиToolStripMenuItem.Name = "изменитьДанныеУчетнойЗаписиToolStripMenuItem";
             this.изменитьДанныеУчетнойЗаписиToolStripMenuItem.Size = new System.Drawing.Size(325, 26);
             this.изменитьДанныеУчетнойЗаписиToolStripMenuItem.Text = "Изменить данные учетной записи";
+            this.изменитьДанныеУчетнойЗаписиToolStripMenuItem.Click += new System.EventHandler(this.изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click);
             // 
             // Exit
             // 
@@ -160,10 +161,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(1062, 0);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 17F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(1056, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 24);
+            this.label2.Size = new System.Drawing.Size(30, 29);
             this.label2.TabIndex = 27;
             this.label2.Text = "X";
             this.label2.Click += new System.EventHandler(this.label2_Click);

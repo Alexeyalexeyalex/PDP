@@ -245,36 +245,38 @@ namespace Ychpo
         public void buttonsend_Click(object sender, EventArgs e)
         {
             string name;
-            try
+            if (login.Text!="")
             {
-                string log = Shifrovka(login.Text, "YchetPO");
-                //Запись в переменные необходимых данных о пользователе
-                SqlConnection con = BDconnect.GetBDConnection();
-                con.Open();
-                SqlCommand emaill = new SqlCommand("select [Email] from polz where[login] = '" + log + "' ", con);
-                email = DeShifrovka(emaill.ExecuteScalar().ToString(), "YchetPO");
-                SqlCommand IP = new SqlCommand("select [I_P] from polz where[login] = '" + log + "' ", con);
-                name = DeShifrovka(IP.ExecuteScalar().ToString(), "YchetPO");
-                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + log + "'",con);
-                idpolz =id.ExecuteScalar().ToString(); 
-
-                //Формирование четырехзначного кода подтверждения
-                var x = new Random();
-                kodpodt = x.Next(1000, 9999);
-
-                //Отправка электронного письма с кодом подтверждения на почту
                 try
                 {
-                    MailMessage mail = new MailMessage();
-                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                    string log = Shifrovka(login.Text, "YchetPO");
+                    //Запись в переменные необходимых данных о пользователе
+                    SqlConnection con = BDconnect.GetBDConnection();
+                    con.Open();
+                    SqlCommand emaill = new SqlCommand("select [Email] from polz where[login] = '" + log + "' ", con);
+                    email = DeShifrovka(emaill.ExecuteScalar().ToString(), "YchetPO");
+                    SqlCommand IP = new SqlCommand("select [I_P] from polz where[login] = '" + log + "' ", con);
+                    name = DeShifrovka(IP.ExecuteScalar().ToString(), "YchetPO");
+                    SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + log + "'", con);
+                    idpolz = id.ExecuteScalar().ToString();
 
-                    mail.From = new MailAddress("ychet.po@gmail.com");
-                    mail.To.Add(email);
-                    mail.Subject = "Техническая поддержка";
+                    //Формирование четырехзначного кода подтверждения
+                    var x = new Random();
+                    kodpodt = x.Next(1000, 9999);
 
-                    mail.IsBodyHtml = true;
-                    string htmlBody;
-                    htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
+                    //Отправка электронного письма с кодом подтверждения на почту
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
+                        SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                        mail.From = new MailAddress("ychet.po@gmail.com");
+                        mail.To.Add(email);
+                        mail.Subject = "Техническая поддержка";
+
+                        mail.IsBodyHtml = true;
+                        string htmlBody;
+                        htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
                 <br><br>Здравствуйте уважаемый(ая) " + name + @" !
                 <br>Вы получили это письмо, потому что вы зарегистрированы в программе учета программного обеспечения и не помните пароль к своей учетной записи.
                 <br>Высылаем Вам секретный код для активации вашего профиля.
@@ -283,65 +285,71 @@ namespace Ychpo
                 <br>
                 <br>Мы рады, что вы выбрали именно наш программный продукт и желаем Вам приятого пользования!</body></html>";
 
-                    mail.Body = htmlBody;
+                        mail.Body = htmlBody;
 
-                    SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("ychet.po", "Qq112233!");
-                    SmtpServer.EnableSsl = true;
+                        SmtpServer.Port = 587;
+                        SmtpServer.Credentials = new System.Net.NetworkCredential("ychet.po", "Qq112233!");
+                        SmtpServer.EnableSsl = true;
 
-                    SmtpServer.Send(mail);
-
-
-                    Controls.Clear();
+                        SmtpServer.Send(mail);
 
 
-                    Label info = new Label();
-                    info.AutoSize = false;
-                    info.Left = 40;
-                    info.Top = 100;
-                    info.Width = 400;
-                    info.Height = 50;
-                    info.Text = "     На вашу почту было отправлено сообщение с кодом подтверждения";
-                    info.Font = new Font(info.Font.FontFamily, 13);
-                    Controls.Add(info);
+                        Controls.Clear();
 
 
-                    kod.Left = 96;
-                    kod.Top = 185;
-                    kod.Width = 211;
-                    kod.Height = 30;
-                    kod.Font = new Font(kod.Font.FontFamily, 13);
-                    Controls.Add(kod);
+                        Label info = new Label();
+                        info.AutoSize = false;
+                        info.Left = 40;
+                        info.Top = 100;
+                        info.Width = 400;
+                        info.Height = 50;
+                        info.Text = "     На вашу почту было отправлено сообщение с кодом подтверждения";
+                        info.Font = new Font(info.Font.FontFamily, 13);
+                        Controls.Add(info);
 
-                    Button buttonsendkod = new Button();
-                    buttonsendkod.Width = 171;
-                    buttonsendkod.Height = 30;
-                    buttonsendkod.Left = 116;
-                    buttonsendkod.Top = 240;
-                    buttonsendkod.Font = new Font(buttonsendkod.Font.FontFamily, 13);
-                    buttonsendkod.Text = "Отправить";
-                    buttonsendkod.Click += this.buttonsendkod_Click;
-                    Controls.Add(buttonsendkod);
 
-                    exit.Width = 22;
-                    exit.Height = 22;
-                    exit.Left = 385;
-                    exit.Top = 13;
-                    exit.Font = new Font(exit.Font.FontFamily, 13);
-                    exit.Text = "X";
-                    exit.Click += this.exit_Click;
-                    Controls.Add(exit);
+                        kod.Left = 96;
+                        kod.Top = 185;
+                        kod.Width = 211;
+                        kod.Height = 30;
+                        kod.Font = new Font(kod.Font.FontFamily, 13);
+                        Controls.Add(kod);
+
+                        Button buttonsendkod = new Button();
+                        buttonsendkod.Width = 171;
+                        buttonsendkod.Height = 30;
+                        buttonsendkod.Left = 116;
+                        buttonsendkod.Top = 240;
+                        buttonsendkod.Font = new Font(buttonsendkod.Font.FontFamily, 13);
+                        buttonsendkod.Text = "Отправить";
+                        buttonsendkod.Click += this.buttonsendkod_Click;
+                        Controls.Add(buttonsendkod);
+
+                        exit.Width = 22;
+                        exit.Height = 22;
+                        exit.Left = 385;
+                        exit.Top = 13;
+                        exit.Font = new Font(exit.Font.FontFamily, 13);
+                        exit.Text = "X";
+                        exit.Click += this.exit_Click;
+                        Controls.Add(exit);
+                    }
+
+                    catch
+                    {
+                        MessageBox.Show("Что-то пошло не так, предполагаемые действия:\n \n 1 Проверте правильность указанного email \n 2 Проверте подключение к интернету \n 3 Перезагрузите программу от имени администратора \n 4 Обратитесь к администратору", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                    }
                 }
-
                 catch
                 {
-                    MessageBox.Show("Что-то пошло не так, предполагаемые действия:\n \n 1 Проверте правильность указанного email \n 2 Проверте подключение к интернету \n 3 Перезагрузите программу от имени администратора \n 4 Обратитесь к администратору", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
+                    MessageBox.Show("Что-то пошло не так, предполагаемые действия:\n \n 1 Проверте правильность написанного вами логина \n 2 Проверте подключение к базе данных");
                 }
             }
-            catch
+            else
             {
-                MessageBox.Show("Что-то пошло не так, предполагаемые действия:\n \n 1 Проверте правильность написанного вами логина \n 2 Проверте подключение к базе данных");
+                MessageBox.Show("Напишите пожалуйста ваш логин");
             }
+            
 
         }
         TextBox newpass = new TextBox();
@@ -443,6 +451,7 @@ namespace Ychpo
             {
                 try
                 {
+                    //изменение пароля для учетной записи пользователя
                     string npass = Shifrovka(newpass.Text, "YchetPO");
                     SqlConnection con = BDconnect.GetBDConnection();
                     con.Open();

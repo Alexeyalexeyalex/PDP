@@ -21,7 +21,8 @@ namespace Ychpo
         string DostupkZakazam;
         string DostupkPolz;
         string Auto;
-
+        string imiapolz;
+        int razmershrifta=13;
         public Glavnaya()
         {
             InitializeComponent();
@@ -225,6 +226,15 @@ namespace Ychpo
 
         private void ZakazPO_Click(object sender, EventArgs e)
         {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
             for (int i = 0; i < sum; i++)
@@ -285,6 +295,17 @@ namespace Ychpo
 
         private void ролиToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+            
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
             for (int i = 0; i < sum; i++)
@@ -355,10 +376,29 @@ namespace Ychpo
                 dataGridView1.Rows.Add(s);
 
             con.Close();
+
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
+
         }
 
         private void данныеПользователейToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
             for (int i = 0; i < sum; i++)
@@ -465,6 +505,16 @@ namespace Ychpo
 
         private void добавлениеПОToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
             for (int i = 0; i < sum; i++)
@@ -521,5 +571,264 @@ namespace Ychpo
                 dataGridView1.Rows.Add(s);
 
         }
+
+        
+
+        private void изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+            //Возвращение значений полей из бд
+            SqlCommand F = new SqlCommand("select [Фамилия пользователя] from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            string Fam = F.ExecuteScalar().ToString();
+            SqlCommand O = new SqlCommand("select [Очество пользователя] from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            string otch = O.ExecuteScalar().ToString();
+            SqlCommand EM = new SqlCommand("select [Email] from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            string email = EM.ExecuteScalar().ToString();
+            SqlCommand DOLJ = new SqlCommand("select [Должность] from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            string dolj = DOLJ.ExecuteScalar().ToString();
+            SqlCommand imiapolzovatelia = new SqlCommand("select [Имя пользователя] from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            imiapolz = DeShifrovka(imiapolzovatelia.ExecuteScalar().ToString(), "YchetPO");
+
+
+            dataGridView1.Visible = false;
+            GroupBox groupBox = new GroupBox();
+            groupBox.Name = "Box";
+            groupBox.Left = 10;
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = menuStrip1.Height + 60;
+            groupBox.Height = this.Height  -menuStrip1.Height*2 - 60;
+            Controls.Add(groupBox);
+
+            Label fl = new Label();
+            fl.AutoSize = false;
+            fl.Left = this.Width / 5;
+            fl.Top = menuStrip1.Height+this.Height/7;
+            fl.Width = this.Width / 5;
+            fl.Height = 50;
+            fl.Text = "Фамилия";
+            fl.Font = new Font(fl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(fl);
+
+            TextBox ft = new TextBox();
+            ft.Text = DeShifrovka(Fam, "YchetPO");
+            ft.Name = "Familia";
+            ft.Left = fl.Left;
+            ft.Top = fl.Top+fl.Height;
+            ft.Width = fl.Width;
+            ft.Font = new Font(ft.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ft);
+
+            Label il = new Label();
+            il.AutoSize = false;
+            il.Left = fl.Left;
+            il.Top = ft.Top+ft.Height*2;
+            il.Width = fl.Width;
+            il.Height = 50;
+            il.Text = "Имя";
+            il.Font = new Font(il.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(il);
+
+            TextBox it = new TextBox();
+            it.Text = imiapolz; 
+            it.Name = "Imia";
+            it.Left = fl.Left;
+            it.Top = il.Top+il.Height;
+            it.Width = fl.Width;
+            it.Font = new Font(it.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(it);
+
+            Label ol = new Label();
+            ol.AutoSize = false;
+            ol.Left = fl.Left;
+            ol.Top = it.Top + it.Height * 2;
+            ol.Width = fl.Width;
+            ol.Height = 50;
+            ol.Text = "Отчество";
+            ol.Font = new Font(ol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ol);
+
+            TextBox ot = new TextBox();
+            ot.Text = DeShifrovka(otch, "YchetPO");
+            ot.Name = "Otchestvo";
+            ot.Left = fl.Left;
+            ot.Top = ol.Top + ol.Height;
+            ot.Width = fl.Width;
+            ot.Font = new Font(ot.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ot);
+
+            Label emaill = new Label();
+            emaill.AutoSize = false;
+            emaill.Left = this.Width / 5*3;
+            emaill.Top = fl.Top;
+            emaill.Width = fl.Width;
+            emaill.Height = 50;
+            emaill.Text = "Email";
+            emaill.Font = new Font(emaill.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(emaill);
+
+            TextBox emailt = new TextBox();
+            emailt.Text = DeShifrovka(email, "YchetPO");
+            emailt.Name = "Emailname";
+            emailt.Left = emaill.Left;
+            emailt.Top = ft.Top;
+            emailt.Width = emaill.Width;
+            emailt.Font = new Font(emailt.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(emailt);
+
+            Label loginl = new Label();
+            loginl.AutoSize = false;
+            loginl.Left = emaill.Left;
+            loginl.Top = il.Top;
+            loginl.Width = emaill.Width;
+            loginl.Height = 50;
+            loginl.Text = "Логин";
+            loginl.Font = new Font(loginl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(loginl);
+
+            TextBox logint = new TextBox();
+            logint.Text = DeShifrovka(Program.loginpolz, "YchetPO");
+            logint.Name = "loginname";
+            logint.Left = emaill.Left;
+            logint.Top = it.Top;
+            logint.Width = emaill.Width;
+            logint.Font = new Font(logint.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(logint);
+
+            Label doljl = new Label();
+            doljl.AutoSize = false;
+            doljl.Left = emaill.Left;
+            doljl.Top = ol.Top;
+            doljl.Width = emaill.Width;
+            doljl.Height = 50;
+            doljl.Text = "Должность";
+            doljl.Font = new Font(doljl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(doljl);
+
+            TextBox doljt = new TextBox();
+            doljt.Text = dolj;
+            doljt.Left = emaill.Left;
+            doljt.Top = ot.Top;
+            doljt.Width = emaill.Width;
+            doljt.Font = new Font(doljt.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(doljt);
+
+            Button izm = new Button();
+            izm.Text = "Изменить данные";
+            izm.Left = emailt.Left;
+            izm.Width = emailt.Width;
+            izm.Height = emailt.Height+5;
+            izm.Top = doljt.Top +doljt.Height * 3;
+            izm.Font = new Font(izm.Font.FontFamily, razmershrifta);
+            izm.Click += this.izm_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(izm);
+
+            con.Close();
+        }
+        public void izm_Click(object sender, EventArgs e)
+        {
+            string F = Shifrovka(((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text, "YchetPO");
+            string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
+            string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
+            string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
+            string login = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
+            SqlDataReader dr;
+            dr = sc.ExecuteReader();
+            int count = 0;
+            while (dr.Read())
+            {
+                count += 1;
+            }
+            dr.Close();
+
+            if ((count == 1)&&(Program.loginpolz != login))
+            {
+                MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
+            }
+            else
+            {
+                if (Program.namepolz != imiapolz)
+                {
+                    try
+                    {
+                        //удаление данных для автоматического входа из реестра 
+                        RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                        saveKey.SetValue("name", imiapolz);
+                        saveKey.Close();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                        Application.Exit();
+                    }
+                }
+                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + Program.loginpolz + "' ", con);
+                int idpolzov = Convert.ToInt32(id.ExecuteScalar());
+
+                if ((F!="")&&(I!="") && (email!= "") && (login!= ""))
+                {
+                    SqlCommand izmenenie = new SqlCommand("polz_edit", con);
+                    izmenenie.CommandType = CommandType.StoredProcedure;
+                    izmenenie.Parameters.AddWithValue("@id_polz", idpolzov);
+                    izmenenie.Parameters.AddWithValue("@F_P", F);
+                    izmenenie.Parameters.AddWithValue("@I_P", I);
+                    izmenenie.Parameters.AddWithValue("@O_P", O);
+                    izmenenie.Parameters.AddWithValue("@email", email);
+                    izmenenie.Parameters.AddWithValue("@login", login);
+                    izmenenie.ExecuteNonQuery();
+
+                    if (Program.loginpolz == login)
+                    {
+                        MessageBox.Show("Ваши данные успещно изменены");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ваши данные успещно изменены, пожалуйста авторизуйтесь повторно");
+                        try
+                        {
+                            //удаление данных для автоматического входа из реестра 
+                            RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+                            saveKey.SetValue("Polz", "");
+                            saveKey.SetValue("login", "");
+                            saveKey.SetValue("name", "");
+                            saveKey.Close();
+                            Autoriz autoriz = new Autoriz();
+                            autoriz.Show();
+                            this.Close();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Пожалуйста запустите программу от имени администратора");
+                            Application.Exit();
+                        }
+                    }
+                }
+
+                else
+                {
+                    MessageBox.Show("Не все поля заполнены");
+                }
+
+               
+
+            }
+            con.Close();
+        }
+
     }
 }

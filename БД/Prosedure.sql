@@ -16,8 +16,8 @@ CREATE PROCEDURE [DBO].[polz_edit]
 @I_P varchar(max),
 @O_P varchar(max),
 @email varchar(max),
-@login varchar(max),
-@password varchar(max)
+@login varchar(max)
+
 AS
 	update [dbo].polz
 	set
@@ -25,10 +25,11 @@ AS
 	I_P=@I_P,
 	O_P=@O_P,
 	email=@email,
-	login=@login,
-	password=@password
+	login=@login
+
 	where id_polz=@id_polz;
 go
+
 
 CREATE PROCEDURE [DBO].[polzpass_edit]
 @id_polz int,
