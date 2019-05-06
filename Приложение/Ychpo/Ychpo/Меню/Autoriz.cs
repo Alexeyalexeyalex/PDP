@@ -113,8 +113,8 @@ namespace Ychpo
             try
             {
                 SqlConnection con = BDconnect.GetBDConnection();
-                DeShifrovka a = new DeShifrovka();
-                a.DeShifrowka(metroTextBox1.Text, "YchetPO");
+                //DeShifrovka a = new DeShifrovka();
+                //a.DeShifrowka(metroTextBox1.Text, "YchetPO");
                 con.Open();
                 string log = Shifrovka(metroTextBox1.Text, "YchetPO");
                 string pas = Shifrovka(metroTextBox2.Text, "YchetPO");
@@ -358,92 +358,99 @@ namespace Ychpo
         TextBox newpasssubmit = new TextBox();
         public void buttonsendkod_Click(object sender, EventArgs e)
         {
-
-            if (popitki < 10)
+            try
             {
-                if (Convert.ToInt32(kod.Text) == kodpodt)
+                if (popitki < 10)
                 {
-                    Controls.Clear();
+                    if (Convert.ToInt32(kod.Text) == kodpodt)
+                    {
+                        Controls.Clear();
 
-                    Label newparol = new Label();
-                    newparol.AutoSize = false;
-                    newparol.Left = 91;
-                    newparol.Top = 70;
-                    newparol.Width = 400;
-                    newparol.Height = 23;
-                    newparol.Text = "Новый пароль";
-                    newparol.Font = new Font(newparol.Font.FontFamily, 13);
-                    Controls.Add(newparol);
-
-
-                    newpass.Left = 96;
-                    newpass.Top = 103;
-                    newpass.Width = 211;
-                    newpass.Height = 30;
-                    newpass.Font = new Font(newpass.Font.FontFamily, 13);
-                    Controls.Add(newpass);
-
-                    Label newparolsubmit = new Label();
-                    newparolsubmit.AutoSize = false;
-                    newparolsubmit.Left = 91;
-                    newparolsubmit.Top = 140;
-                    newparolsubmit.Width = 400;
-                    newparolsubmit.Height = 23;
-                    newparolsubmit.Text = "Подтвердите пароль";
-                    newparolsubmit.Font = new Font(newparolsubmit.Font.FontFamily, 13);
-                    Controls.Add(newparolsubmit);
+                        Label newparol = new Label();
+                        newparol.AutoSize = false;
+                        newparol.Left = 91;
+                        newparol.Top = 70;
+                        newparol.Width = 400;
+                        newparol.Height = 23;
+                        newparol.Text = "Новый пароль";
+                        newparol.Font = new Font(newparol.Font.FontFamily, 13);
+                        Controls.Add(newparol);
 
 
-                    newpasssubmit.Left = 96;
-                    newpasssubmit.Top = 173;
-                    newpasssubmit.Width = 211;
-                    newpasssubmit.Height = 30;
-                    newpasssubmit.Font = new Font(newpasssubmit.Font.FontFamily, 13);
-                    Controls.Add(newpasssubmit);
+                        newpass.Left = 96;
+                        newpass.Top = 103;
+                        newpass.Width = 211;
+                        newpass.Height = 30;
+                        newpass.Font = new Font(newpass.Font.FontFamily, 13);
+                        Controls.Add(newpass);
 
-                    Button buttonizmparol = new Button();
-                    buttonizmparol.Width = 171;
-                    buttonizmparol.Height = 30;
-                    buttonizmparol.Left = 116;
-                    buttonizmparol.Top = 220;
-                    buttonizmparol.Font = new Font(buttonizmparol.Font.FontFamily, 13);
-                    buttonizmparol.Text = "Изменить";
-                    buttonizmparol.Click += this.buttonizmparol_Click;
-                    Controls.Add(buttonizmparol);
+                        Label newparolsubmit = new Label();
+                        newparolsubmit.AutoSize = false;
+                        newparolsubmit.Left = 91;
+                        newparolsubmit.Top = 140;
+                        newparolsubmit.Width = 400;
+                        newparolsubmit.Height = 23;
+                        newparolsubmit.Text = "Подтвердите пароль";
+                        newparolsubmit.Font = new Font(newparolsubmit.Font.FontFamily, 13);
+                        Controls.Add(newparolsubmit);
 
-                    Button otmena = new Button();
-                    otmena.Width = 171;
-                    otmena.Height = 30;
-                    otmena.Left = 116;
-                    otmena.Top = 260;
-                    otmena.Font = new Font(buttonizmparol.Font.FontFamily, 13);
-                    otmena.Text = "Отмена";
-                    otmena.Click += this.otmena_Click;
-                    Controls.Add(otmena);
 
-                    exit.Width = 22;
-                    exit.Height = 22;
-                    exit.Left = 385;
-                    exit.Top = 13;
-                    exit.Font = new Font(exit.Font.FontFamily, 13);
-                    exit.Text = "X";
-                    exit.Click += this.exit_Click;
-                    Controls.Add(exit);
+                        newpasssubmit.Left = 96;
+                        newpasssubmit.Top = 173;
+                        newpasssubmit.Width = 211;
+                        newpasssubmit.Height = 30;
+                        newpasssubmit.Font = new Font(newpasssubmit.Font.FontFamily, 13);
+                        Controls.Add(newpasssubmit);
+
+                        Button buttonizmparol = new Button();
+                        buttonizmparol.Width = 171;
+                        buttonizmparol.Height = 30;
+                        buttonizmparol.Left = 116;
+                        buttonizmparol.Top = 220;
+                        buttonizmparol.Font = new Font(buttonizmparol.Font.FontFamily, 13);
+                        buttonizmparol.Text = "Изменить";
+                        buttonizmparol.Click += this.buttonizmparol_Click;
+                        Controls.Add(buttonizmparol);
+
+                        Button otmena = new Button();
+                        otmena.Width = 171;
+                        otmena.Height = 30;
+                        otmena.Left = 116;
+                        otmena.Top = 260;
+                        otmena.Font = new Font(buttonizmparol.Font.FontFamily, 13);
+                        otmena.Text = "Отмена";
+                        otmena.Click += this.otmena_Click;
+                        Controls.Add(otmena);
+
+                        exit.Width = 22;
+                        exit.Height = 22;
+                        exit.Left = 385;
+                        exit.Top = 13;
+                        exit.Font = new Font(exit.Font.FontFamily, 13);
+                        exit.Text = "X";
+                        exit.Click += this.exit_Click;
+                        Controls.Add(exit);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Вы ввели неправильный код проверки");
+                        kod.Text = "";
+                        popitki++;
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Вы ввели неправильный код проверки");
-                    kod.Text = "";
-                    popitki++;
+                    MessageBox.Show("Извините, вы привысили лимит попыток, повторите запрос");
+                    Autoriz autoriz = new Autoriz();
+                    autoriz.Show();
+                    this.Close();
                 }
             }
-            else
+            catch
             {
-                MessageBox.Show("Извините, вы привысили лимит попыток, повторите запрос");
-                Autoriz autoriz = new Autoriz();
-                autoriz.Show();
-                this.Close();
+                MessageBox.Show("Пожалуйста введите код, который пришел вам на электронную почту");
             }
+           
         }
 
         public void buttonizmparol_Click(object sender, EventArgs e)
@@ -453,20 +460,28 @@ namespace Ychpo
             {
                 try
                 {
-                    //изменение пароля для учетной записи пользователя
-                    string npass = Shifrovka(newpass.Text, "YchetPO");
-                    SqlConnection con = BDconnect.GetBDConnection();
-                    con.Open();
-                    SqlCommand izmenenieparolia = new SqlCommand("polzpass_edit", con);
-                    izmenenieparolia.CommandType = CommandType.StoredProcedure;
-                    izmenenieparolia.Parameters.AddWithValue("@id_polz", idpolz);
-                    izmenenieparolia.Parameters.AddWithValue("@password", npass);
-                    izmenenieparolia.ExecuteNonQuery();
-                    con.Close();
-                    MessageBox.Show("Ваш пароль успешно изменен");
-                    Autoriz autoriz = new Autoriz();
-                    autoriz.Show();
-                    this.Close();
+                    if (newpass.Text!="")
+                    {
+                        //изменение пароля для учетной записи пользователя
+                        string npass = Shifrovka(newpass.Text, "YchetPO");
+                        SqlConnection con = BDconnect.GetBDConnection();
+                        con.Open();
+                        SqlCommand izmenenieparolia = new SqlCommand("polzpass_edit", con);
+                        izmenenieparolia.CommandType = CommandType.StoredProcedure;
+                        izmenenieparolia.Parameters.AddWithValue("@id_polz", idpolz);
+                        izmenenieparolia.Parameters.AddWithValue("@password", npass);
+                        izmenenieparolia.ExecuteNonQuery();
+                        con.Close();
+                        MessageBox.Show("Ваш пароль успешно изменен");
+                        Autoriz autoriz = new Autoriz();
+                        autoriz.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не все поля заполнены");
+                    }
+                  
                 }
                 catch
                 {

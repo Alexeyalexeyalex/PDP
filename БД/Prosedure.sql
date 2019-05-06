@@ -5,10 +5,11 @@ CREATE PROCEDURE [DBO].[polz_add]
 @O_P varchar(max),
 @email varchar(max),
 @login varchar(max),
-@password varchar(max)
+@password varchar(max),
+@dostup bit
 )
 AS
-	insert into [dbo].[polz]([F_P],[I_P],[O_P],[email],[login],[password]) values((@F_P),(@I_P),(@O_P),(@email),(@login),(@password));
+	insert into [dbo].[polz]([F_P],[I_P],[O_P],[email],[login],[password],[dostup]) values((@F_P),(@I_P),(@O_P),(@email),(@login),(@password),(@dostup));
 go
 CREATE PROCEDURE [DBO].[polz_edit]
 @id_polz int,

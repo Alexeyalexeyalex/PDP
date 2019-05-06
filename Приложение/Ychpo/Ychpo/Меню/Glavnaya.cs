@@ -22,10 +22,90 @@ namespace Ychpo
         string DostupkPolz;
         string Auto;
         string imiapolz;
-        int razmershrifta=13;
+        int razmershrifta = 13;
         public Glavnaya()
         {
             InitializeComponent();
+        }
+
+        private void delitegroupbox()
+        {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void creategroupbox()
+        {
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
+        }
+
+        private void removedtgv()
+        {
+            //удаление данных из dataGridView
+            int sum = this.dataGridView1.Columns.Count;
+            for (int i = 0; i < sum; i++)
+            { this.dataGridView1.Columns.RemoveAt(0); }
+        }
+
+        private void adddatagvaddpo()
+        {
+            //создание необходимых столбцов в dataGridView
+            var column1 = new DataGridViewTextBoxColumn();
+            var column2 = new DataGridViewTextBoxColumn();
+            var column3 = new DataGridViewTextBoxColumn();
+            var column4 = new DataGridViewTextBoxColumn();
+
+            column1.HeaderText = "Номер";
+            column1.Name = "Номер";
+            column2.HeaderText = "Название";
+            column2.Name = "Название";
+            column3.HeaderText = "Количество";
+            column3.Name = "Количество";
+            column4.HeaderText = "Версия";
+            column4.Name = "Версия";
+            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4 });
+
+            //выбор необходимых данных
+            string query = "select * from po";
+
+            //запись данных в dataGridView
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+            SqlCommand command = new SqlCommand(query, con);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<string[]> data = new List<string[]>();
+
+            while (reader.Read())
+            {
+                data.Add(new string[15]);
+
+                data[data.Count - 1][0] = reader[0].ToString();
+                data[data.Count - 1][1] = DeShifrovka(reader[1].ToString(), "YchetPO");
+                data[data.Count - 1][2] = reader[2].ToString();
+                data[data.Count - 1][3] = DeShifrovka(reader[3].ToString(), "YchetPO");
+
+
+            }
+            reader.Close();
+            foreach (string[] s in data)
+                dataGridView1.Rows.Add(s);
+            con.Close();
         }
 
 
@@ -227,77 +307,22 @@ namespace Ychpo
         private void ZakazPO_Click(object sender, EventArgs e)
         {
             //удаление элементов формы 
-            try
-            {
-                (Controls["Box"] as GroupBox).Dispose();
-            }
-            catch
-            {
+            delitegroupbox();
 
-            }
             //удаление данных из dataGridView
-            int sum = this.dataGridView1.Columns.Count;
-            for (int i = 0; i < sum; i++)
-            { this.dataGridView1.Columns.RemoveAt(0); }
+            removedtgv();
+
+            //добавление данных в dataGridView
+            adddatagvaddpo();
 
             dataGridView1.Visible = true;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
 
-            //создание необходимых столбцов в dataGridView
-            var column1 = new DataGridViewTextBoxColumn();
-            var column2 = new DataGridViewTextBoxColumn();
-            var column3 = new DataGridViewTextBoxColumn();
-            var column4 = new DataGridViewTextBoxColumn();
+           
 
-            column1.HeaderText = "Номер";
-            column1.Name = "Номер";
-            column2.HeaderText = "Название";
-            column2.Name = "Название";
-            column3.HeaderText = "Количество";
-            column3.Name = "Количество";
-            column4.HeaderText = "Версия";
-            column4.Name = "Версия";
-            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4 });
-
-            //выбор необходимых данных
-            string query = "select * from po";
-
-            //запись данных в dataGridView
-            SqlCommand command = new SqlCommand(query, con);
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            List<string[]> data = new List<string[]>();
-
-            while (reader.Read())
-            {
-                data.Add(new string[4]);
-
-                data[data.Count - 1][0] = reader[0].ToString();
-                data[data.Count - 1][1] = reader[1].ToString();
-                data[data.Count - 1][2] = reader[2].ToString();
-                data[data.Count - 1][3] = reader[3].ToString();
-
-
-            }
-
-            reader.Close();
-
-
-
-            foreach (string[] s in data)
-                dataGridView1.Rows.Add(s);
-
-            //динамическое создание 
-            GroupBox groupBox = new GroupBox();
-            groupBox.Left = 10;
-            groupBox.Name = "Box";
-            groupBox.Width = this.Width - 20;
-            groupBox.Top = dataGridView1.Height + 60;
-            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
-            Controls.Add(groupBox);
+            creategroupbox();
 
             con.Close();
         }
@@ -522,94 +547,131 @@ namespace Ychpo
 
         private void добавлениеПОToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //удаление элементов формы 
-            try
-            {
-                (Controls["Box"] as GroupBox).Dispose();
-            }
-            catch
-            {
+            //удаление элемента
+            delitegroupbox();
 
-            }
             //динамическое создание 
-            GroupBox groupBox = new GroupBox();
-            groupBox.Left = 10;
-            groupBox.Name = "Box";
-            groupBox.Width = this.Width - 20;
-            groupBox.Top = dataGridView1.Height + 60;
-            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
-            Controls.Add(groupBox);
+            creategroupbox();
 
             //удаление данных из dataGridView
-            int sum = this.dataGridView1.Columns.Count;
-            for (int i = 0; i < sum; i++)
-            { this.dataGridView1.Columns.RemoveAt(0); }
+            removedtgv();
 
             dataGridView1.Visible = true;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
 
-            //создание необходимых столбцов в dataGridView
-            var column1 = new DataGridViewTextBoxColumn();
-            var column2 = new DataGridViewTextBoxColumn();
-            var column3 = new DataGridViewTextBoxColumn();
-            var column4 = new DataGridViewTextBoxColumn();
+            //добавление данных из бд в dataGridView
+            adddatagvaddpo();
+           
 
-            column1.HeaderText = "Номер";
-            column1.Name = "Номер";
-            column2.HeaderText = "Название";
-            column2.Name = "Название";
-            column3.HeaderText = "Количество";
-            column3.Name = "Количество";
-            column4.HeaderText = "Версия";
-            column4.Name = "Версия";
-            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4 });
+            Label namepol = new Label();
+            namepol.Left = Width / 3;
+            namepol.Width = Width / 3;
+            namepol.Height = 50;
+            namepol.Text = "Название ПО";
+            namepol.Top =  100;
+            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepol);
 
-            //выбор необходимых данных
-            string query = "select * from po";
+            TextBox namepot = new TextBox();
+            namepot.Left = namepol.Left;
+            namepot.Name = "NAME";
+            namepot.Width = namepol.Width;
+            namepot.Height = 50;
+            namepot.Top = namepol.Top+ namepol.Height;
+            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepot);
+            con.Close();
 
-            //запись данных в dataGridView
-            SqlCommand command = new SqlCommand(query, con);
+            Label versl = new Label();
+            versl.Left = namepol.Left;
+            versl.Width = namepol.Width;
+            versl.Height = 50;
+            versl.Text = "Версия ПО";
+            versl.Top = namepot.Top + namepot.Height*2;
+            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(versl);
 
-            SqlDataReader reader = command.ExecuteReader();
+            TextBox verst = new TextBox();
+            verst.Left = versl.Left;
+            verst.Name = "VERS";
+            verst.Width = versl.Width;
+            verst.Height = 50;
+            verst.Top = versl.Top + versl.Height;
+            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(verst);
+            
 
-            List<string[]> data = new List<string[]>();
+            Label kolvol = new Label();
+            kolvol.Left = namepol.Left;
+            kolvol.Width = namepol.Width;
+            kolvol.Height = 50;
+            kolvol.Text = "Количество ПО";
+            kolvol.Top = verst.Top + verst.Height * 2;
+            kolvol.Font = new Font(kolvol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(kolvol);
 
-            while (reader.Read())
-            {
-                data.Add(new string[15]);
+            NumericUpDown kolichestvo = new NumericUpDown();
+            kolichestvo.Left = namepol.Left;
+            kolichestvo.Name = "KOLICH";
+            kolichestvo.Width = 60;
+            kolichestvo.Top = kolvol.Top + kolvol.Height;
+            kolichestvo.Font = new Font(kolichestvo.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(kolichestvo);
 
-                data[data.Count - 1][0] = reader[0].ToString();
-                data[data.Count - 1][1] = reader[1].ToString();
-                data[data.Count - 1][2] = reader[2].ToString();
-                data[data.Count - 1][3] = reader[3].ToString();
+            Button dobavlenie = new Button();
+            dobavlenie.Left = namepol.Left;
+            dobavlenie.Width = namepol.Width;
+            dobavlenie.Height = 50;
+            dobavlenie.Text = "Добавить";
+            dobavlenie.Top = kolichestvo.Top + kolichestvo.Height * 2;
+            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
+            dobavlenie.Click += dobavlenie_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
 
-
-            }
-
-            reader.Close();
-
-
-
-            foreach (string[] s in data)
-                dataGridView1.Rows.Add(s);
-
+            con.Close();
         }
 
-        
-
-        private void изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+        public void dobavlenie_Click(object sender, EventArgs e)
         {
-            //удаление элементов формы 
             try
             {
-                (Controls["Box"] as GroupBox).Dispose();
+                string naimpo = Shifrovka(((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text, "YchetPO");
+                string verspo = Shifrovka(((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text, "YchetPO");
+                decimal kolpo = ((Controls["Box"] as GroupBox).Controls["KOLICH"] as NumericUpDown).Value;
+                if ((naimpo!="")&&(verspo!="")&&(kolpo>0))
+                {
+                    SqlConnection con = BDconnect.GetBDConnection();
+                    con.Open();
+                    SqlCommand po = new SqlCommand("po_add", con);
+                    po.CommandType = CommandType.StoredProcedure;
+                    po.Parameters.AddWithValue("@naim_po", naimpo);
+                    po.Parameters.AddWithValue("@kol_po", kolpo);
+                    po.Parameters.AddWithValue("@vers_po", verspo);
+                    po.ExecuteNonQuery();
+                    con.Close();
+                    removedtgv();
+                    adddatagvaddpo();
+                    MessageBox.Show("Программное обеспечение успешно добавлено");
+                }
+                else
+                {
+                    MessageBox.Show("Заполните пожалуйста все данные корректно");
+                }
+               
             }
             catch
             {
-
+                MessageBox.Show("Отсутствует подключение к базе данных");
             }
+            
+        }
+
+
+            private void изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+            {
+            delitegroupbox();
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
@@ -860,15 +922,8 @@ namespace Ychpo
 
         private void заявкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //удаление элементов формы 
-            try
-            {
-                (Controls["Box"] as GroupBox).Dispose();
-            }
-            catch
-            {
+            delitegroupbox();
 
-            }
             //динамическое создание 
             GroupBox groupBox = new GroupBox();
             groupBox.Left = 10;
@@ -881,15 +936,7 @@ namespace Ychpo
 
         private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //удаление элементов формы 
-            try
-            {
-                (Controls["Box"] as GroupBox).Dispose();
-            }
-            catch
-            {
-
-            }
+            delitegroupbox();
             //динамическое создание 
             GroupBox groupBox = new GroupBox();
             groupBox.Left = 10;

@@ -53,7 +53,7 @@ CREATE TABLE [DBO].[polz]
 [email] varchar(max) NOT NULL,
 [login] varchar(max) NOT NULL,
 [password] varchar(max) NOT NULL,
-[dostup] bit  NULL,
+[dostup] bit NOT NULL,
 constraint [PK_id_polz] PRIMARY KEY CLUSTERED
 	([id_polz] ASC) on [PRIMARY],
 

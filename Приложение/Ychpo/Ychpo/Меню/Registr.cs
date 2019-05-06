@@ -140,6 +140,14 @@ namespace Ychpo
                         registr.Parameters.AddWithValue("@email", email);
                         registr.Parameters.AddWithValue("@login", login);
                         registr.Parameters.AddWithValue("@password", passw);
+                        if (admin == 1)
+                        {
+                            registr.Parameters.AddWithValue("@dostup", 1);
+                        }
+                        else
+                        {
+                            registr.Parameters.AddWithValue("@dostup", 0);
+                        }
                         registr.ExecuteNonQuery();
 
                         SqlCommand Polz = new SqlCommand("select [id_polz] from polz where[login] = '" + login + "' ", con);
