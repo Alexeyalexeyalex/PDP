@@ -49,10 +49,11 @@ CREATE TABLE [DBO].[polz]
 [id_polz] INT NOT NULL IDENTITY (1,1),
 [F_P] varchar(max) NOT NULL,
 [I_P] varchar(max) NOT NULL,
-[O_P] varchar(max) NOT NULL,
+[O_P] varchar(max) NULL,
 [email] varchar(max) NOT NULL,
 [login] varchar(max) NOT NULL,
 [password] varchar(max) NOT NULL,
+[dostup] bit  NULL,
 constraint [PK_id_polz] PRIMARY KEY CLUSTERED
 	([id_polz] ASC) on [PRIMARY],
 
@@ -97,6 +98,30 @@ constraint [PK_id_zakaz] PRIMARY KEY CLUSTERED
 REFERENCES [DBO].[po]([id_po]),
 	CONSTRAINT [FK_zayavka_id] FOREIGN KEY ([zayavka_id])
 REFERENCES [DBO].[zayavka]([id_zayavka]),
+)
+
+CREATE TABLE [DBO].[error]
+(
+[id_error] INT NOT NULL IDENTITY (1,1),
+[naim_error] varchar(max) NOT NULL,
+[opisanie] varchar(max) NOT NULL,
+[statusError] bit NOT NULL,
+[sposobYstranenia] varchar(max) NOT NULL,
+constraint [PK_id_error] PRIMARY KEY CLUSTERED
+	([id_error] ASC) on [PRIMARY],
+)
+
+CREATE TABLE [DBO].[sovmosh]
+(
+[id_sovmosh] INT NOT NULL IDENTITY (1,1),
+[polzsovmosh_id] int Null,
+[error_id] int null,
+constraint [PK_id_sovmosh] PRIMARY KEY CLUSTERED
+	([id_sovmosh] ASC) on [PRIMARY],
+	CONSTRAINT [FK_polzsovmosh_id] FOREIGN KEY ([polzsovmosh_id])
+REFERENCES [DBO].[polz]([id_polz]),
+	CONSTRAINT [FK_error_id] FOREIGN KEY ([error_id])
+REFERENCES [DBO].[error]([id_error]),
 )
 go
 

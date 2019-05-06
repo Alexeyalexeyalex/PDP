@@ -113,6 +113,8 @@ namespace Ychpo
             try
             {
                 SqlConnection con = BDconnect.GetBDConnection();
+                DeShifrovka a = new DeShifrovka();
+                a.DeShifrowka(metroTextBox1.Text, "YchetPO");
                 con.Open();
                 string log = Shifrovka(metroTextBox1.Text, "YchetPO");
                 string pas = Shifrovka(metroTextBox2.Text, "YchetPO");

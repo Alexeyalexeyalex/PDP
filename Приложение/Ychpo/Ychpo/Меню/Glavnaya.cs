@@ -290,6 +290,15 @@ namespace Ychpo
             foreach (string[] s in data)
                 dataGridView1.Rows.Add(s);
 
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
+
             con.Close();
         }
 
@@ -376,7 +385,7 @@ namespace Ychpo
                 dataGridView1.Rows.Add(s);
 
             con.Close();
-
+            //динамическое создание 
             GroupBox groupBox = new GroupBox();
             groupBox.Left = 10;
             groupBox.Name = "Box";
@@ -398,6 +407,14 @@ namespace Ychpo
             {
 
             }
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
 
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
@@ -514,6 +531,14 @@ namespace Ychpo
             {
 
             }
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
 
             //удаление данных из dataGridView
             int sum = this.dataGridView1.Columns.Count;
@@ -742,6 +767,7 @@ namespace Ychpo
             string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
             string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
             string login = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+            string imiatextbox = ((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
@@ -762,7 +788,7 @@ namespace Ychpo
             }
             else
             {
-                if (Program.namepolz != imiapolz)
+                if (Program.namepolz != imiatextbox)
                 {
                     try
                     {
@@ -770,6 +796,8 @@ namespace Ychpo
                         RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
                         saveKey.SetValue("name", imiapolz);
                         saveKey.Close();
+                        Program.namepolz = imiatextbox;
+                        Impolz.Text = "Здравствуйте " + imiatextbox;//вывод на форме имени пользователя
                     }
                     catch
                     {
@@ -830,5 +858,46 @@ namespace Ychpo
             con.Close();
         }
 
+        private void заявкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
+        }
+
+        private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //удаление элементов формы 
+            try
+            {
+                (Controls["Box"] as GroupBox).Dispose();
+            }
+            catch
+            {
+
+            }
+            //динамическое создание 
+            GroupBox groupBox = new GroupBox();
+            groupBox.Left = 10;
+            groupBox.Name = "Box";
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = dataGridView1.Height + 60;
+            groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
+            Controls.Add(groupBox);
+        }
     }
 }

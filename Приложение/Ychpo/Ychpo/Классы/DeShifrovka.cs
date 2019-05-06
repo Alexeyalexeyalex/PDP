@@ -8,9 +8,9 @@ using System.IO;
 
 namespace Ychpo
 {
-    class DeShifrovka
+  public   class DeShifrovka
     {
-        public static string DeShifrowka(string ciphText, string pass,
+        public string DeShifrowka(string ciphText, string pass,
                string sol = "doberman", string cryptographicAlgorithm = "SHA1",
                int passIter = 2, string initVec = "a8doSuDitOz1hZe#",
                int keySize = 256)

@@ -87,6 +87,7 @@
             this.заявкиToolStripMenuItem.Name = "заявкиToolStripMenuItem";
             this.заявкиToolStripMenuItem.Size = new System.Drawing.Size(325, 26);
             this.заявкиToolStripMenuItem.Text = "Заявки";
+            this.заявкиToolStripMenuItem.Click += new System.EventHandler(this.заявкиToolStripMenuItem_Click);
             // 
             // изменитьДанныеУчетнойЗаписиToolStripMenuItem
             // 
@@ -124,6 +125,7 @@
             this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
             this.заказыToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
             this.заказыToolStripMenuItem.Text = "Заказы";
+            this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
             // 
             // Polz
             // 
