@@ -75,13 +75,15 @@ REFERENCES [DBO].[dolj]([id_dolj]),
 CREATE TABLE [DBO].[zayavka]
 (
 [id_zayavka] INT NOT NULL IDENTITY (1,1),
-[kol_zayavka] int NOT NULL,
 [status] varchar(max) NOT NULL,
 [polz_id] int NOT NULL,
+[poz_id] int NOT NULL,
 constraint [PK_id_zayavka] PRIMARY KEY CLUSTERED
 	([id_zayavka] ASC) on [PRIMARY],
 	CONSTRAINT [FK_polz_id] FOREIGN KEY ([polz_id])
 REFERENCES [DBO].[polz]([id_polz]),
+	CONSTRAINT [FK_poz_id] FOREIGN KEY ([poz_id])
+REFERENCES [DBO].[po]([id_po]),
 )
 
 CREATE TABLE [DBO].[zakaz]
@@ -89,15 +91,23 @@ CREATE TABLE [DBO].[zakaz]
 [id_zakaz] INT NOT NULL IDENTITY (1,1),
 [time] varchar(5) NOT NULL,
 [date] varchar(10) NOT NULL,
-[Kod] varchar(max) NOT NULL,
-[po_id] int NOT NULL,
-[zayavka_id] int NOT NULL,
 constraint [PK_id_zakaz] PRIMARY KEY CLUSTERED
 	([id_zakaz] ASC) on [PRIMARY],
-	CONSTRAINT [FK_po_id] FOREIGN KEY ([po_id])
+)
+
+CREATE TABLE [DBO].[lickluch]
+(
+[id_lickluch] INT NOT NULL IDENTITY (1,1),
+[kod] varchar(max) NOT NULL,
+[statuskluch] bit NOT NULL,
+[zak_id] int NULL,
+[pol_id] int NOT NULL,
+constraint [PK_id_lickluch] PRIMARY KEY CLUSTERED
+	([id_lickluch] ASC) on [PRIMARY],
+	CONSTRAINT [FK_zak_id] FOREIGN KEY ([zak_id])
+REFERENCES [DBO].[zakaz]([id_zakaz]),
+	CONSTRAINT [FK_pol_id] FOREIGN KEY ([pol_id])
 REFERENCES [DBO].[po]([id_po]),
-	CONSTRAINT [FK_zayavka_id] FOREIGN KEY ([zayavka_id])
-REFERENCES [DBO].[zayavka]([id_zayavka]),
 )
 
 CREATE TABLE [DBO].[error]

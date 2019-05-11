@@ -119,16 +119,15 @@ go
 
 CREATE PROCEDURE [DBO].[zayavka_add]
 (
-@kol_zayavka int,
 @status varchar(max),
+@poz_id int,
 @polz_id int
 )
 AS
-	insert into [dbo].[zayavka]([kol_zayavka],[status],[polz_id]) values((@kol_zayavka),(@status),(@polz_id));
+	insert into [dbo].[zayavka]([poz_id],[status],[polz_id]) values((@poz_id),(@status),(@polz_id));
 go
 CREATE PROCEDURE [DBO].[zayavka_edit]
 @id_zayavka int,
-@kol_zayavka int,
 @naim_zayavka varchar(max),
 @vers_zayavka varchar(max),
 @status varchar(max),
@@ -136,7 +135,6 @@ CREATE PROCEDURE [DBO].[zayavka_edit]
 AS
 	update [dbo].zayavka
 	set
-	kol_zayavka=@kol_zayavka,
 	status=@status,
 	polz_id=@polz_id
 	where id_zayavka=@id_zayavka;
@@ -161,13 +159,10 @@ go
 CREATE PROCEDURE [DBO].[zakaz_add]
 (
 @time varchar(5),
-@date varchar(10),
-@kod varchar(max),
-@po_id int,
-@zayavka_id int
+@date varchar(10)
 )
 AS
-	insert into [dbo].[zakaz]([time],[date],[kod],[po_id],[zayavka_id]) values((@time),(@date),(@kod),(@po_id),(@zayavka_id));
+	insert into [dbo].[zakaz]([time],[date]) values((@time),(@date));
 go
 
 CREATE PROCEDURE [DBO].[po_add]
@@ -194,6 +189,17 @@ AS
 	vers_po=@vers_po
 	where @id_PO = id_PO
 go
+CREATE PROCEDURE [DBO].[pokol_update]
+(
+@id_PO int,
+@kol_po int
+)
+AS
+	update [dbo].po
+	set
+	kol_po=@kol_po
+	where @id_PO = id_PO
+go
 CREATE PROCEDURE [DBO].[po_delete]
 @id_po int
 AS
@@ -208,4 +214,29 @@ AS
 	where 
 	 polzsovm_id=@id_polzov;
 	
+go
+
+
+CREATE PROCEDURE [DBO].[kluch_add]
+(
+@kod varchar(max),
+@statuskluch bit,
+@pol_id int
+)
+AS
+	insert into [dbo].[lickluch]([kod],[statuskluch],[pol_id]) values((@kod),(@statuskluch),(@pol_id));
+go
+
+CREATE PROCEDURE [DBO].[kluch_update]
+(
+@id_lickluch int,
+@statuskluch bit,
+@zak_id int
+)
+AS
+	update [dbo].lickluch
+	set
+	statuskluch=@statuskluch,
+	zak_id=@zak_id
+	where @id_lickluch = id_lickluch
 go
