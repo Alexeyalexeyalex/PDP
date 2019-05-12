@@ -37,16 +37,16 @@
             this.изменитьДанныеУчетнойЗаписиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Exit = new System.Windows.Forms.ToolStripMenuItem();
             this.Zakazi = new System.Windows.Forms.ToolStripMenuItem();
-            this.добавлениеПОToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.заказыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.добавлениеПОToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Polz = new System.Windows.Forms.ToolStripMenuItem();
             this.ролиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.данныеПользователейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.зарегистрироватьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Impolz = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.зарегистрироватьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -116,6 +116,13 @@
             this.Zakazi.Text = "Управление заказами";
             this.Zakazi.Visible = false;
             // 
+            // заказыToolStripMenuItem
+            // 
+            this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
+            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
+            this.заказыToolStripMenuItem.Text = "Заказы";
+            this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
+            // 
             // добавлениеПОToolStripMenuItem
             // 
             this.добавлениеПОToolStripMenuItem.Name = "добавлениеПОToolStripMenuItem";
@@ -123,12 +130,12 @@
             this.добавлениеПОToolStripMenuItem.Text = "Добавление ПО";
             this.добавлениеПОToolStripMenuItem.Click += new System.EventHandler(this.добавлениеПОToolStripMenuItem_Click);
             // 
-            // заказыToolStripMenuItem
+            // добавлениеЛицензионныхКлючейToolStripMenuItem
             // 
-            this.заказыToolStripMenuItem.Name = "заказыToolStripMenuItem";
-            this.заказыToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
-            this.заказыToolStripMenuItem.Text = "Заказы";
-            this.заказыToolStripMenuItem.Click += new System.EventHandler(this.заказыToolStripMenuItem_Click);
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Name = "добавлениеЛицензионныхКлючейToolStripMenuItem";
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Text = "Добавление лицензионных ключей";
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Click += new System.EventHandler(this.добавлениеЛицензионныхКлючейToolStripMenuItem_Click);
             // 
             // Polz
             // 
@@ -146,6 +153,7 @@
             this.ролиToolStripMenuItem.Name = "ролиToolStripMenuItem";
             this.ролиToolStripMenuItem.Size = new System.Drawing.Size(311, 26);
             this.ролиToolStripMenuItem.Text = "Роли";
+            this.ролиToolStripMenuItem.Visible = false;
             this.ролиToolStripMenuItem.Click += new System.EventHandler(this.ролиToolStripMenuItem_Click);
             // 
             // данныеПользователейToolStripMenuItem
@@ -154,6 +162,13 @@
             this.данныеПользователейToolStripMenuItem.Size = new System.Drawing.Size(311, 26);
             this.данныеПользователейToolStripMenuItem.Text = "Данные пользователей";
             this.данныеПользователейToolStripMenuItem.Click += new System.EventHandler(this.данныеПользователейToolStripMenuItem_Click);
+            // 
+            // зарегистрироватьПользователяToolStripMenuItem
+            // 
+            this.зарегистрироватьПользователяToolStripMenuItem.Name = "зарегистрироватьПользователяToolStripMenuItem";
+            this.зарегистрироватьПользователяToolStripMenuItem.Size = new System.Drawing.Size(311, 26);
+            this.зарегистрироватьПользователяToolStripMenuItem.Text = "Зарегистрировать пользователя";
+            this.зарегистрироватьПользователяToolStripMenuItem.Click += new System.EventHandler(this.зарегистрироватьПользователяToolStripMenuItem_Click);
             // 
             // Impolz
             // 
@@ -198,19 +213,6 @@
             this.dataGridView1.Visible = false;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // добавлениеЛицензионныхКлючейToolStripMenuItem
-            // 
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Name = "добавлениеЛицензионныхКлючейToolStripMenuItem";
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Text = "Добавление лицензионных ключей";
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem.Click += new System.EventHandler(this.добавлениеЛицензионныхКлючейToolStripMenuItem_Click);
-            // 
-            // зарегистрироватьПользователяToolStripMenuItem
-            // 
-            this.зарегистрироватьПользователяToolStripMenuItem.Name = "зарегистрироватьПользователяToolStripMenuItem";
-            this.зарегистрироватьПользователяToolStripMenuItem.Size = new System.Drawing.Size(311, 26);
-            this.зарегистрироватьПользователяToolStripMenuItem.Text = "Зарегистрировать пользователя";
             // 
             // Glavnaya
             // 

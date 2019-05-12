@@ -1540,5 +1540,133 @@ namespace Ychpo
                 MessageBox.Show("Отсутствует подключение к базе данных");
             }
         }
+
+        private void зарегистрироватьПользователяToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            delitegroupbox();
+
+            try
+            {
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
+
+                dataGridView1.Visible = false;
+                GroupBox groupBox = new GroupBox();
+                groupBox.Name = "Box";
+                groupBox.Left = 10;
+                groupBox.Width = this.Width - 20;
+                groupBox.Top = menuStrip1.Height + 60;
+                groupBox.Height = this.Height - menuStrip1.Height * 2 - 60;
+                Controls.Add(groupBox);
+
+                Label fl = new Label();
+                fl.AutoSize = false;
+                fl.Left = this.Width / 5;
+                fl.Top = menuStrip1.Height + this.Height / 7;
+                fl.Width = this.Width / 5;
+                fl.Height = 50;
+                fl.Text = "Фамилия";
+                fl.Font = new Font(fl.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(fl);
+
+                TextBox ft = new TextBox();
+                ft.Name = "Familia";
+                ft.Left = fl.Left;
+                ft.Top = fl.Top + fl.Height;
+                ft.Width = fl.Width;
+                ft.Font = new Font(ft.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(ft);
+
+                Label il = new Label();
+                il.AutoSize = false;
+                il.Left = fl.Left;
+                il.Top = ft.Top + ft.Height * 2;
+                il.Width = fl.Width;
+                il.Height = 50;
+                il.Text = "Имя";
+                il.Font = new Font(il.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(il);
+
+                TextBox it = new TextBox();
+                it.Text = imiapolz;
+                it.Name = "Imia";
+                it.Left = fl.Left;
+                it.Top = il.Top + il.Height;
+                it.Width = fl.Width;
+                it.Font = new Font(it.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(it);
+
+                Label ol = new Label();
+                ol.AutoSize = false;
+                ol.Left = fl.Left;
+                ol.Top = it.Top + it.Height * 2;
+                ol.Width = fl.Width;
+                ol.Height = 50;
+                ol.Text = "Отчество";
+                ol.Font = new Font(ol.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(ol);
+
+                TextBox ot = new TextBox();
+                ot.Name = "Otchestvo";
+                ot.Left = fl.Left;
+                ot.Top = ol.Top + ol.Height;
+                ot.Width = fl.Width;
+                ot.Font = new Font(ot.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(ot);
+
+                Label emaill = new Label();
+                emaill.AutoSize = false;
+                emaill.Left = this.Width / 5 * 3;
+                emaill.Top = fl.Top;
+                emaill.Width = fl.Width;
+                emaill.Height = 50;
+                emaill.Text = "Email";
+                emaill.Font = new Font(emaill.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(emaill);
+
+                TextBox emailt = new TextBox();
+                emailt.Name = "Emailname";
+                emailt.Left = emaill.Left;
+                emailt.Top = ft.Top;
+                emailt.Width = emaill.Width;
+                emailt.Font = new Font(emailt.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(emailt);
+
+                Label loginl = new Label();
+                loginl.AutoSize = false;
+                loginl.Left = emaill.Left;
+                loginl.Top = il.Top;
+                loginl.Width = emaill.Width;
+                loginl.Height = 50;
+                loginl.Text = "Логин";
+                loginl.Font = new Font(loginl.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(loginl);
+
+                TextBox logint = new TextBox();
+                logint.Text = DeShifrovka(Program.loginpolz, "YchetPO");
+                logint.Name = "loginname";
+                logint.Left = emaill.Left;
+                logint.Top = it.Top;
+                logint.Width = emaill.Width;
+                logint.Font = new Font(logint.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(logint);
+
+                Button add = new Button();
+                add.Text ="Добавить сотрудника";
+                add.Left = emailt.Left;
+                add.Width = emailt.Width;
+                add.Height = emailt.Height + 5;
+                add.Top = ot.Top;
+                add.Font = new Font(add.Font.FontFamily, razmershrifta);
+                add.Click += this.izm_Click;
+                (Controls["Box"] as GroupBox).Controls.Add(add);
+
+                con.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Отсутствует подключение к базе данных");
+            }
+        }
     }
 }
