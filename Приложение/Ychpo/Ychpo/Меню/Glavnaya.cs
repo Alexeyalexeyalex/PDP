@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net.Mail;
+using word = Microsoft.Office.Interop.Word;
 
 namespace Ychpo
 {
@@ -30,10 +31,19 @@ namespace Ychpo
         string idpolz;
         string kolich;
         string status;
+        string iddolj;
         int kolichestvo;
         public Glavnaya()
         {
             InitializeComponent();
+        }
+
+        private void ReplaceWord(string stubToReplace, string text, word.Document worddocument)
+        {
+            // Замена переменных в ворд документе 
+            var range = worddocument.Content;
+            range.Find.ClearFormatting();
+            range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
         }
 
         private void addzakazi()
@@ -694,6 +704,143 @@ namespace Ychpo
             dataGridView1.Rows.Add(s);
 
 
+
+            Label fl = new Label();
+            fl.AutoSize = false;
+            fl.Left = this.Width / 5;
+            fl.Top = menuStrip1.Height + this.Height / 7;
+            fl.Width = this.Width / 5;
+            fl.Height = 50;
+            fl.Text = "Фамилия";
+            fl.Font = new Font(fl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(fl);
+
+            TextBox ft = new TextBox();
+            ft.Name = "Familia";
+            ft.Left = fl.Left;
+            ft.Top = fl.Top + fl.Height;
+            ft.Width = fl.Width;
+            ft.Font = new Font(ft.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ft);
+
+            Label il = new Label();
+            il.AutoSize = false;
+            il.Left = fl.Left;
+            il.Top = ft.Top + ft.Height * 2;
+            il.Width = fl.Width;
+            il.Height = 50;
+            il.Text = "Имя";
+            il.Font = new Font(il.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(il);
+
+            TextBox it = new TextBox();
+            it.Name = "Imia";
+            it.Left = fl.Left;
+            it.Top = il.Top + il.Height;
+            it.Width = fl.Width;
+            it.Font = new Font(it.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(it);
+
+            Label ol = new Label();
+            ol.AutoSize = false;
+            ol.Left = fl.Left;
+            ol.Top = it.Top + it.Height * 2;
+            ol.Width = fl.Width;
+            ol.Height = 50;
+            ol.Text = "Отчество";
+            ol.Font = new Font(ol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ol);
+
+            TextBox ot = new TextBox();
+            ot.Name = "Otchestvo";
+            ot.Left = fl.Left;
+            ot.Top = ol.Top + ol.Height;
+            ot.Width = fl.Width;
+            ot.Font = new Font(ot.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ot);
+
+            Label doljl = new Label();
+            doljl.AutoSize = false;
+            doljl.Left = fl.Left;
+            doljl.Top = ot.Top + ot.Height * 2;
+            doljl.Width = fl.Width;
+            doljl.Height = 50;
+            doljl.Text = "Должность";
+            doljl.Font = new Font(doljl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(doljl);
+
+            ComboBox dolj = new ComboBox();
+            dolj.Name = "Doljnost";
+            dolj.Left = fl.Left;
+            dolj.Top = doljl.Top + doljl.Height;
+            dolj.Width = fl.Width;
+            dolj.Font = new Font(dolj.Font.FontFamily, razmershrifta);
+            dolj.SelectedIndexChanged += dolj_SelectedIndexChanged;
+            (Controls["Box"] as GroupBox).Controls.Add(dolj);
+
+            Label emaill = new Label();
+            emaill.AutoSize = false;
+            emaill.Left = this.Width / 5 * 3;
+            emaill.Top = fl.Top;
+            emaill.Width = fl.Width;
+            emaill.Height = 50;
+            emaill.Text = "Email";
+            emaill.Font = new Font(emaill.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(emaill);
+
+            TextBox emailt = new TextBox();
+            emailt.Name = "Emailname";
+            emailt.Left = emaill.Left;
+            emailt.Top = ft.Top;
+            emailt.Width = emaill.Width;
+            emailt.Font = new Font(emailt.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(emailt);
+
+            Label loginl = new Label();
+            loginl.AutoSize = false;
+            loginl.Left = emaill.Left;
+            loginl.Top = il.Top;
+            loginl.Width = emaill.Width;
+            loginl.Height = 50;
+            loginl.Text = "Логин";
+            loginl.Font = new Font(loginl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(loginl);
+
+            TextBox logint = new TextBox();
+            logint.Name = "loginname";
+            logint.Left = emaill.Left;
+            logint.Top = it.Top;
+            logint.Width = emaill.Width;
+            logint.Font = new Font(logint.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(logint);
+
+            Label passl = new Label();
+            passl.AutoSize = false;
+            passl.Left = emaill.Left;
+            passl.Top = ol.Top;
+            passl.Width = emaill.Width;
+            passl.Height = 50;
+            passl.Text = "Пароль";
+            passl.Font = new Font(passl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(passl);
+
+            TextBox passt = new TextBox();
+            passt.Name = "pass";
+            passt.Left = emaill.Left;
+            passt.Top = ot.Top;
+            passt.Width = emaill.Width;
+            passt.Font = new Font(passt.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(passt);
+
+            Button add = new Button();
+            add.Text = "Добавить сотрудника";
+            add.Left = emailt.Left;
+            add.Width = emailt.Width;
+            add.Height = emailt.Height + 5;
+            add.Top = dolj.Top;
+            add.Font = new Font(add.Font.FontFamily, razmershrifta);
+            add.Click += dobavleniepolz_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(add);
             con.Close();
         }
 
@@ -1588,7 +1735,6 @@ namespace Ychpo
                 (Controls["Box"] as GroupBox).Controls.Add(il);
 
                 TextBox it = new TextBox();
-                it.Text = imiapolz;
                 it.Name = "Imia";
                 it.Left = fl.Left;
                 it.Top = il.Top + il.Height;
@@ -1613,6 +1759,25 @@ namespace Ychpo
                 ot.Width = fl.Width;
                 ot.Font = new Font(ot.Font.FontFamily, razmershrifta);
                 (Controls["Box"] as GroupBox).Controls.Add(ot);
+
+                Label doljl = new Label();
+                doljl.AutoSize = false;
+                doljl.Left = fl.Left;
+                doljl.Top = ot.Top + ot.Height * 2;
+                doljl.Width = fl.Width;
+                doljl.Height = 50;
+                doljl.Text = "Должность";
+                doljl.Font = new Font(doljl.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(doljl);
+
+                ComboBox dolj = new ComboBox();
+                dolj.Name = "Doljnost";
+                dolj.Left = fl.Left;
+                dolj.Top = doljl.Top + doljl.Height;
+                dolj.Width = fl.Width;
+                dolj.Font = new Font(dolj.Font.FontFamily, razmershrifta);
+                dolj.SelectedIndexChanged += dolj_SelectedIndexChanged;
+                (Controls["Box"] as GroupBox).Controls.Add(dolj);
 
                 Label emaill = new Label();
                 emaill.AutoSize = false;
@@ -1643,7 +1808,6 @@ namespace Ychpo
                 (Controls["Box"] as GroupBox).Controls.Add(loginl);
 
                 TextBox logint = new TextBox();
-                logint.Text = DeShifrovka(Program.loginpolz, "YchetPO");
                 logint.Name = "loginname";
                 logint.Left = emaill.Left;
                 logint.Top = it.Top;
@@ -1651,15 +1815,42 @@ namespace Ychpo
                 logint.Font = new Font(logint.Font.FontFamily, razmershrifta);
                 (Controls["Box"] as GroupBox).Controls.Add(logint);
 
+                Label passl = new Label();
+                passl.AutoSize = false;
+                passl.Left = emaill.Left;
+                passl.Top = ol.Top;
+                passl.Width = emaill.Width;
+                passl.Height = 50;
+                passl.Text = "Пароль";
+                passl.Font = new Font(passl.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(passl);
+
+                TextBox passt = new TextBox();
+                passt.Name = "pass";
+                passt.Left = emaill.Left;
+                passt.Top = ot.Top;
+                passt.Width = emaill.Width;
+                passt.Font = new Font(passt.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(passt);
+
                 Button add = new Button();
                 add.Text ="Добавить сотрудника";
                 add.Left = emailt.Left;
                 add.Width = emailt.Width;
                 add.Height = emailt.Height + 5;
-                add.Top = ot.Top;
+                add.Top = dolj.Top;
                 add.Font = new Font(add.Font.FontFamily, razmershrifta);
-                add.Click += this.izm_Click;
+                add.Click += dobavleniepolz_Click;
                 (Controls["Box"] as GroupBox).Controls.Add(add);
+
+                SqlCommand get_otd_name1 = new SqlCommand("select id_dolj as \"idd\", Naim_dolj as \"named\"from dolj ", con);
+                SqlDataReader dr1 = get_otd_name1.ExecuteReader();
+                DataTable dt1 = new DataTable();
+                dt1.Load(dr1);
+                dolj.DataSource = dt1;
+                dolj.DisplayMember = "named";
+                dolj.ValueMember = "idd";
+                dolj.Text = "";
 
                 con.Close();
             }
@@ -1667,6 +1858,117 @@ namespace Ychpo
             {
                 MessageBox.Show("Отсутствует подключение к базе данных");
             }
+        }
+
+
+        private void dolj_SelectedIndexChanged(object sender, EventArgs e)// присвоение ID переменной 
+        {
+            iddolj = ((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).SelectedValue.ToString();
+        }
+
+        public void dobavleniepolz_Click(object sender, EventArgs e)
+        {
+            if ((((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text != ""))
+            {        
+                if ((((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text != "Администратор") &&(((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text != "Пользователь") &&(((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text != "Сотрудник"))
+                {
+                    MessageBox.Show("Пожалуйста выберите должность из выпадающего списка");
+                }
+                else
+                {
+                    try
+                    {
+                        //шифрование данных, вбитых ползователем для занесения в бд
+                        string F = Shifrovka(((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text, "YchetPO");
+                        string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
+                        string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
+                        string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
+                        string login = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+                        string passw = Shifrovka(((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text, "YchetPO");
+
+                        //проверка на наличие такого же логина в бд
+                        SqlConnection con = BDconnect.GetBDConnection();
+                        con.Open();
+                        SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
+                        SqlDataReader dr;
+                        dr = sc.ExecuteReader();
+                        int count = 0;
+                        while (dr.Read())
+                        {
+                            count += 1;
+                        }
+                        dr.Close();
+
+                        if (count == 1)
+                        {
+                            MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
+                        }
+                        else
+                        {
+                            //добавление нового пользователя
+                            SqlCommand registr = new SqlCommand("polz_add", con);
+                            registr.CommandType = CommandType.StoredProcedure;
+                            registr.Parameters.AddWithValue("@F_P", F);
+                            registr.Parameters.AddWithValue("@I_P", I);
+                            registr.Parameters.AddWithValue("@O_P", O);
+                            registr.Parameters.AddWithValue("@email", email);
+                            registr.Parameters.AddWithValue("@login", login);
+                            registr.Parameters.AddWithValue("@password", passw);
+                            registr.Parameters.AddWithValue("@dostup", 0);
+                            registr.ExecuteNonQuery();
+
+                            SqlCommand Polz = new SqlCommand("select [id_polz] from polz where[login] = '" + login + "' ", con);
+                            string id = Polz.ExecuteScalar().ToString();
+
+
+                            SqlCommand sovm = new SqlCommand("sovm_add", con);
+                            sovm.Parameters.AddWithValue("@polzsovm_id", id);
+                            sovm.Parameters.AddWithValue("@dolj_id", iddolj);
+                            sovm.CommandType = CommandType.StoredProcedure;
+                            sovm.ExecuteNonQuery();
+
+                            con.Close();
+                            MessageBox.Show("Вы успешно зарегистрировали нового пользователя");
+                            ((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text = "";
+                            ((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text = "";
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Отсутствует подключение к базе данных");
+                    }
+                }
+               
+            }
+            else
+            {
+                MessageBox.Show("Не все поля заполнены");
+            }
+        }
+
+        private void выводДанныхToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var wordApp = new word.Application();
+            // Открытие Word документа 
+            var wordDocument = wordApp.Documents.Open("\\shapka.docx");
+
+            // Замена данных в ворд документе 
+            ReplaceWord("{time}", "1", wordDocument);
+            ReplaceWord("{data}", "2", wordDocument);
+            ReplaceWord("{naimpo}", "3", wordDocument);
+            ReplaceWord("{f}","4" , wordDocument);
+            ReplaceWord("{i}",Program.namepolz , wordDocument);
+            ReplaceWord("{o}", "5", wordDocument);
+            ReplaceWord("{dolj}","6" , wordDocument);
+
+            // Сохранение документа 
+            wordDocument.SaveAs2("C:\\Users\\Alex\\Desktop\\statistika.docx");
+            wordApp.Quit();
         }
     }
 }

@@ -47,6 +47,7 @@
             this.Impolz = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.выводДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -110,7 +111,8 @@
             this.Zakazi.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.заказыToolStripMenuItem,
             this.добавлениеПОToolStripMenuItem,
-            this.добавлениеЛицензионныхКлючейToolStripMenuItem});
+            this.добавлениеЛицензионныхКлючейToolStripMenuItem,
+            this.выводДанныхToolStripMenuItem});
             this.Zakazi.Name = "Zakazi";
             this.Zakazi.Size = new System.Drawing.Size(177, 25);
             this.Zakazi.Text = "Управление заказами";
@@ -214,6 +216,13 @@
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // выводДанныхToolStripMenuItem
+            // 
+            this.выводДанныхToolStripMenuItem.Name = "выводДанныхToolStripMenuItem";
+            this.выводДанныхToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
+            this.выводДанныхToolStripMenuItem.Text = "Вывод статистических данных";
+            this.выводДанныхToolStripMenuItem.Click += new System.EventHandler(this.выводДанныхToolStripMenuItem_Click);
+            // 
             // Glavnaya
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,5 +266,6 @@
         private System.Windows.Forms.ToolStripMenuItem данныеПользователейToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem добавлениеЛицензионныхКлючейToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem зарегистрироватьПользователяToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem выводДанныхToolStripMenuItem;
     }
 }

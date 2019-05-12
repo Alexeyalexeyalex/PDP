@@ -183,7 +183,7 @@ namespace Ychpo
                             role.ExecuteNonQuery();
 
                             SqlCommand dolj = new SqlCommand("dolj_add", con);
-                            dolj.Parameters.AddWithValue("@naim_dolj", "Admin");
+                            dolj.Parameters.AddWithValue("@naim_dolj", "Администратор");
                             dolj.Parameters.AddWithValue("@role_id", 2);
                             dolj.CommandType = CommandType.StoredProcedure;
                             dolj.ExecuteNonQuery();
