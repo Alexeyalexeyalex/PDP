@@ -32,6 +32,8 @@ namespace Ychpo
         string kolich;
         string status;
         string iddolj;
+        string emailadmina;
+        string imiapolzadmin;
         int kolichestvo;
         public Glavnaya()
         {
@@ -46,7 +48,122 @@ namespace Ychpo
             range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
         }
 
-        private void addzakazi()
+        private void vivoddannihpolz()
+        {
+            //удаление данных из dataGridView
+            int sum = this.dataGridView1.Columns.Count;
+            for (int i = 0; i < sum; i++)
+            {
+                this.dataGridView1.Columns.RemoveAt(0);
+            }
+
+            //создание необходимых столбцов в dataGridView
+            var column1 = new DataGridViewTextBoxColumn();
+            var column2 = new DataGridViewTextBoxColumn();
+            var column3 = new DataGridViewTextBoxColumn();
+            var column4 = new DataGridViewTextBoxColumn();
+            var column5 = new DataGridViewTextBoxColumn();
+            var column6 = new DataGridViewTextBoxColumn();
+            var column7 = new DataGridViewTextBoxColumn();
+            var column8 = new DataGridViewTextBoxColumn();
+            var column9 = new DataGridViewTextBoxColumn();
+            var column10 = new DataGridViewTextBoxColumn();
+            var column11 = new DataGridViewTextBoxColumn();
+            var column12 = new DataGridViewCheckBoxColumn();
+            var column13 = new DataGridViewCheckBoxColumn();
+            var column14 = new DataGridViewCheckBoxColumn();
+            var column15 = new DataGridViewCheckBoxColumn();
+
+            column1.HeaderText = "Номер пользователя";
+            column1.Name = "Номер пользователя";
+            column2.HeaderText = "Фамилия";
+            column2.Name = "Фамилия";
+            column3.HeaderText = "Имя";
+            column3.Name = "Имя";
+            column4.HeaderText = "Очество";
+            column4.Name = "Очество";
+            column5.HeaderText = "Email";
+            column5.Name = "Email";
+            column6.HeaderText = "Логин";
+            column6.Name = "Логин";
+            column7.HeaderText = "Пароль";
+            column7.Name = "Пароль";
+            column8.HeaderText = "Номер должности";
+            column8.Name = "Номер должности";
+            column9.HeaderText = "Должность";
+            column9.Name = "Должность";
+            column10.HeaderText = "Номер роли";
+            column10.Name = "Номер роли";
+            column11.HeaderText = "Роль";
+            column11.Name = "Роль";
+            column12.HeaderText = "Доступ к пользователям";
+            column12.Name = "Доступ к пользователям";
+            column13.HeaderText = "Доступ к заявкам";
+            column13.Name = "Доступ к заявкам";
+            column14.HeaderText = "Доступ к ПО";
+            column14.Name = "Доступ к ПО";
+            column15.HeaderText = "Доступ к заказам";
+            column15.Name = "Доступ к заказам";
+
+            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15 });
+
+            dataGridView1.Visible = true;
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            string query;
+
+            //SqlCommand R = new SqlCommand("select роль from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
+            //string rol = R.ExecuteScalar().ToString();
+
+            //if (rol== "Admin")
+            //{
+            //выбор необходимых данных
+            query = "SELECT * FROM polzv";
+            //}
+            //else
+            //{
+            //    //выбор необходимых данных
+            //    query = "SELECT * FROM polzv where роль != 'Admin'";
+            //}
+            //запись данных в dataGridView
+            SqlCommand command = new SqlCommand(query, con);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<string[]> data = new List<string[]>();
+
+            while (reader.Read())
+            {
+                data.Add(new string[15]);
+
+                data[data.Count - 1][0] = reader[0].ToString();
+                data[data.Count - 1][1] = DeShifrovka(reader[1].ToString(), "YchetPO");
+                data[data.Count - 1][2] = DeShifrovka(reader[2].ToString(), "YchetPO");
+                data[data.Count - 1][3] = DeShifrovka(reader[3].ToString(), "YchetPO");
+                data[data.Count - 1][4] = DeShifrovka(reader[4].ToString(), "YchetPO");
+                data[data.Count - 1][5] = DeShifrovka(reader[5].ToString(), "YchetPO");
+                data[data.Count - 1][6] = reader[6].ToString();
+                data[data.Count - 1][7] = reader[7].ToString();
+                data[data.Count - 1][8] = reader[8].ToString();
+                data[data.Count - 1][9] = reader[9].ToString();
+                data[data.Count - 1][10] = reader[10].ToString();
+                data[data.Count - 1][11] = reader[11].ToString();
+                data[data.Count - 1][12] = reader[12].ToString();
+                data[data.Count - 1][13] = reader[13].ToString();
+                data[data.Count - 1][14] = reader[14].ToString();
+
+            }
+
+            reader.Close();
+
+            con.Close();
+
+            foreach (string[] s in data)
+                dataGridView1.Rows.Add(s);
+        }
+            private void addzakazi()
         {
             //создание необходимых столбцов в dataGridView
             var column1 = new DataGridViewTextBoxColumn();
@@ -189,6 +306,9 @@ namespace Ychpo
             dataGridView1.Width = this.Width / 7 * 5;
             dataGridView1.Height = this.Height / 3;
             dataGridView1.Location = new Point(this.Width / 7,menuStrip1.Height+15);
+            textBox1.Top = dataGridView1.Top + dataGridView1.Height;
+            textBox1.Width = dataGridView1.Width;
+            textBox1.Left = dataGridView1.Left;
             // настройка расположения label2
             label2.Location = new Point(this.Width-24, 0);
 
@@ -388,6 +508,7 @@ namespace Ychpo
             adddatagvaddpo();
 
             dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
@@ -585,6 +706,7 @@ namespace Ychpo
 
         private void данныеПользователейToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            menu = "polzovateli";
             //удаление элементов формы 
             try
             {
@@ -603,112 +725,19 @@ namespace Ychpo
             groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
             Controls.Add(groupBox);
 
-            //удаление данных из dataGridView
-            int sum = this.dataGridView1.Columns.Count;
-            for (int i = 0; i < sum; i++)
-            {
-                this.dataGridView1.Columns.RemoveAt(0);
-            }
+            vivoddannihpolz();
 
-            //создание необходимых столбцов в dataGridView
-            var column1 = new DataGridViewTextBoxColumn();
-            var column2 = new DataGridViewTextBoxColumn();
-            var column3 = new DataGridViewTextBoxColumn();
-            var column4 = new DataGridViewTextBoxColumn();
-            var column5 = new DataGridViewTextBoxColumn();
-            var column6 = new DataGridViewTextBoxColumn();
-            var column7 = new DataGridViewTextBoxColumn();
-            var column8 = new DataGridViewTextBoxColumn();
-            var column9 = new DataGridViewTextBoxColumn();
-            var column10 = new DataGridViewTextBoxColumn();
-            var column11 = new DataGridViewTextBoxColumn();
-            var column12 = new DataGridViewCheckBoxColumn();
-            var column13 = new DataGridViewCheckBoxColumn();
-            var column14 = new DataGridViewCheckBoxColumn();
-            var column15 = new DataGridViewCheckBoxColumn();
 
-            column1.HeaderText = "Номер пользователя";
-            column1.Name = "Номер пользователя";
-            column2.HeaderText = "Фамилия";
-            column2.Name = "Фамилия";
-            column3.HeaderText = "Имя";
-            column3.Name = "Имя";
-            column4.HeaderText = "Очество";
-            column4.Name = "Очество";
-            column5.HeaderText = "Email";
-            column5.Name = "Email";
-            column6.HeaderText = "Логин";
-            column6.Name = "Логин";
-            column7.HeaderText = "Пароль";
-            column7.Name = "Пароль";
-            column8.HeaderText = "Номер должности";
-            column8.Name = "Номер должности";
-            column9.HeaderText = "Должность";
-            column9.Name = "Должность";
-            column10.HeaderText = "Номер роли";
-            column10.Name = "Номер роли";
-            column11.HeaderText = "Роль";
-            column11.Name = "Роль";
-            column12.HeaderText = "Доступ к пользователям";
-            column12.Name = "Доступ к пользователям";
-            column13.HeaderText = "Доступ к заявкам";
-            column13.Name = "Доступ к заявкам";
-            column14.HeaderText = "Доступ к ПО";
-            column14.Name = "Доступ к ПО";
-            column15.HeaderText = "Доступ к заказам";
-            column15.Name = "Доступ к заказам";
-
-            this.dataGridView1.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13, column14, column15 });
-       
-            dataGridView1.Visible = true;
-            SqlConnection con = BDconnect.GetBDConnection();
-            con.Open();
-
-            //выбор необходимых данных
-            string query = "SELECT * FROM polzv";
-
-            //запись данных в dataGridView
-            SqlCommand command = new SqlCommand(query, con);
-
-            SqlDataReader reader = command.ExecuteReader();
-
-            List<string[]> data = new List<string[]>();
-
-            while (reader.Read())
-            {
-                data.Add(new string[15]);
-
-                data[data.Count - 1][0] = reader[0].ToString();
-                data[data.Count - 1][1] = DeShifrovka(reader[1].ToString(), "YchetPO");
-                data[data.Count - 1][2] = DeShifrovka(reader[2].ToString(), "YchetPO");
-                data[data.Count - 1][3] = DeShifrovka(reader[3].ToString(), "YchetPO");
-                data[data.Count - 1][4] = DeShifrovka(reader[4].ToString(), "YchetPO");
-                data[data.Count - 1][5] = DeShifrovka(reader[5].ToString(), "YchetPO");
-                data[data.Count - 1][6] = DeShifrovka(reader[6].ToString(), "YchetPO");
-                data[data.Count - 1][7] = reader[7].ToString();
-                data[data.Count - 1][8] = reader[8].ToString();
-                data[data.Count - 1][9] = reader[9].ToString();
-                data[data.Count - 1][10] = reader[10].ToString();
-                data[data.Count - 1][11] = reader[11].ToString();
-                data[data.Count - 1][12] = reader[12].ToString();
-                data[data.Count - 1][13] = reader[13].ToString();
-                data[data.Count - 1][14] = reader[14].ToString();
-     
-            }
-
-            reader.Close();
+            
 
            
-
-            foreach (string[] s in data)
-            dataGridView1.Rows.Add(s);
 
 
 
             Label fl = new Label();
             fl.AutoSize = false;
             fl.Left = this.Width / 5;
-            fl.Top = menuStrip1.Height + this.Height / 7;
+            fl.Top = menuStrip1.Height;
             fl.Width = this.Width / 5;
             fl.Height = 50;
             fl.Text = "Фамилия";
@@ -759,24 +788,24 @@ namespace Ychpo
             ot.Font = new Font(ot.Font.FontFamily, razmershrifta);
             (Controls["Box"] as GroupBox).Controls.Add(ot);
 
-            Label doljl = new Label();
-            doljl.AutoSize = false;
-            doljl.Left = fl.Left;
-            doljl.Top = ot.Top + ot.Height * 2;
-            doljl.Width = fl.Width;
-            doljl.Height = 50;
-            doljl.Text = "Должность";
-            doljl.Font = new Font(doljl.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(doljl);
+            //Label doljl = new Label();
+            //doljl.AutoSize = false;
+            //doljl.Left = fl.Left;
+            //doljl.Top = ot.Top + ot.Height * 2;
+            //doljl.Width = fl.Width;
+            //doljl.Height = 50;
+            //doljl.Text = "Должность";
+            //doljl.Font = new Font(doljl.Font.FontFamily, razmershrifta);
+            //(Controls["Box"] as GroupBox).Controls.Add(doljl);
 
-            ComboBox dolj = new ComboBox();
-            dolj.Name = "Doljnost";
-            dolj.Left = fl.Left;
-            dolj.Top = doljl.Top + doljl.Height;
-            dolj.Width = fl.Width;
-            dolj.Font = new Font(dolj.Font.FontFamily, razmershrifta);
-            dolj.SelectedIndexChanged += dolj_SelectedIndexChanged;
-            (Controls["Box"] as GroupBox).Controls.Add(dolj);
+            //ComboBox dolj = new ComboBox();
+            //dolj.Name = "Doljnost";
+            //dolj.Left = fl.Left;
+            //dolj.Top = doljl.Top + doljl.Height;
+            //dolj.Width = fl.Width;
+            //dolj.Font = new Font(dolj.Font.FontFamily, razmershrifta);
+            //dolj.SelectedIndexChanged += dolj_SelectedIndexChanged;
+            //(Controls["Box"] as GroupBox).Controls.Add(dolj);
 
             Label emaill = new Label();
             emaill.AutoSize = false;
@@ -808,6 +837,7 @@ namespace Ychpo
 
             TextBox logint = new TextBox();
             logint.Name = "loginname";
+            logint.Enabled = false;
             logint.Left = emaill.Left;
             logint.Top = it.Top;
             logint.Width = emaill.Width;
@@ -833,14 +863,76 @@ namespace Ychpo
             (Controls["Box"] as GroupBox).Controls.Add(passt);
 
             Button add = new Button();
-            add.Text = "Добавить сотрудника";
+            add.Text = "Изменить данные";
             add.Left = emailt.Left;
             add.Width = emailt.Width;
             add.Height = emailt.Height + 5;
-            add.Top = dolj.Top;
+            add.Top = passt.Top + passt.Height * 2;
             add.Font = new Font(add.Font.FontFamily, razmershrifta);
-            add.Click += dobavleniepolz_Click;
+            add.Click += izmpolzadmin_Click;
             (Controls["Box"] as GroupBox).Controls.Add(add);
+
+        }
+
+        public void izmpolzadmin_Click(object sender, EventArgs e)
+        {
+            string F = Shifrovka(((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text, "YchetPO");
+            string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
+            string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
+            string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
+            string login = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+            string pass = Shifrovka(((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text, "YchetPO");
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
+            SqlDataReader dr;
+            dr = sc.ExecuteReader();
+            int count = 0;
+            while (dr.Read())
+            {
+                count += 1;
+            }
+            dr.Close();
+
+            if ((count == 1)&&(imiapolzadmin!= ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text))
+            {
+                MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
+            }
+            else
+            {
+              
+                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + login + "' ", con);
+                int idpolzov = Convert.ToInt32(id.ExecuteScalar());
+
+                if ((F != "") && (I != "") && (email != "") && (login != "")&&(pass!=""))
+                {
+                    SqlCommand izmenenie = new SqlCommand("fullpolz_edit", con);
+                    izmenenie.CommandType = CommandType.StoredProcedure;
+                    izmenenie.Parameters.AddWithValue("@id_polz", idpolzov);
+                    izmenenie.Parameters.AddWithValue("@F_P", F);
+                    izmenenie.Parameters.AddWithValue("@I_P", I);
+                    izmenenie.Parameters.AddWithValue("@O_P", O);
+                    izmenenie.Parameters.AddWithValue("@email", email);
+                    izmenenie.Parameters.AddWithValue("@login", login);
+                    izmenenie.Parameters.AddWithValue("@password", pass);
+                    izmenenie.ExecuteNonQuery();
+
+                    MessageBox.Show("Данные успещно изменены");
+                    vivoddannihpolz();
+
+
+                }
+
+                else
+                {
+                    MessageBox.Show("Не все поля заполнены");
+                }
+
+
+
+            }
             con.Close();
         }
 
@@ -858,6 +950,7 @@ namespace Ychpo
             removedtgv();
 
             dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
@@ -1020,6 +1113,7 @@ namespace Ychpo
 
 
                 dataGridView1.Visible = false;
+                textBox1.Visible = false;
                 GroupBox groupBox = new GroupBox();
                 groupBox.Name = "Box";
                 groupBox.Left = 10;
@@ -1248,6 +1342,7 @@ namespace Ychpo
             removedtgv();
 
             dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
             //создание необходимых столбцов в dataGridView
             var column1 = new DataGridViewTextBoxColumn();
@@ -1306,6 +1401,7 @@ namespace Ychpo
             creategroupbox();
 
             dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
             //добавление данных в dataGridView
             addzakazi();
@@ -1435,9 +1531,9 @@ namespace Ychpo
 
                     SqlCommand emaill = new SqlCommand("select [Email] from polz where[login] = '" + Program.loginpolz + "' ", con);
                     string email = DeShifrovka(emaill.ExecuteScalar().ToString(), "YchetPO");
-                    try
-                    {
-                        MailMessage mail = new MailMessage();
+                try
+                {
+                    MailMessage mail = new MailMessage();
                         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
                         mail.From = new MailAddress("ychet.po@gmail.com");
@@ -1462,11 +1558,17 @@ namespace Ychpo
 
                         SmtpServer.Send(mail);
 
+                        string date = DateTime.Now.ToString("dd MM yyyy");
+                        string time = DateTime.Now.ToString("HH:mm:ss");
                         SqlCommand StrPrc1 = new SqlCommand("zakaz_add", con);
                         StrPrc1.CommandType = CommandType.StoredProcedure;
-                        StrPrc1.Parameters.AddWithValue("@time", DateTime.Now.ToString("HH:mm:ss"));
-                        StrPrc1.Parameters.AddWithValue("@date", DateTime.Now.ToString("dd MMMM yyyy"));
+                        StrPrc1.Parameters.AddWithValue("@time", time);
+                        StrPrc1.Parameters.AddWithValue("@date", date);
                         StrPrc1.ExecuteNonQuery();
+
+                        SqlCommand idz = new SqlCommand("select @@identity ", con);
+                        string idzak = idz.ExecuteScalar().ToString();
+
                         SqlCommand StrPrc = new SqlCommand("zayavkast_edit", con);
                         StrPrc.CommandType = CommandType.StoredProcedure;
                         StrPrc.Parameters.AddWithValue("@id_zayavkast", idpo);
@@ -1477,7 +1579,7 @@ namespace Ychpo
                         izmenenie.CommandType = CommandType.StoredProcedure;
                         izmenenie.Parameters.AddWithValue("@id_lickluch", idklucha);
                         izmenenie.Parameters.AddWithValue("@statuskluch", 1);
-                        izmenenie.Parameters.AddWithValue("@zak_id", 1);
+                        izmenenie.Parameters.AddWithValue("@zak_id", idzak);
                         izmenenie.ExecuteNonQuery();
 
                         //удаление данных из dataGridView
@@ -1485,15 +1587,15 @@ namespace Ychpo
                         //добавление данных в dataGridView
                         addzakazi();
                         MessageBox.Show("На почту пользователя был выслан лицензионный ключ");
-                    }
+            }
 
                     catch
-                    {
-                        MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
-                    }
-                    con.Close();
+            {
+                MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
+            }
+                con.Close();
                 }
-        }
+            }
             catch
             {
                 MessageBox.Show("Пожалуйста, выберите заявку");
@@ -1540,6 +1642,16 @@ namespace Ychpo
                     ((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
                     ((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
                 }
+                if (menu == "polzovateli")
+                {
+                    ((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+                    ((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                    imiapolzadmin= dataGridView1.CurrentRow.Cells[2].Value.ToString();
+                    ((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+                    ((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
+                    ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text = dataGridView1.CurrentRow.Cells[5].Value.ToString();
+                    ((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text = DeShifrovka(dataGridView1.CurrentRow.Cells[6].Value.ToString(), "YchetPO"); ;
+                }
             }
             catch
             {
@@ -1561,6 +1673,7 @@ namespace Ychpo
             removedtgv();
 
             dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
@@ -1698,6 +1811,7 @@ namespace Ychpo
                 con.Open();
 
                 dataGridView1.Visible = false;
+                textBox1.Visible = false;
                 GroupBox groupBox = new GroupBox();
                 groupBox.Name = "Box";
                 groupBox.Left = 10;
@@ -1953,22 +2067,249 @@ namespace Ychpo
 
         private void выводДанныхToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var wordApp = new word.Application();
-            // Открытие Word документа 
-            var wordDocument = wordApp.Documents.Open("\\shapka.docx");
+            menu = "dobavlenie";
+            //удаление элемента
+            delitegroupbox();
 
-            // Замена данных в ворд документе 
-            ReplaceWord("{time}", "1", wordDocument);
-            ReplaceWord("{data}", "2", wordDocument);
-            ReplaceWord("{naimpo}", "3", wordDocument);
-            ReplaceWord("{f}","4" , wordDocument);
-            ReplaceWord("{i}",Program.namepolz , wordDocument);
-            ReplaceWord("{o}", "5", wordDocument);
-            ReplaceWord("{dolj}","6" , wordDocument);
+            //динамическое создание 
+            creategroupbox();
 
-            // Сохранение документа 
-            wordDocument.SaveAs2("C:\\Users\\Alex\\Desktop\\statistika.docx");
-            wordApp.Quit();
+            //удаление данных из dataGridView
+            removedtgv();
+
+            dataGridView1.Visible = true;
+            textBox1.Visible = true;
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            //добавление данных из бд в dataGridView
+            adddatagvaddpo();
+
+
+            Label namepol = new Label();
+            namepol.Left = Width / 3;
+            namepol.Width = Width / 3;
+            namepol.Height = 50;
+            namepol.Text = "Название ПО";
+            namepol.Top = 100;
+            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepol);
+
+            TextBox namepot = new TextBox();
+            namepot.Left = namepol.Left;
+            namepot.Enabled = false;
+            namepot.Name = "NAME";
+            namepot.Width = namepol.Width;
+            namepot.Height = 50;
+            namepot.Top = namepol.Top + namepol.Height;
+            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepot);
+
+            Label versl = new Label();
+            versl.Left = namepol.Left;
+            versl.Width = namepol.Width;
+            versl.Height = 50;
+            versl.Text = "Версия ПО";
+            versl.Top = namepot.Top + namepot.Height * 2;
+            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(versl);
+
+            TextBox verst = new TextBox();
+            verst.Left = versl.Left;
+            verst.Enabled = false;
+            verst.Name = "VERS";
+            verst.Width = versl.Width;
+            verst.Height = 50;
+            verst.Top = versl.Top + versl.Height;
+            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(verst);
+
+            Button dobavlenie = new Button();
+            dobavlenie.Left = namepol.Left;
+            dobavlenie.Width = namepol.Width;
+            dobavlenie.Height = 50;
+            dobavlenie.Text = "Вывести статистику";
+            dobavlenie.Top = verst.Top + verst.Height * 2;
+            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
+            dobavlenie.Click += dobavlenieklucha_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
+
+            con.Close();
+
+            //var wordApp = new word.Application();
+            //// Открытие Word документа 
+            //var wordDocument = wordApp.Documents.Open(@"C:\shapka.docx");
+
+            //// Замена данных в ворд документе 
+            //ReplaceWord("{time}", "1", wordDocument);
+            //ReplaceWord("{data}", "2", wordDocument);
+            //ReplaceWord("{naimpo}", "3", wordDocument);
+            //ReplaceWord("{f}", "4", wordDocument);
+            //ReplaceWord("{i}", Program.namepolz, wordDocument);
+            //ReplaceWord("{o}", "5", wordDocument);
+            //ReplaceWord("{dolj}", "6", wordDocument);
+
+            //// Сохранение документа 
+            //wordDocument.SaveAs(@"C:\statistika.docx");
+            //wordApp.Quit();
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            delitegroupbox();
+
+            dataGridView1.Visible = false;
+            textBox1.Visible = false;
+            GroupBox groupBox = new GroupBox();
+            groupBox.Name = "Box";
+            groupBox.Left = 10;
+            groupBox.Width = this.Width - 20;
+            groupBox.Top = menuStrip1.Height + 60;
+            groupBox.Height = this.Height - menuStrip1.Height * 2 - 60;
+            Controls.Add(groupBox);
+
+            Label temal = new Label();
+            temal.Left = Width / 5;
+            temal.Width = Width / 5*3;
+            temal.Height = 50;
+            temal.Text = "Тема письма";
+            temal.Top = 100;
+            temal.Font = new Font(temal.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(temal);
+
+            TextBox temat = new TextBox();
+            temat.Left = temal.Left;
+            temat.Name = "tema";
+            temat.Width = temal.Width;
+            temat.Height = 50;
+            temat.Top = temal.Top + temal.Height;
+            temat.Font = new Font(temat.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(temat);
+
+            Label opisaniel = new Label();
+            opisaniel.Left = temat.Left;
+            opisaniel.Width = temat.Width;
+            opisaniel.Height = 50;
+            opisaniel.Text = "Описание проблемы";
+            opisaniel.Top = temat.Top + temat.Height * 2;
+            opisaniel.Font = new Font(opisaniel.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(opisaniel);
+
+            TextBox opisaniet = new TextBox();
+            opisaniet.Left = opisaniel.Left;
+            opisaniet.Name = "opisanie";
+            opisaniet.Width = opisaniel.Width;
+            opisaniet.Multiline = true;
+            opisaniet.Height = 200;
+            opisaniet.Top = opisaniel.Top + opisaniel.Height;
+            opisaniet.Font = new Font(opisaniet.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(opisaniet);
+
+            Button otpravka = new Button();
+            otpravka.Left = opisaniet.Left;
+            otpravka.Width = opisaniet.Width;
+            otpravka.Height = 50;
+            otpravka.Text = "Отправить сообщение администратору";
+            otpravka.Top = opisaniet.Top + opisaniet.Height+50;
+            otpravka.Font = new Font(otpravka.Font.FontFamily, razmershrifta);
+            otpravka.Click += otpravkaerror_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(otpravka);
+
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            SqlCommand em = new SqlCommand("select Email from polzv where роль = '" + "Admin" + "' ", con);
+            emailadmina = DeShifrovka(em.ExecuteScalar().ToString(), "YchetPO");
+
+            con.Close();
+
+            Label emailadmin = new Label();
+            emailadmin.Left = opisaniet.Left;
+            emailadmin.Width = opisaniet.Width;
+            emailadmin.Height = 50;
+            emailadmin.Text = "При ошибке отправки сообщения вы можете написать на "+ emailadmina;
+            emailadmin.Top = opisaniet.Top + opisaniet.Height;
+            emailadmin.Font = new Font(emailadmin.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(emailadmin);
+
+
+        }
+        public void otpravkaerror_Click(object sender, EventArgs e)
+        {
+            //try
+            //{
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
+
+
+
+                SqlCommand f = new SqlCommand("select F_P from polz where login = '" + Program.loginpolz + "' ", con);
+                string F = DeShifrovka(f.ExecuteScalar().ToString(), "YchetPO");
+
+                SqlCommand i = new SqlCommand("select I_P from polz where login = '" + Program.loginpolz + "' ", con);
+                string I = DeShifrovka(i.ExecuteScalar().ToString(), "YchetPO");
+
+                SqlCommand em = new SqlCommand("select [email] from polz where login = '" + Program.loginpolz + "' ", con);
+                string emailpolz = DeShifrovka(em.ExecuteScalar().ToString(), "YchetPO");
+
+
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+                mail.From = new MailAddress("ychet.po@gmail.com");
+                mail.To.Add(emailadmina);
+                mail.Subject = ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text;
+
+                mail.IsBodyHtml = true;
+                string htmlBody;
+                htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
+                <br><br>Здравствуйте администратор!
+                <br>Поступила жалоба от "+F+@" "+I+@", логин "+ DeShifrovka(Program.loginpolz, "YchetPO")+@", его email - "+ emailpolz + @"
+                <br>                                                                                              
+                <br>Описание проблемы:       " + ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text + @"
+                <br>
+                <br>Мы рады, что вы выбрали именно наш программный продукт и желаем Вам приятого пользования!</body></html>";
+
+                mail.Body = htmlBody;
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("ychet.po", "Qq112233!");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
+               
+                MessageBox.Show("Ваше сообщение было отправлено");
+                
+                con.Close();
+                ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text = "";
+                ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text = "";
+            //}
+
+            //catch
+            //{
+            //    MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
+            //}
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            if (textBox1.Text != "")
+            {
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    dataGridView1.Rows[i].Visible = false;
+                    for (int c = 0; c < dataGridView1.Columns.Count; c++)
+                    {
+                        if (dataGridView1[c, i].Value.ToString() == textBox1.Text)
+                        {
+                            dataGridView1.Rows[i].Visible = true;
+                            break;
+                        }
+                    }
+                }
+            }
+           
         }
     }
 }

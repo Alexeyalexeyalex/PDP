@@ -141,6 +141,7 @@
             this.metroTextBox5.FontSize = MetroFramework.MetroTextBoxSize.Tall;
             this.metroTextBox5.Location = new System.Drawing.Point(286, 255);
             this.metroTextBox5.Name = "metroTextBox5";
+            this.metroTextBox5.PasswordChar = '*';
             this.metroTextBox5.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox5.TabIndex = 37;
             // 

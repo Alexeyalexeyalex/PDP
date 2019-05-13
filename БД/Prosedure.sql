@@ -31,6 +31,27 @@ AS
 	where id_polz=@id_polz;
 go
 
+CREATE PROCEDURE [DBO].[fullpolz_edit]
+@id_polz int,
+@F_P varchar(max),
+@I_P varchar(max),
+@O_P varchar(max),
+@email varchar(max),
+@login varchar(max),
+@password varchar(max)
+
+AS
+	update [dbo].polz
+	set
+	F_P=@F_P,
+	I_P=@I_P,
+	O_P=@O_P,
+	email=@email,
+	login=@login,
+	password=@password
+
+	where id_polz=@id_polz;
+go
 
 CREATE PROCEDURE [DBO].[polzpass_edit]
 @id_polz int,
@@ -240,3 +261,4 @@ AS
 	zak_id=@zak_id
 	where @id_lickluch = id_lickluch
 go
+
