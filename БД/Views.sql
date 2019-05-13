@@ -22,3 +22,12 @@ dolj  inner join
 role on role.id_role=dolj.role_id 
 go
 
+create view [dbo].[statistika]
+as select id_zakaz as 'Номер заказа',naim_po as 'Название ПО', vers_po as 'Версия ПО',F_P as'Фамилия',I_P as 'Имя',O_P as 'Отчество',time as 'Время заказа',date as 'Дата заказа' 
+from
+zakaz inner join
+lickluch on id_zakaz=zak_id inner join
+PO on id_PO=pol_id inner join
+zayavka on id_PO=poz_id inner join
+polz on id_polz=polz_id
+go

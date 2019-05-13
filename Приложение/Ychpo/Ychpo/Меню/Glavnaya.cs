@@ -12,7 +12,7 @@ using Microsoft.Win32;
 using System.Security.Cryptography;
 using System.IO;
 using System.Net.Mail;
-using word = Microsoft.Office.Interop.Word;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Ychpo
 {
@@ -40,13 +40,7 @@ namespace Ychpo
             InitializeComponent();
         }
 
-        private void ReplaceWord(string stubToReplace, string text, word.Document worddocument)
-        {
-            // Замена переменных в ворд документе 
-            var range = worddocument.Content;
-            range.Find.ClearFormatting();
-            range.Find.Execute(FindText: stubToReplace, ReplaceWith: text);
-        }
+
 
         private void vivoddannihpolz()
         {
@@ -2132,7 +2126,7 @@ namespace Ychpo
             dobavlenie.Text = "Вывести статистику";
             dobavlenie.Top = verst.Top + verst.Height * 2;
             dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
-            dobavlenie.Click += dobavlenieklucha_Click;
+            dobavlenie.Click += stat_Click;
             (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
 
             con.Close();
@@ -2154,8 +2148,59 @@ namespace Ychpo
             //wordDocument.SaveAs(@"C:\statistika.docx");
             //wordApp.Quit();
         }
+        private void stat_Click(object sender, EventArgs e)
+        {
+            string name = Shifrovka(((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text, "YchetPO");
+            string vers = Shifrovka(((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text, "YchetPO");
+            //удаление данных из dataGridView
+            removedtgv();
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from statistika where [Название ПО] = '"+name+"'and [Версия ПО] = '"+vers+"'", con);
+            SqlCommandBuilder cb1 = new SqlCommandBuilder(da1);
+            DataSet ds1 = new DataSet();
+            da1.Fill(ds1, "statistika");
+            dataGridView1.DataSource = ds1.Tables[0];
+
+            object oMissing = System.Reflection.Missing.Value;
+            object oEndOfDoc = "\\endofdoc"; /* \endofdoc is a predefined bookmark */
+
+            //Start Word and create a new document. 
+            Word._Application oWord;
+            Word._Document oDoc;
+            oWord = new Word.Application();
+            oDoc = oWord.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
+
+            //Insert a table 
+            Word.Table oTable;
+            Word.Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            oTable = oDoc.Tables.Add(wrdRng, dataGridView1.Rows.Count, dataGridView1.Columns.Count);
+            oTable.Range.ParagraphFormat.SpaceAfter = 6;
+            oTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleDouble;
+            oTable.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleDouble;
+            oTable.Cell(1, 1).Range.Text = "Номер заказа";
+            oTable.Cell(1, 2).Range.Text = "Название ПО";
+            oTable.Cell(1, 3).Range.Text = "Версия ПО";
+            oTable.Cell(1, 4).Range.Text = "Фамилия";
+            oTable.Cell(1, 5).Range.Text = "Имя";
+            oTable.Cell(1, 6).Range.Text = "Отчество";
+            oTable.Cell(1, 7).Range.Text = "Время заказа";
+            oTable.Cell(1, 8).Range.Text = "Дата заказа";
+
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                for (int x = 0; x < dataGridView1.Columns.Count; x++)
+                {
+                    oTable.Cell(i + 2, x + 1).Range.Text = dataGridView1.Rows[i].Cells[x].Value.ToString();
+                    oTable.Range.Font.Size = 11;
+                }
+            }
+             //oDoc.SaveAs2("\\");
+             con.Close();
+        }
+
+            private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             delitegroupbox();
 
