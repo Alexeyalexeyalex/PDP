@@ -874,33 +874,33 @@ namespace Ychpo
             string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
             string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
             string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
-            string login = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+            string login1 = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
             string pass = Shifrovka(((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text, "YchetPO");
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
 
-            SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
-            SqlDataReader dr;
-            dr = sc.ExecuteReader();
-            int count = 0;
-            while (dr.Read())
-            {
-                count += 1;
-            }
-            dr.Close();
+            //SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
+            //SqlDataReader dr;
+            //dr = sc.ExecuteReader();
+            //int count = 0;
+            //while (dr.Read())
+            //{
+            //    count += 1;
+            //}
+            //dr.Close();
 
-            if ((count == 1)&&(imiapolzadmin!= ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text))
-            {
-                MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
-            }
-            else
-            {
+            //if ((count == 1)&&(imiapolzadmin!= ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text))
+            //{
+            //    MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
+            //}
+            //else
+            //{
               
-                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + login + "' ", con);
+                SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + login1 + "' ", con);
                 int idpolzov = Convert.ToInt32(id.ExecuteScalar());
 
-                if ((F != "") && (I != "") && (email != "") && (login != "")&&(pass!=""))
+                if ((F != "") && (I != "") && (email != "") && (login1 != "")&&(pass!=""))
                 {
                     SqlCommand izmenenie = new SqlCommand("fullpolz_edit", con);
                     izmenenie.CommandType = CommandType.StoredProcedure;
@@ -909,7 +909,7 @@ namespace Ychpo
                     izmenenie.Parameters.AddWithValue("@I_P", I);
                     izmenenie.Parameters.AddWithValue("@O_P", O);
                     izmenenie.Parameters.AddWithValue("@email", email);
-                    izmenenie.Parameters.AddWithValue("@login", login);
+                    izmenenie.Parameters.AddWithValue("@login", login1);
                     izmenenie.Parameters.AddWithValue("@password", pass);
                     izmenenie.ExecuteNonQuery();
 
@@ -919,14 +919,14 @@ namespace Ychpo
 
                 }
 
-                else
+            else
                 {
                     MessageBox.Show("Не все поля заполнены");
                 }
 
 
 
-            }
+            //}
             con.Close();
         }
 
