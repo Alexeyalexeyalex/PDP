@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.Win32;
-using System.Net;
 using System.Net.Mail;
-using System.Web;
-using System.Net.Mime;
 using System.Security.Cryptography;
 using System.IO;
 
@@ -555,10 +548,7 @@ namespace Ychpo
                 }
 
             }
-            catch
-            {
-                MessageBox.Show("Пожалуйста запустите программу от имени администратора");
-            }
+            catch{}
             Controls.Add(podkl);
 
             //Создание кнопки подтверждения

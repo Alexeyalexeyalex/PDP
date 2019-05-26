@@ -13,6 +13,7 @@ namespace Ychpo
 {
     public partial class Srttings : MetroFramework.Forms.MetroForm
     {
+        string color;
         public Srttings()
         {
             InitializeComponent();
@@ -20,18 +21,13 @@ namespace Ychpo
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
             {
-                RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
-                saveKey.SetValue("Polz", "");
-                saveKey.Close();
+                panel1.BackColor = colorDialog1.Color;
             }
-            catch
-            {
-                MessageBox.Show("Пожалуйста запустите программу от имени администратора");
-                Application.Exit();
-            }
-
+            RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
+            saveKey.SetValue("Color", colorDialog1.Color);
+            saveKey.Close();
         }
 
         private void Srttings_Load(object sender, EventArgs e)

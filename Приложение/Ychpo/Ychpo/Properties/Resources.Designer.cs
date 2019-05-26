@@ -73,6 +73,16 @@ namespace Ychpo.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap mad_max_vzryv_igra_geroj_92966_1600x900 {
+            get {
+                object obj = ResourceManager.GetObject("mad_max_vzryv_igra_geroj_92966_1600x900", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WMF_Ago444 {
             get {
                 object obj = ResourceManager.GetObject("WMF-Ago444", resourceCulture);

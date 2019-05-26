@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.Win32;
@@ -306,6 +303,8 @@ namespace Ychpo
             // настройка расположения label2
             label2.Location = new Point(this.Width-24, 0);
 
+
+
             try
             {
                 //получение данных из реесира
@@ -313,7 +312,9 @@ namespace Ychpo
                 Auto = (string)readKey.GetValue("Polz");
                 string loadlogin = (string)readKey.GetValue("login");
                 string loadname = (string)readKey.GetValue("name");
+                //string color = (string)readKey.GetValue("color");
                 readKey.Close();
+                //this.BackColor = Color.FromArgb(Convert.ToInt32(color));
                 if (Auto == "Auto") //проверка на автоматический вход 
                 {
                     Program.loginpolz = loadlogin;//передача данных из реестра в глобальную переменную
@@ -325,6 +326,11 @@ namespace Ychpo
                 MessageBox.Show("Пожалуйста запустите программу от имени администратора");
             }
 
+            RegistryKey readKey1 = Registry.LocalMachine.OpenSubKey("software\\Ychpo");
+            string color = (string)readKey1.GetValue("color");
+            readKey1.Close();
+
+            //this.BackColor = Color.FromArgb(Convert.ToInt32(color));
 
             Impolz.Text = "Здравствуйте "+Program.namepolz;//вывод на форме имени пользователя
             try
@@ -2196,90 +2202,97 @@ namespace Ychpo
                     oTable.Range.Font.Size = 11;
                 }
             }
+            oWord.Visible = true;
              //oDoc.SaveAs2("\\");
              con.Close();
         }
 
-            private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            delitegroupbox();
+         private void toolStripMenuItem1_Click(object sender, EventArgs e)
+         {
+            try
+            {
+                delitegroupbox();
 
-            dataGridView1.Visible = false;
-            textBox1.Visible = false;
-            GroupBox groupBox = new GroupBox();
-            groupBox.Name = "Box";
-            groupBox.Left = 10;
-            groupBox.Width = this.Width - 20;
-            groupBox.Top = menuStrip1.Height + 60;
-            groupBox.Height = this.Height - menuStrip1.Height * 2 - 60;
-            Controls.Add(groupBox);
+                dataGridView1.Visible = false;
+                textBox1.Visible = false;
+                GroupBox groupBox = new GroupBox();
+                groupBox.Name = "Box";
+                groupBox.Left = 10;
+                groupBox.Width = this.Width - 20;
+                groupBox.Top = menuStrip1.Height + 60;
+                groupBox.Height = this.Height - menuStrip1.Height * 2 - 60;
+                Controls.Add(groupBox);
 
-            Label temal = new Label();
-            temal.Left = Width / 5;
-            temal.Width = Width / 5*3;
-            temal.Height = 50;
-            temal.Text = "Тема письма";
-            temal.Top = 100;
-            temal.Font = new Font(temal.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(temal);
+                Label temal = new Label();
+                temal.Left = Width / 5;
+                temal.Width = Width / 5 * 3;
+                temal.Height = 50;
+                temal.Text = "Тема письма";
+                temal.Top = 100;
+                temal.Font = new Font(temal.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(temal);
 
-            TextBox temat = new TextBox();
-            temat.Left = temal.Left;
-            temat.Name = "tema";
-            temat.Width = temal.Width;
-            temat.Height = 50;
-            temat.Top = temal.Top + temal.Height;
-            temat.Font = new Font(temat.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(temat);
+                TextBox temat = new TextBox();
+                temat.Left = temal.Left;
+                temat.Name = "tema";
+                temat.Width = temal.Width;
+                temat.Height = 50;
+                temat.Top = temal.Top + temal.Height;
+                temat.Font = new Font(temat.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(temat);
 
-            Label opisaniel = new Label();
-            opisaniel.Left = temat.Left;
-            opisaniel.Width = temat.Width;
-            opisaniel.Height = 50;
-            opisaniel.Text = "Описание проблемы";
-            opisaniel.Top = temat.Top + temat.Height * 2;
-            opisaniel.Font = new Font(opisaniel.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(opisaniel);
+                Label opisaniel = new Label();
+                opisaniel.Left = temat.Left;
+                opisaniel.Width = temat.Width;
+                opisaniel.Height = 50;
+                opisaniel.Text = "Описание проблемы";
+                opisaniel.Top = temat.Top + temat.Height * 2;
+                opisaniel.Font = new Font(opisaniel.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(opisaniel);
 
-            TextBox opisaniet = new TextBox();
-            opisaniet.Left = opisaniel.Left;
-            opisaniet.Name = "opisanie";
-            opisaniet.Width = opisaniel.Width;
-            opisaniet.Multiline = true;
-            opisaniet.Height = 200;
-            opisaniet.Top = opisaniel.Top + opisaniel.Height;
-            opisaniet.Font = new Font(opisaniet.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(opisaniet);
+                TextBox opisaniet = new TextBox();
+                opisaniet.Left = opisaniel.Left;
+                opisaniet.Name = "opisanie";
+                opisaniet.Width = opisaniel.Width;
+                opisaniet.Multiline = true;
+                opisaniet.Height = 200;
+                opisaniet.Top = opisaniel.Top + opisaniel.Height;
+                opisaniet.Font = new Font(opisaniet.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(opisaniet);
 
-            Button otpravka = new Button();
-            otpravka.Left = opisaniet.Left;
-            otpravka.Width = opisaniet.Width;
-            otpravka.Height = 50;
-            otpravka.Text = "Отправить сообщение администратору";
-            otpravka.Top = opisaniet.Top + opisaniet.Height+50;
-            otpravka.Font = new Font(otpravka.Font.FontFamily, razmershrifta);
-            otpravka.Click += otpravkaerror_Click;
-            (Controls["Box"] as GroupBox).Controls.Add(otpravka);
+                Button otpravka = new Button();
+                otpravka.Left = opisaniet.Left;
+                otpravka.Width = opisaniet.Width;
+                otpravka.Height = 50;
+                otpravka.Text = "Отправить сообщение администратору";
+                otpravka.Top = opisaniet.Top + opisaniet.Height + 50;
+                otpravka.Font = new Font(otpravka.Font.FontFamily, razmershrifta);
+                otpravka.Click += otpravkaerror_Click;
+                (Controls["Box"] as GroupBox).Controls.Add(otpravka);
 
-            SqlConnection con = BDconnect.GetBDConnection();
-            con.Open();
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
 
-            SqlCommand em = new SqlCommand("select Email from polzv where роль = '" + "Admin" + "' ", con);
-            emailadmina = DeShifrovka(em.ExecuteScalar().ToString(), "YchetPO");
+                SqlCommand em = new SqlCommand("select Email from polzv where роль = '" + "Admin" + "' ", con);
+                emailadmina = DeShifrovka(em.ExecuteScalar().ToString(), "YchetPO");
 
-            con.Close();
+                con.Close();
 
-            Label emailadmin = new Label();
-            emailadmin.Left = opisaniet.Left;
-            emailadmin.Width = opisaniet.Width;
-            emailadmin.Height = 50;
-            emailadmin.Text = "При ошибке отправки сообщения вы можете написать на "+ emailadmina;
-            emailadmin.Top = opisaniet.Top + opisaniet.Height;
-            emailadmin.Font = new Font(emailadmin.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(emailadmin);
+                Label emailadmin = new Label();
+                emailadmin.Left = opisaniet.Left;
+                emailadmin.Width = opisaniet.Width;
+                emailadmin.Height = 50;
+                emailadmin.Text = "При ошибке отправки сообщения вы можете написать на " + emailadmina;
+                emailadmin.Top = opisaniet.Top + opisaniet.Height;
+                emailadmin.Font = new Font(emailadmin.Font.FontFamily, razmershrifta);
+                (Controls["Box"] as GroupBox).Controls.Add(emailadmin);
 
-
-        }
+            }
+            catch 
+            {
+                MessageBox.Show("Отсутствует подключение к базе данных");
+            }
+         }
         public void otpravkaerror_Click(object sender, EventArgs e)
         {
             //try
@@ -2355,6 +2368,13 @@ namespace Ychpo
                 }
             }
            
+        }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Srttings srttings = new Srttings();
+            srttings.Show();
+            this.Close();
         }
     }
 }

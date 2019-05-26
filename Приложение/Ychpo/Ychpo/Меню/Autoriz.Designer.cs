@@ -98,15 +98,16 @@
             // 
             // metroLabel3
             // 
-            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.metroLabel3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel3.Location = new System.Drawing.Point(125, 244);
+            this.metroLabel3.Location = new System.Drawing.Point(98, 231);
             this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(60, 25);
+            this.metroLabel3.Size = new System.Drawing.Size(115, 45);
             this.metroLabel3.TabIndex = 20;
             this.metroLabel3.Text = "Войти";
+            this.metroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.metroLabel3.Click += new System.EventHandler(this.metroLabel3_Click);
             // 
             // metroLabel4
