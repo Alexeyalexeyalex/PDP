@@ -26,13 +26,26 @@ namespace Ychpo
                 panel1.BackColor = colorDialog1.Color;
             }
             RegistryKey saveKey = Registry.LocalMachine.CreateSubKey("software\\Ychpo");
-            saveKey.SetValue("Color", colorDialog1.Color);
+            saveKey.SetValue("Color", colorDialog1.Color.Name );
             saveKey.Close();
         }
 
         private void Srttings_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            Glavnaya glavnaya = new Glavnaya();
+            glavnaya.Show();
+            this.Close();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

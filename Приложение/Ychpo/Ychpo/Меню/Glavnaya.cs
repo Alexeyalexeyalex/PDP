@@ -10,6 +10,10 @@ using System.Security.Cryptography;
 using System.IO;
 using System.Net.Mail;
 using Word = Microsoft.Office.Interop.Word;
+using System.ComponentModel;
+using System.Net;
+using System.Threading;
+using System.Reflection;
 
 namespace Ychpo
 {
@@ -287,6 +291,8 @@ namespace Ychpo
         {
 
         }
+
+
             private void Glavnaya_Load(object sender, EventArgs e)
         {
             if (this.Width == 800)//изменение шрифта на минимальном разрешении
@@ -329,7 +335,29 @@ namespace Ychpo
             RegistryKey readKey1 = Registry.LocalMachine.OpenSubKey("software\\Ychpo");
             string color = (string)readKey1.GetValue("color");
             readKey1.Close();
+            try
+            {
+                this.BackColor = Color.FromName(color);
+            }
+            catch 
+            {
+                try
+                {
+                    this.BackColor = Color.FromArgb(Convert.ToInt32(color));
+                }
+                catch 
+                {
+                    try
+                    {
+                        this.BackColor = ColorTranslator.FromHtml(color);
+                    }
+                    catch 
+                    {
 
+                    }
+                    
+                }
+            }
             //this.BackColor = Color.FromArgb(Convert.ToInt32(color));
 
             Impolz.Text = "Здравствуйте "+Program.namepolz;//вывод на форме имени пользователя
@@ -491,7 +519,6 @@ namespace Ychpo
             symmK.Clear();
             return Encoding.UTF8.GetString(plainTextBytes, 0, byteCount);
         }
-
 
 
         private void ZakazPO_Click(object sender, EventArgs e)
@@ -2136,78 +2163,168 @@ namespace Ychpo
             (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
 
             con.Close();
-
-            //var wordApp = new word.Application();
-            //// Открытие Word документа 
-            //var wordDocument = wordApp.Documents.Open(@"C:\shapka.docx");
-
-            //// Замена данных в ворд документе 
-            //ReplaceWord("{time}", "1", wordDocument);
-            //ReplaceWord("{data}", "2", wordDocument);
-            //ReplaceWord("{naimpo}", "3", wordDocument);
-            //ReplaceWord("{f}", "4", wordDocument);
-            //ReplaceWord("{i}", Program.namepolz, wordDocument);
-            //ReplaceWord("{o}", "5", wordDocument);
-            //ReplaceWord("{dolj}", "6", wordDocument);
-
-            //// Сохранение документа 
-            //wordDocument.SaveAs(@"C:\statistika.docx");
-            //wordApp.Quit();
         }
+
+
+
         private void stat_Click(object sender, EventArgs e)
         {
+
             string name = Shifrovka(((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text, "YchetPO");
             string vers = Shifrovka(((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text, "YchetPO");
-            //удаление данных из dataGridView
-            removedtgv();
+
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
 
-            SqlDataAdapter da1 = new SqlDataAdapter("select * from statistika where [Название ПО] = '"+name+"'and [Версия ПО] = '"+vers+"'", con);
+            //создание элемента для вывода статистики в word
+            DataGridView stat = new DataGridView();
+            stat.Visible = false;
+            (Controls["Box"] as GroupBox).Controls.Add(stat);
+
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from statistika where [Название ПО] = '" + name + "'and [Версия ПО] = '" + vers + "'", con);
             SqlCommandBuilder cb1 = new SqlCommandBuilder(da1);
-            DataSet ds1 = new DataSet();
-            da1.Fill(ds1, "statistika");
-            dataGridView1.DataSource = ds1.Tables[0];
+
+
+
+            //создание необходимых столбцов в dataGridView
+            var column1 = new DataGridViewTextBoxColumn();
+            var column2 = new DataGridViewTextBoxColumn();
+            var column3 = new DataGridViewTextBoxColumn();
+            var column4 = new DataGridViewTextBoxColumn();
+            var column5 = new DataGridViewTextBoxColumn();
+            var column6 = new DataGridViewTextBoxColumn();
+            var column7 = new DataGridViewTextBoxColumn();
+            var column8 = new DataGridViewTextBoxColumn();
+
+            column1.HeaderText = "Номер заказа";
+            column1.Name = "Номер заказа";
+            column2.HeaderText = "Название ПО";
+            column2.Name = "Название ПО";
+            column3.HeaderText = "Версия ПО";
+            column3.Name = "Версия ПО";
+            column4.HeaderText = "Фамилия клиента";
+            column4.Name = "Фамилия клиента";
+            column5.HeaderText = "Имя клиента";
+            column5.Name = "Имя клиента";
+            column6.HeaderText = "Отчество клиента";
+            column6.Name = "Отчество клиента";
+            column7.HeaderText = "Время заказа";
+            column7.Name = "Время заказа";
+            column8.HeaderText = "Дата заказа";
+            column8.Name = "Дата заказа";
+
+            stat.Columns.AddRange(new DataGridViewColumn[] { column1, column2, column3, column4, column5, column6, column7, column8 });
+
+            //выбор необходимых данных
+            string query = "select * from statistika where [Название ПО] = '" + name + "'and [Версия ПО] = '" + vers + "'";
+
+            //запись данных в dataGridView
+            SqlCommand command = new SqlCommand(query, con);
+
+            SqlDataReader reader = command.ExecuteReader();
+
+            List<string[]> data = new List<string[]>();
+
+            while (reader.Read())
+            {
+                data.Add(new string[8]);
+
+                data[data.Count - 1][0] = reader[0].ToString();
+                data[data.Count - 1][1] = DeShifrovka(reader[1].ToString(), "YchetPO");
+                data[data.Count - 1][2] = DeShifrovka(reader[2].ToString(), "YchetPO");
+                data[data.Count - 1][3] = DeShifrovka(reader[3].ToString(), "YchetPO");
+                data[data.Count - 1][4] = DeShifrovka(reader[4].ToString(), "YchetPO");
+                data[data.Count - 1][5] = DeShifrovka(reader[5].ToString(), "YchetPO");
+                data[data.Count - 1][6] = reader[6].ToString();
+                data[data.Count - 1][7] = reader[7].ToString();
+            }
+            reader.Close();
+            foreach (string[] s in data)
+            stat.Rows.Add(s);
+            con.Close();
+
+
+
 
             object oMissing = System.Reflection.Missing.Value;
             object oEndOfDoc = "\\endofdoc"; /* \endofdoc is a predefined bookmark */
 
-            //Start Word and create a new document. 
+
+
+            //Создание нового документа Word. 
             Word._Application oWord;
             Word._Document oDoc;
             oWord = new Word.Application();
             oDoc = oWord.Documents.Add(ref oMissing, ref oMissing, ref oMissing, ref oMissing);
 
-            //Insert a table 
+            Word.Paragraph zagolovok;
+            zagolovok = oDoc.Content.Paragraphs.Add(ref oMissing);
+            zagolovok.Range.Text = "Статистика по "+ DeShifrovka(name, "YchetPO") +" "+ DeShifrovka(vers, "YchetPO");
+            zagolovok.Range.Font.Size = 20;
+            zagolovok.Range.Font.Bold = 3;
+            zagolovok.Format.SpaceAfter = 0;
+            zagolovok.Format.SpaceBefore = 250;
+            zagolovok.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            zagolovok.Range.InsertParagraphAfter();
+
+            Word.Paragraph date;
+            date = oDoc.Content.Paragraphs.Add(ref oMissing);
+            date.Range.Text = "Статистика на " + DateTime.Now.ToString("dd MM yyyy") + "гг " + DateTime.Now.ToString("HH:mm:ss");
+            date.Range.Font.Size = 16;
+            date.Range.Font.Bold = 3;
+            date.Format.SpaceAfter = 0;
+            date.Format.SpaceBefore = 300;
+            date.Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+            date.Range.InsertParagraphAfter();
+
+
+
+            // Переход на след страницу 
+            object unit;
+            object extend;
+            unit = Word.WdUnits.wdStory;
+            extend = Word.WdMovementType.wdMove;
+            oWord.Selection.EndKey(ref unit, ref extend);
+            object oType;
+            oType = Word.WdBreakType.wdSectionBreakNextPage;
+            oWord.Selection.InsertBreak(ref oType);
+
+            Word.Range orientation = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
+            orientation.PageSetup.Orientation = Word.WdOrientation.wdOrientLandscape;
+            orientation.PageSetup.LeftMargin = oWord.CentimetersToPoints((float)2.5);
+
+            // Insert a table
             Word.Table oTable;
             Word.Range wrdRng = oDoc.Bookmarks.get_Item(ref oEndOfDoc).Range;
-            oTable = oDoc.Tables.Add(wrdRng, dataGridView1.Rows.Count, dataGridView1.Columns.Count);
+            oTable = oDoc.Tables.Add(wrdRng, stat.Rows.Count, stat.Columns.Count);
+            oTable.Range.ParagraphFormat.SpaceBefore = 0;
             oTable.Range.ParagraphFormat.SpaceAfter = 6;
             oTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleDouble;
             oTable.Borders.InsideLineStyle = Word.WdLineStyle.wdLineStyleDouble;
             oTable.Cell(1, 1).Range.Text = "Номер заказа";
             oTable.Cell(1, 2).Range.Text = "Название ПО";
             oTable.Cell(1, 3).Range.Text = "Версия ПО";
-            oTable.Cell(1, 4).Range.Text = "Фамилия";
-            oTable.Cell(1, 5).Range.Text = "Имя";
-            oTable.Cell(1, 6).Range.Text = "Отчество";
+            oTable.Cell(1, 4).Range.Text = "Фамилия клиента";
+            oTable.Cell(1, 5).Range.Text = "Имя клиента";
+            oTable.Cell(1, 6).Range.Text = "Отчество клиента";
             oTable.Cell(1, 7).Range.Text = "Время заказа";
             oTable.Cell(1, 8).Range.Text = "Дата заказа";
 
-            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            for (int i = 0; i < stat.Rows.Count - 1; i++)
             {
-                for (int x = 0; x < dataGridView1.Columns.Count; x++)
+                for (int x = 0; x < stat.Columns.Count; x++)
                 {
-                    oTable.Cell(i + 2, x + 1).Range.Text = dataGridView1.Rows[i].Cells[x].Value.ToString();
+                    oTable.Cell(i + 2, x + 1).Range.Text = stat.Rows[i].Cells[x].Value.ToString();
                     oTable.Range.Font.Size = 11;
                 }
             }
             oWord.Visible = true;
-             //oDoc.SaveAs2("\\");
-             con.Close();
+            
+
+
         }
 
-         private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
          {
             try
             {
@@ -2295,8 +2412,8 @@ namespace Ychpo
          }
         public void otpravkaerror_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 SqlConnection con = BDconnect.GetBDConnection();
                 con.Open();
 
@@ -2342,12 +2459,12 @@ namespace Ychpo
                 con.Close();
                 ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text = "";
                 ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text = "";
-            //}
+            }
 
-            //catch
-            //{
-            //    MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
-            //}
+            catch
+            {
+                MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -2376,5 +2493,12 @@ namespace Ychpo
             srttings.Show();
             this.Close();
         }
+
+
+
+
+
+
+       
     }
 }

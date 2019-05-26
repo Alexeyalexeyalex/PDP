@@ -1,114 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using System.Net;
-using System.Reflection;
 using System.IO;
+using System.Threading;
+using System.Reflection;
 
-namespace Ychpo
+namespace UpdateYchpo
 {
-    public partial class Zastavka : MetroFramework.Forms.MetroForm
+    public partial class Form1 : Form
     {
-
-        public Zastavka()
-        {
-            InitializeComponent();
-
-            WebClient web = new WebClient();
-            string newversion = web.DownloadString(url_version);
-            string name_program = web.DownloadString(name_program_linck);
-
-            string fullName1 = Assembly.GetEntryAssembly().Location;
-            string myName = Path.GetFileNameWithoutExtension(fullName1);
-
-            up_filename = name_program + ".exe"; // имя временного файла для новой версии
-
-            string[] keys = Environment.GetCommandLineArgs();
-
-            if (keys.Length < 3)
-                do_check_update();
-            else
-            {
-                if (keys[1].ToLower() == "/u")
-                    do_copy_downloaded_program(keys[2]);
-
-                if (keys[1].ToLower() == "/d")
-                    do_delete_old_program(keys[2]);
-            }
-        }
-
-        Task ProcessImport(List<string> data, IProgress<ProgressReport> progress)
-        {
-            int index = 1;
-            int totalProgress = data.Count;
-            var progressReport = new ProgressReport();
-            return Task.Run(() =>
-            {
-                for (int i = 0; i < totalProgress; i++)
-                {
-                    progressReport.PercentComplete = index++ * 100 / totalProgress;
-                    progress.Report(progressReport);
-                    Thread.Sleep(3);
-                }
-            });
-        }
-
-
-        private async void Zastavka_Load(object sender, EventArgs e)
-        {
-
-
-
-
-            //List<string> list = new List<string>();
-            //for (int i = 0; i < 1000; i++)
-            //    list.Add(i.ToString());
-            //metroLabel1.Text = "Working...";
-            //var progressReport = new Progress<ProgressReport>();
-            //progressReport.ProgressChanged += (o, report) =>
-            //{
-            //    metroLabel1.Text = string.Format("Загрузка...{0}%", report.PercentComplete);
-            //    metroProgressBar1.Value = report.PercentComplete;
-            //    metroProgressBar1.Update();
-            //};
-            //await ProcessImport(list, progressReport);
-
-            //try
-            //{
-            //    RegistryKey readKey = Registry.LocalMachine.OpenSubKey("software\\Ychpo");
-            //    string loadString = (string)readKey.GetValue("Polz");
-            //    readKey.Close();
-            //    if (loadString == "Auto")
-            //    {
-            //        Glavnaya glavnaya = new Glavnaya();
-            //        glavnaya.Show();
-            //        this.Hide();
-            //    }
-            //    else
-            //    {
-            //        Autoriz autoriz = new Autoriz();
-            //        autoriz.Show();
-            //        this.Hide();
-            //    }
-
-            //}
-            //catch
-            //{
-            //    Autoriz autoriz = new Autoriz();
-            //    autoriz.Show();
-            //    this.Hide();
-            //}
-        }
-
-
         //Вам нужно поставить версию здесь,для этой программы.
         public static string my_version = "1.0";
 
@@ -136,8 +37,30 @@ namespace Ychpo
         // Признак, что обновление не требуется или закончено, можно запускать программу.
         private bool is_skipped; public bool skipped() { return is_skipped; }
 
+        public Form1()
+        {
+            WebClient web = new WebClient();
+            string newversion = web.DownloadString(url_version);
+            string name_program = web.DownloadString(name_program_linck);
 
+            string fullName1 = Assembly.GetEntryAssembly().Location;
+            string myName = Path.GetFileNameWithoutExtension(fullName1);
 
+            up_filename = name_program + ".exe"; // имя временного файла для новой версии
+
+            string[] keys = Environment.GetCommandLineArgs();
+
+            if (keys.Length < 3)
+                do_check_update();
+            else
+            {
+                if (keys[1].ToLower() == "/u")
+                    do_copy_downloaded_program(keys[2]);
+
+                if (keys[1].ToLower() == "/d")
+                    do_delete_old_program(keys[2]);
+            }
+        }
         private void do_check_update()
         {
             string new_version = get_server_version(); // Получаем номер последней версии
@@ -154,7 +77,7 @@ namespace Ychpo
         private void do_download_update()
         {
             InitializeComponent();
-            metroLabel1.Text = "Скачивается файл: " + url_program;
+            label_status.Text = "Скачивается файл: " + url_program;
             download_file();
             is_download = true; // Будем ждать завершения процесса
             is_skipped = false; // Основную форму не нужно запускать
@@ -177,7 +100,7 @@ namespace Ychpo
 
         private void ProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-           metroProgressBar1.Value = e.ProgressPercentage;
+            progress_download.Value = e.ProgressPercentage;
         }
 
         private void Completed(object sender, AsyncCompletedEventArgs e)
@@ -292,7 +215,24 @@ namespace Ychpo
 
 
 
+        private void FormUpdater_Load(object sender, EventArgs e)
+        {
 
+
+
+
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            System.IO.FileInfo fi = new System.IO.FileInfo("C:\\Test.txt");
+            fi.Delete();
+        }
+
+private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
-
 }
