@@ -52,15 +52,16 @@
             // 
             // metroLabel3
             // 
-            this.metroLabel3.AutoSize = true;
+            this.metroLabel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.metroLabel3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.metroLabel3.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel3.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel3.Location = new System.Drawing.Point(7, 13);
+            this.metroLabel3.Location = new System.Drawing.Point(0, 0);
             this.metroLabel3.Name = "metroLabel3";
-            this.metroLabel3.Size = new System.Drawing.Size(178, 25);
+            this.metroLabel3.Size = new System.Drawing.Size(191, 45);
             this.metroLabel3.TabIndex = 27;
             this.metroLabel3.Text = "Зарегистрироваться";
+            this.metroLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.metroLabel3.Click += new System.EventHandler(this.metroLabel3_Click);
             // 
             // metroLabel2
@@ -90,6 +91,7 @@
             this.metroTextBox2.Name = "metroTextBox2";
             this.metroTextBox2.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox2.TabIndex = 24;
+            this.metroTextBox2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.metroTextBox1_KeyPress);
             // 
             // metroTextBox1
             // 
@@ -98,6 +100,7 @@
             this.metroTextBox1.Name = "metroTextBox1";
             this.metroTextBox1.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox1.TabIndex = 23;
+            this.metroTextBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.metroTextBox1_KeyPress);
             // 
             // groupBox1
             // 
@@ -125,6 +128,7 @@
             this.metroTextBox4.Name = "metroTextBox4";
             this.metroTextBox4.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox4.TabIndex = 29;
+            this.metroTextBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.metroTextBox1_KeyPress);
             // 
             // metroLabel6
             // 
@@ -172,6 +176,7 @@
             this.metroTextBox6.Name = "metroTextBox6";
             this.metroTextBox6.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox6.TabIndex = 34;
+            this.metroTextBox6.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.metroTextBox6_KeyPress);
             // 
             // metroTextBox7
             // 
@@ -180,18 +185,20 @@
             this.metroTextBox7.Name = "metroTextBox7";
             this.metroTextBox7.Size = new System.Drawing.Size(171, 30);
             this.metroTextBox7.TabIndex = 33;
+            this.metroTextBox7.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.metroTextBox7_KeyPress);
             // 
             // metroLabel4
             // 
-            this.metroLabel4.AutoSize = true;
+            this.metroLabel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.metroLabel4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.metroLabel4.FontSize = MetroFramework.MetroLabelSize.Tall;
             this.metroLabel4.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel4.Location = new System.Drawing.Point(18, 13);
+            this.metroLabel4.Location = new System.Drawing.Point(0, 0);
             this.metroLabel4.Name = "metroLabel4";
-            this.metroLabel4.Size = new System.Drawing.Size(74, 25);
+            this.metroLabel4.Size = new System.Drawing.Size(115, 45);
             this.metroLabel4.TabIndex = 39;
             this.metroLabel4.Text = "Отмена";
+            this.metroLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.metroLabel4.Click += new System.EventHandler(this.metroLabel4_Click);
             // 
             // groupBox2
@@ -243,9 +250,7 @@
             this.Text = "Регистрация";
             this.Load += new System.EventHandler(this.Registr_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

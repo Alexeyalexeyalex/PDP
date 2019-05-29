@@ -86,26 +86,16 @@ REFERENCES [DBO].[polz]([id_polz]),
 REFERENCES [DBO].[po]([id_po]),
 )
 
-CREATE TABLE [DBO].[zakaz]
-(
-[id_zakaz] INT NOT NULL IDENTITY (1,1),
-[time] varchar(5) NOT NULL,
-[date] varchar(10) NOT NULL,
-constraint [PK_id_zakaz] PRIMARY KEY CLUSTERED
-	([id_zakaz] ASC) on [PRIMARY],
-)
-
 CREATE TABLE [DBO].[lickluch]
 (
 [id_lickluch] INT NOT NULL IDENTITY (1,1),
 [kod] varchar(max) NOT NULL,
 [statuskluch] bit NOT NULL,
-[zak_id] int NULL,
+[time] varchar(5) NULL,
+[date] varchar(10) NULL,
 [pol_id] int NOT NULL,
 constraint [PK_id_lickluch] PRIMARY KEY CLUSTERED
 	([id_lickluch] ASC) on [PRIMARY],
-	CONSTRAINT [FK_zak_id] FOREIGN KEY ([zak_id])
-REFERENCES [DBO].[zakaz]([id_zakaz]),
 	CONSTRAINT [FK_pol_id] FOREIGN KEY ([pol_id])
 REFERENCES [DBO].[po]([id_po]),
 )
@@ -116,7 +106,7 @@ CREATE TABLE [DBO].[error]
 [naim_error] varchar(max) NOT NULL,
 [opisanie] varchar(max) NOT NULL,
 [statusError] bit NOT NULL,
-[sposobYstranenia] varchar(max) NOT NULL,
+[sposobYstranenia] varchar(max) NULL,
 constraint [PK_id_error] PRIMARY KEY CLUSTERED
 	([id_error] ASC) on [PRIMARY],
 )

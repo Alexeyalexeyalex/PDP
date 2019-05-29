@@ -177,13 +177,18 @@ AS
 go
 
 
-CREATE PROCEDURE [DBO].[zakaz_add]
+CREATE PROCEDURE [DBO].[lickluchtd_edit]
 (
+@id_lickluch int,
 @time varchar(5),
 @date varchar(10)
 )
 AS
-	insert into [dbo].[zakaz]([time],[date]) values((@time),(@date));
+	update [dbo].lickluch
+	set
+	time=@time,
+	date=@date
+	where id_lickluch=@id_lickluch;
 go
 
 CREATE PROCEDURE [DBO].[po_add]
@@ -251,14 +256,22 @@ go
 CREATE PROCEDURE [DBO].[kluch_update]
 (
 @id_lickluch int,
-@statuskluch bit,
-@zak_id int
+@statuskluch bit
 )
 AS
 	update [dbo].lickluch
 	set
-	statuskluch=@statuskluch,
-	zak_id=@zak_id
+	statuskluch=@statuskluch
 	where @id_lickluch = id_lickluch
 go
 
+CREATE PROCEDURE [DBO].[error_add]
+(
+@naim_error varchar(max),
+@opisanie varchar(max),
+@statusError bit,
+@sposobYstranenia varchar(max)
+)
+AS
+	insert into [dbo].[error]([naim_error],[opisanie],[statusError],[sposobYstranenia]) values((@naim_error),(@opisanie),(@statusError),(@sposobYstranenia));
+go

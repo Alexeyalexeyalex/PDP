@@ -35,14 +35,215 @@ namespace Ychpo
         string iddolj;
         string emailadmina;
         string imiapolzadmin;
+        string passwordizmenenie;
         int kolichestvo;
         public Glavnaya()
         {
             InitializeComponent();
         }
 
+        private void dinamichsozdzayavka()
+        {
+            Label namepol = new Label();
+            namepol.Left = Width / 3;
+            namepol.Width = Width / 3;
+            namepol.Height = 50;
+            namepol.Text = "Название ПО";
+            namepol.Top = 100;
+            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepol);
+
+            TextBox namepot = new TextBox();
+            namepot.Left = namepol.Left;
+            namepot.Name = "NAME";
+            namepot.Width = namepol.Width;
+            namepot.Enabled = false;
+            namepot.Height = 50;
+            namepot.Top = namepol.Top + namepol.Height;
+            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepot);
+
+            Label versl = new Label();
+            versl.Left = namepol.Left;
+            versl.Width = namepol.Width;
+            versl.Height = 50;
+            versl.Text = "Версия ПО";
+            versl.Top = namepot.Top + namepot.Height * 2;
+            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(versl);
+
+            TextBox verst = new TextBox();
+            verst.Left = versl.Left;
+            verst.Name = "VERS";
+            verst.Width = versl.Width;
+            verst.Enabled = false;
+            verst.Height = 50;
+            verst.Top = versl.Top + versl.Height;
+            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(verst);
 
 
+            Button dobavlenie = new Button();
+            dobavlenie.Left = namepol.Left;
+            dobavlenie.Width = namepol.Width;
+            dobavlenie.Height = 50;
+            dobavlenie.Text = "Заказать";
+            dobavlenie.Top = verst.Top + verst.Height * 3;
+            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
+            dobavlenie.Click += zakaz_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
+        }
+        private void dinamichsozdizmpolz()
+        {
+
+        }
+        private void dinamichsozdzakaza()
+        {
+            Label namepol = new Label();
+            namepol.Left = Width / 3;
+            namepol.Width = Width / 3;
+            namepol.Height = 50;
+            namepol.Text = "Название ПО";
+            namepol.Top = 100;
+            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepol);
+
+            TextBox namepot = new TextBox();
+            namepot.Left = namepol.Left;
+            namepot.Name = "NAME";
+            namepot.Enabled = false;
+            namepot.Width = namepol.Width;
+            namepot.Height = 50;
+            namepot.Top = namepol.Top + namepol.Height;
+            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(namepot);
+
+            Label versl = new Label();
+            versl.Left = namepol.Left;
+            versl.Width = namepol.Width;
+            versl.Height = 50;
+            versl.Text = "Версия ПО";
+            versl.Top = namepot.Top + namepot.Height * 2;
+            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(versl);
+
+            TextBox verst = new TextBox();
+            verst.Left = versl.Left;
+            verst.Name = "VERS";
+            verst.Width = versl.Width;
+            verst.Enabled = false;
+            verst.Height = 50;
+            verst.Top = versl.Top + versl.Height;
+            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(verst);
+
+            Button dobavlenie = new Button();
+            dobavlenie.Left = namepol.Left;
+            dobavlenie.Width = namepol.Width;
+            dobavlenie.Height = 50;
+            dobavlenie.Text = "Оформить";
+            dobavlenie.Top = verst.Top + verst.Height * 2;
+            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
+            dobavlenie.Click += oformlenie_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
+
+            Button otmena = new Button();
+            otmena.Left = namepol.Left;
+            otmena.Width = namepol.Width;
+            otmena.Height = 50;
+            otmena.Text = "Отменить заявку";
+            otmena.Top = dobavlenie.Top + dobavlenie.Height * 2;
+            otmena.Font = new Font(otmena.Font.FontFamily, razmershrifta);
+            otmena.Click += otmena_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(otmena);
+        }
+        private void dinamichsozderror()
+        {
+            Label nameerror = new Label();
+            nameerror.Left = Width / 3;
+            nameerror.Width = Width / 3;
+            nameerror.Height = 50;
+            nameerror.Text = "Название ошибки";
+            nameerror.Top = 50;
+            nameerror.Font = new Font(nameerror.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(nameerror);
+
+            TextBox nameerrort = new TextBox();
+            nameerrort.Left = nameerror.Left;
+            nameerrort.Name = "NAMEERROR";
+            nameerrort.Width = nameerror.Width;
+            nameerrort.Height = 50;
+            nameerrort.Top = nameerror.Top + nameerror.Height;
+            nameerrort.Font = new Font(nameerror.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(nameerrort);
+
+            Label opisl = new Label();
+            opisl.Left = nameerrort.Left;
+            opisl.Width = nameerrort.Width;
+            opisl.Height = 50;
+            opisl.Text = "Описание ошибки";
+            opisl.Top = nameerrort.Top + nameerrort.Height * 2;
+            opisl.Font = new Font(opisl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(opisl);
+
+            TextBox opist = new TextBox();
+            opist.Left = opisl.Left;
+            opist.Name = "OPISANIE";
+            opist.Width = opisl.Width;
+            opist.Height = 50;
+            opist.Top = opisl.Top + opisl.Height;
+            opist.Font = new Font(opist.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(opist);
+
+            Label sposobystrl = new Label();
+            sposobystrl.Left = opist.Left;
+            sposobystrl.Width = opist.Width;
+            sposobystrl.Height = 50;
+            sposobystrl.Text = "Способ устранения";
+            sposobystrl.Top = opist.Top + opist.Height * 2;
+            sposobystrl.Font = new Font(sposobystrl.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(sposobystrl);
+
+            TextBox ystr = new TextBox();
+            ystr.Left = sposobystrl.Left;
+            ystr.Name = "YSTR";
+            ystr.Width = sposobystrl.Width;
+            ystr.Height = 50;
+            ystr.Top = sposobystrl.Top + sposobystrl.Height;
+            ystr.Font = new Font(ystr.Font.FontFamily, razmershrifta);
+            (Controls["Box"] as GroupBox).Controls.Add(ystr);
+
+            Button dobavlenie = new Button();
+            //dobavlenie.BackColor = Color.FromName("White");
+            dobavlenie.Left = ystr.Left;
+            dobavlenie.Width = ystr.Width;
+            dobavlenie.Height = 50;
+            dobavlenie.Text = "Добавить";
+            dobavlenie.Top = ystr.Top + ystr.Height+10;
+            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
+            dobavlenie.Click += dobavlenieerror_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
+
+            Button izm = new Button();
+            izm.Left = dobavlenie.Left + dobavlenie.Width / 2;
+            izm.Width = dobavlenie.Width/2;
+            izm.Height = 50;
+            izm.Text = "Изменить";
+            izm.Top = dobavlenie.Top + dobavlenie.Height + 10;
+            izm.Font = new Font(izm.Font.FontFamily, razmershrifta);
+            izm.Click += dobavlenie_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(izm);
+
+            Button del = new Button();
+            del.Left = dobavlenie.Left;
+            del.Width = dobavlenie.Width / 2;
+            del.Height = 50;
+            del.Text = "Удалить";
+            del.Top = dobavlenie.Top + dobavlenie.Height + 10;
+            del.Font = new Font(del.Font.FontFamily, razmershrifta);
+            del.Click += dobavlenie_Click;
+            (Controls["Box"] as GroupBox).Controls.Add(del);
+        }
         private void vivoddannihpolz()
         {
             //удаление данных из dataGridView
@@ -109,19 +310,8 @@ namespace Ychpo
 
             string query;
 
-            //SqlCommand R = new SqlCommand("select роль from polzv where[Логин] = '" + Program.loginpolz + "' ", con);
-            //string rol = R.ExecuteScalar().ToString();
-
-            //if (rol== "Admin")
-            //{
-            //выбор необходимых данных
             query = "SELECT * FROM polzv";
-            //}
-            //else
-            //{
-            //    //выбор необходимых данных
-            //    query = "SELECT * FROM polzv where роль != 'Admin'";
-            //}
+
             //запись данных в dataGridView
             SqlCommand command = new SqlCommand(query, con);
 
@@ -158,7 +348,7 @@ namespace Ychpo
             foreach (string[] s in data)
                 dataGridView1.Rows.Add(s);
         }
-            private void addzakazi()
+        private void addzakazi()
         {
             //создание необходимых столбцов в dataGridView
             var column1 = new DataGridViewTextBoxColumn();
@@ -206,8 +396,7 @@ namespace Ychpo
                 dataGridView1.Rows.Add(s);
             con.Close();
         }
-
-            private void delitegroupbox()
+        private void delitegroupbox()
         {
             //удаление элементов формы 
             try
@@ -219,7 +408,6 @@ namespace Ychpo
 
             }
         }
-
         private void creategroupbox()
         {
             //динамическое создание 
@@ -231,7 +419,6 @@ namespace Ychpo
             groupBox.Height = this.Height - dataGridView1.Height - menuStrip1.Height - 40;
             Controls.Add(groupBox);
         }
-
         private void removedtgv()
         {
             //удаление данных из dataGridView
@@ -239,7 +426,6 @@ namespace Ychpo
             for (int i = 0; i < sum; i++)
             { this.dataGridView1.Columns.RemoveAt(0); }
         }
-
         private void adddatagvaddpo()
         {
             //создание необходимых столбцов в dataGridView
@@ -278,22 +464,17 @@ namespace Ychpo
                 data[data.Count - 1][1] = DeShifrovka(reader[1].ToString(), "YchetPO");
                 data[data.Count - 1][2] = reader[2].ToString();
                 data[data.Count - 1][3] = DeShifrovka(reader[3].ToString(), "YchetPO");
-
-
             }
             reader.Close();
             foreach (string[] s in data)
                 dataGridView1.Rows.Add(s);
             con.Close();
         }
-
         private void createmenupo()
         {
 
         }
-
-
-            private void Glavnaya_Load(object sender, EventArgs e)
+        private void Glavnaya_Load(object sender, EventArgs e)
         {
             if (this.Width == 800)//изменение шрифта на минимальном разрешении
             {
@@ -353,13 +534,10 @@ namespace Ychpo
                     }
                     catch 
                     {
-
-                    }
-                    
+            
+                    }                    
                 }
             }
-            //this.BackColor = Color.FromArgb(Convert.ToInt32(color));
-
             Impolz.Text = "Здравствуйте "+Program.namepolz;//вывод на форме имени пользователя
             try
             {
@@ -392,6 +570,7 @@ namespace Ychpo
                 if (DostupkPolz == "True")
                 {
                     Polz.Visible = true;
+                    error.Visible = true;
                 }
 
             }
@@ -401,14 +580,6 @@ namespace Ychpo
             }
 
         }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
         private void Exit_Click(object sender, EventArgs e)
         {
             try
@@ -431,17 +602,10 @@ namespace Ychpo
                 this.Close();
             }
         }
-
         private void label2_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
-
-
-
-
-
         //метод шифрования строки
         public static string Shifrovka(string ishText, string pass,
                string sol = "doberman", string cryptographicAlgorithm = "SHA1",
@@ -539,61 +703,10 @@ namespace Ychpo
 
             SqlConnection con = BDconnect.GetBDConnection();
             con.Open();
-
             // создание groupbox
             creategroupbox();
-
-            Label namepol = new Label();
-            namepol.Left = Width / 3;
-            namepol.Width = Width / 3;
-            namepol.Height = 50;
-            namepol.Text = "Название ПО";
-            namepol.Top = 100;
-            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(namepol);
-
-            TextBox namepot = new TextBox();
-            namepot.Left = namepol.Left;
-            namepot.Name = "NAME";
-            namepot.Width = namepol.Width;
-            namepot.Enabled = false;
-            namepot.Height = 50;
-            namepot.Top = namepol.Top + namepol.Height;
-            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(namepot);
-            con.Close();
-
-            Label versl = new Label();
-            versl.Left = namepol.Left;
-            versl.Width = namepol.Width;
-            versl.Height = 50;
-            versl.Text = "Версия ПО";
-            versl.Top = namepot.Top + namepot.Height * 2;
-            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(versl);
-
-            TextBox verst = new TextBox();
-            verst.Left = versl.Left;
-            verst.Name = "VERS";
-            verst.Width = versl.Width;
-            verst.Enabled = false;
-            verst.Height = 50;
-            verst.Top = versl.Top + versl.Height;
-            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(verst);
-
-
-            Button dobavlenie = new Button();
-            dobavlenie.Left = namepol.Left;
-            dobavlenie.Width = namepol.Width;
-            dobavlenie.Height = 50;
-            dobavlenie.Text = "Заказать";
-            dobavlenie.Top = verst.Top + verst.Height * 3;
-            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
-            dobavlenie.Click += zakaz_Click;
-            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
-
-
+            //динамическое создание элементов
+            dinamichsozdzayavka();
             con.Close();
         }
         public void zakaz_Click(object sender, EventArgs e)
@@ -602,32 +715,51 @@ namespace Ychpo
             {
                 SqlConnection con = BDconnect.GetBDConnection();
                 con.Open();
-                SqlCommand Id = new SqlCommand("select [id_polz] from polz where[login] = '" + Program.loginpolz + "' ", con);
-                idpolz = Id.ExecuteScalar().ToString();
-                SqlCommand StrPrc1 = new SqlCommand("zayavka_add", con);
-                StrPrc1.CommandType = CommandType.StoredProcedure;
-                StrPrc1.Parameters.AddWithValue("@poz_id", idpo);
-                StrPrc1.Parameters.AddWithValue("@status", "В процессе");
-                StrPrc1.Parameters.AddWithValue("@polz_id", idpolz);
-                StrPrc1.ExecuteNonQuery();
-                MessageBox.Show("Ваша заявка принята, о готовности вашего заказа мы вам сообщим");               
-                ((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text = "";
-                ((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text = "";
+
+                SqlCommand IP = new SqlCommand("select count(*) from lickluch where pol_id = '" + idpo + "' ", con);
+                kolich = IP.ExecuteScalar().ToString();
+                if (kol == kolich)
+                {
+                    SqlCommand Id = new SqlCommand("select [id_polz] from polz where[login] = '" + Program.loginpolz + "' ", con);
+                    idpolz = Id.ExecuteScalar().ToString();
+                    SqlCommand StrPrc1 = new SqlCommand("zayavka_add", con);
+                    StrPrc1.CommandType = CommandType.StoredProcedure;
+                    StrPrc1.Parameters.AddWithValue("@poz_id", idpo);
+                    StrPrc1.Parameters.AddWithValue("@status", "В процессе");
+                    StrPrc1.Parameters.AddWithValue("@polz_id", idpolz);
+                    StrPrc1.ExecuteNonQuery();
+                    MessageBox.Show("Ваша заявка принята, о готовности вашего заказа мы вам сообщим");
+                    ((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text = "";
+                    ((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text = "";
 
 
-                SqlCommand StrPrc = new SqlCommand("pokol_update", con); // Обращение к хранимой процедуре обновления 
-                StrPrc.CommandType = CommandType.StoredProcedure;
-                StrPrc.Parameters.AddWithValue("@id_PO", idpo);
-                StrPrc.Parameters.AddWithValue("@kol_po", Convert.ToInt32(kol) - 1);
-                StrPrc.ExecuteNonQuery();
-                idpo = "";
-                con.Close();
+                    SqlCommand StrPrc = new SqlCommand("pokol_update", con); // Обращение к хранимой процедуре обновления 
+                    StrPrc.CommandType = CommandType.StoredProcedure;
+                    StrPrc.Parameters.AddWithValue("@id_PO", idpo);
+                    StrPrc.Parameters.AddWithValue("@kol_po", Convert.ToInt32(kol) - 1);
+                    StrPrc.ExecuteNonQuery();
+                    idpo = "";
+                    con.Close();
 
-                //удаление данных из dataGridView
-                removedtgv();
+                    //удаление данных из dataGridView
+                    removedtgv();
 
-                //добавление данных в dataGridView
-                adddatagvaddpo();
+                    //добавление данных в dataGridView
+                    adddatagvaddpo();
+                }
+                else
+                {
+                    if (kol != kolich)
+                    {
+                        MessageBox.Show("Не все лицензионные ключи добавлены, повторите попытку позже");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Пожалуйста выберите нужное вам программное обеспечение");
+                    }
+                        
+                }
+                
             }
             catch
             {
@@ -635,9 +767,7 @@ namespace Ychpo
             }
 
         }
-
-
-            private void ролиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ролиToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             //удаление элементов формы 
@@ -730,7 +860,6 @@ namespace Ychpo
             Controls.Add(groupBox);
 
         }
-
         private void данныеПользователейToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menu = "polzovateli";
@@ -753,13 +882,6 @@ namespace Ychpo
             Controls.Add(groupBox);
 
             vivoddannihpolz();
-
-
-            
-
-           
-
-
 
             Label fl = new Label();
             fl.AutoSize = false;
@@ -900,40 +1022,24 @@ namespace Ychpo
             (Controls["Box"] as GroupBox).Controls.Add(add);
 
         }
-
         public void izmpolzadmin_Click(object sender, EventArgs e)
         {
-            string F = Shifrovka(((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text, "YchetPO");
-            string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
-            string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
-            string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
-            string login1 = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
-            string pass = Shifrovka(((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text, "YchetPO");
+            try
+            {
+                string F = Shifrovka(((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text, "YchetPO");
+                string I = Shifrovka(((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text, "YchetPO");
+                string O = Shifrovka(((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text, "YchetPO");
+                string email = Shifrovka(((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text, "YchetPO");
+                string login1 = Shifrovka(((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text, "YchetPO");
+                string pass = Shifrovka(((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text, "YchetPO");
 
-            SqlConnection con = BDconnect.GetBDConnection();
-            con.Open();
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
 
-            //SqlCommand sc = new SqlCommand("Select * from polzv where[Логин] = '" + login + "'", con); //выбор данных из таблицы БД 
-            //SqlDataReader dr;
-            //dr = sc.ExecuteReader();
-            //int count = 0;
-            //while (dr.Read())
-            //{
-            //    count += 1;
-            //}
-            //dr.Close();
-
-            //if ((count == 1)&&(imiapolzadmin!= ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text))
-            //{
-            //    MessageBox.Show("Такой логин уже присутствует в системе, придумайте другой");
-            //}
-            //else
-            //{
-              
                 SqlCommand id = new SqlCommand("select [id_polz] from polz where[login] = '" + login1 + "' ", con);
                 int idpolzov = Convert.ToInt32(id.ExecuteScalar());
 
-                if ((F != "") && (I != "") && (email != "") && (login1 != "")&&(pass!=""))
+                if ((F != "") && (I != "") && (email != "") && (login1 != ""))
                 {
                     SqlCommand izmenenie = new SqlCommand("fullpolz_edit", con);
                     izmenenie.CommandType = CommandType.StoredProcedure;
@@ -943,26 +1049,34 @@ namespace Ychpo
                     izmenenie.Parameters.AddWithValue("@O_P", O);
                     izmenenie.Parameters.AddWithValue("@email", email);
                     izmenenie.Parameters.AddWithValue("@login", login1);
-                    izmenenie.Parameters.AddWithValue("@password", pass);
+
+                    if (pass == "")
+                    {
+                        izmenenie.Parameters.AddWithValue("@password", passwordizmenenie);
+                    }
+                    else
+                    {
+                        izmenenie.Parameters.AddWithValue("@password", pass);
+                    }
+
+
                     izmenenie.ExecuteNonQuery();
 
                     MessageBox.Show("Данные успещно изменены");
                     vivoddannihpolz();
-
-
                 }
-
-            else
+                else
                 {
                     MessageBox.Show("Не все поля заполнены");
                 }
-
-
-
-            //}
-            con.Close();
+                con.Close();
+            }
+            catch 
+            {
+                MessageBox.Show("Произошла ошибка при изменении данных");
+            }
+           
         }
-
         private void добавлениеПОToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menu = "dobavlenie";
@@ -1052,7 +1166,6 @@ namespace Ychpo
 
             con.Close();
         }
-
         public void dobavlenie_Click(object sender, EventArgs e)
         {
             try
@@ -1102,7 +1215,6 @@ namespace Ychpo
                         removedtgv();
                         adddatagvaddpo();
                         MessageBox.Show("Программное обеспечение успешно добавлено, теперь пожалуйста добавьте для него лицензионный ключ");
-
                     }
                     else
                     {
@@ -1116,9 +1228,7 @@ namespace Ychpo
             }
 
         }
-
-
-            private void изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
+        private void изменитьДанныеУчетнойЗаписиToolStripMenuItem_Click(object sender, EventArgs e)
             {
             delitegroupbox();
 
@@ -1359,7 +1469,6 @@ namespace Ychpo
             }
             con.Close();
         }
-
         private void заявкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //удаление элементов формы 
@@ -1413,131 +1522,28 @@ namespace Ychpo
             dataGridView1.Rows.Add(s);
             con.Close();
         }
-
         private void заказыToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
             menu = "oformlenie";
             //удаление элементов формы 
             delitegroupbox();
-
             //удаление данных из dataGridView
             removedtgv();
-
             //динамическое создание 
             creategroupbox();
-
             dataGridView1.Visible = true;
             textBox1.Visible = true;
-
             //добавление данных в dataGridView
             addzakazi();
-
-            Label namepol = new Label();
-            namepol.Left = Width / 3;
-            namepol.Width = Width / 3;
-            namepol.Height = 50;
-            namepol.Text = "Название ПО";
-            namepol.Top = 100;
-            namepol.Font = new Font(namepol.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(namepol);
-
-            TextBox namepot = new TextBox();
-            namepot.Left = namepol.Left;
-            namepot.Name = "NAME";
-            namepot.Enabled = false;
-            namepot.Width = namepol.Width;
-            namepot.Height = 50;
-            namepot.Top = namepol.Top + namepol.Height;
-            namepot.Font = new Font(namepol.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(namepot);
-
-            Label versl = new Label();
-            versl.Left = namepol.Left;
-            versl.Width = namepol.Width;
-            versl.Height = 50;
-            versl.Text = "Версия ПО";
-            versl.Top = namepot.Top + namepot.Height * 2;
-            versl.Font = new Font(versl.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(versl);
-
-            TextBox verst = new TextBox();
-            verst.Left = versl.Left;
-            verst.Name = "VERS";
-            verst.Width = versl.Width;
-            verst.Enabled = false;
-            verst.Height = 50;
-            verst.Top = versl.Top + versl.Height;
-            verst.Font = new Font(verst.Font.FontFamily, razmershrifta);
-            (Controls["Box"] as GroupBox).Controls.Add(verst);
-
-            Button dobavlenie = new Button();
-            dobavlenie.Left = namepol.Left;
-            dobavlenie.Width = namepol.Width;
-            dobavlenie.Height = 50;
-            dobavlenie.Text = "Оформить";
-            dobavlenie.Top = verst.Top + verst.Height * 2;
-            dobavlenie.Font = new Font(dobavlenie.Font.FontFamily, razmershrifta);
-            dobavlenie.Click += oformlenie_Click;
-            (Controls["Box"] as GroupBox).Controls.Add(dobavlenie);
-
-            Button otmena = new Button();
-            otmena.Left = namepol.Left;
-            otmena.Width = namepol.Width;
-            otmena.Height = 50;
-            otmena.Text = "Отменить заявку";
-            otmena.Top = dobavlenie.Top + dobavlenie.Height*2 ;
-            otmena.Font = new Font(otmena.Font.FontFamily, razmershrifta);
-            otmena.Click += otmena_Click;
-            (Controls["Box"] as GroupBox).Controls.Add(otmena);
-
-
+            //
+            dinamichsozdzakaza();
         }
-
         public void otmena_Click(object sender, EventArgs e)
         {
-            if ((status == "Готово") || (status == "Отменен"))
-            {
-                MessageBox.Show("Данный заказ уже выполнен");
-            }
-            else
-            {
-                SqlConnection con = BDconnect.GetBDConnection();
-                con.Open();
-
-                string naim_po = Shifrovka((((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text), "YchetPO");
-                SqlCommand id = new SqlCommand("select id_PO from PO where naim_po = '" + naim_po + "' ", con);
-                string idPO = id.ExecuteScalar().ToString();
-
-                SqlCommand KOL = new SqlCommand("select kol_po from PO where naim_po = '" + naim_po + "' ", con);
-                string kolotmena = KOL.ExecuteScalar().ToString();
-
-                SqlCommand StrPrc = new SqlCommand("pokol_update", con); // Обращение к хранимой процедуре обновления 
-                StrPrc.CommandType = CommandType.StoredProcedure;
-                StrPrc.Parameters.AddWithValue("@id_PO", idPO);
-                StrPrc.Parameters.AddWithValue("@kol_po", Convert.ToInt32(kolotmena) + 1);
-                StrPrc.ExecuteNonQuery();
-
-                SqlCommand StrPrc1 = new SqlCommand("zayavkast_edit", con);
-                StrPrc1.CommandType = CommandType.StoredProcedure;
-                StrPrc1.Parameters.AddWithValue("@id_zayavkast", idpo);
-                StrPrc1.Parameters.AddWithValue("@status", "Отменено");
-                StrPrc1.ExecuteNonQuery();
-
-                //удаление данных из dataGridView
-                removedtgv();
-                //добавление данных в dataGridView
-                addzakazi();
-
-                con.Close();
-            }
-           
-        }
-            public void oformlenie_Click(object sender, EventArgs e)
-            {
             try
             {
-                if ((status == "Готово") || (status == "Отменен"))
+                if ((status == "Готово") || (status == "Отменено"))
                 {
                     MessageBox.Show("Данный заказ уже выполнен");
                 }
@@ -1545,6 +1551,56 @@ namespace Ychpo
                 {
                     SqlConnection con = BDconnect.GetBDConnection();
                     con.Open();
+
+                    string naim_po = Shifrovka((((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text), "YchetPO");
+                    SqlCommand id = new SqlCommand("select id_PO from PO where naim_po = '" + naim_po + "' ", con);
+                    string idPO = id.ExecuteScalar().ToString();
+
+                    SqlCommand KOL = new SqlCommand("select kol_po from PO where naim_po = '" + naim_po + "' ", con);
+                    string kolotmena = KOL.ExecuteScalar().ToString();
+
+                    SqlCommand StrPrc = new SqlCommand("pokol_update", con); // Обращение к хранимой процедуре обновления 
+                    StrPrc.CommandType = CommandType.StoredProcedure;
+                    StrPrc.Parameters.AddWithValue("@id_PO", idPO);
+                    StrPrc.Parameters.AddWithValue("@kol_po", Convert.ToInt32(kolotmena) + 1);
+                    StrPrc.ExecuteNonQuery();
+
+                    SqlCommand StrPrc1 = new SqlCommand("zayavkast_edit", con);
+                    StrPrc1.CommandType = CommandType.StoredProcedure;
+                    StrPrc1.Parameters.AddWithValue("@id_zayavkast", idpo);
+                    StrPrc1.Parameters.AddWithValue("@status", "Отменено");
+                    StrPrc1.ExecuteNonQuery();
+
+                    //удаление данных из dataGridView
+                    removedtgv();
+                    //добавление данных в dataGridView
+                    addzakazi();
+
+                    con.Close();
+                }
+            }
+            catch 
+            {
+                MessageBox.Show("Пожалуйста, выберите заявку");
+            }          
+        }
+        public void oformlenie_Click(object sender, EventArgs e)
+            {
+            try
+            {
+                SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+
+            SqlCommand stat = new SqlCommand("select status from zayavka where id_zayavka = '" + idpo + "' ", con);
+            status = stat.ExecuteScalar().ToString();
+
+            if ((status == "Готово") || (status == "Отменено"))
+                {
+                    MessageBox.Show("Данный заказ уже выполнен");
+                }
+                else
+                {
+                   
 
                     string naim_po = Shifrovka((((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text), "YchetPO");
                     SqlCommand id = new SqlCommand("select id_PO from PO where naim_po = '" + naim_po + "' ", con);
@@ -1558,9 +1614,9 @@ namespace Ychpo
 
                     SqlCommand emaill = new SqlCommand("select [Email] from polz where[login] = '" + Program.loginpolz + "' ", con);
                     string email = DeShifrovka(emaill.ExecuteScalar().ToString(), "YchetPO");
-                try
-                {
-                    MailMessage mail = new MailMessage();
+                    try
+                    {
+                        MailMessage mail = new MailMessage();
                         SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
                         mail.From = new MailAddress("ychet.po@gmail.com");
@@ -1587,14 +1643,15 @@ namespace Ychpo
 
                         string date = DateTime.Now.ToString("dd MM yyyy");
                         string time = DateTime.Now.ToString("HH:mm:ss");
-                        SqlCommand StrPrc1 = new SqlCommand("zakaz_add", con);
+                        SqlCommand StrPrc1 = new SqlCommand("lickluchtd_edit", con);
                         StrPrc1.CommandType = CommandType.StoredProcedure;
+                        StrPrc1.Parameters.AddWithValue("@id_lickluch", idpo);
                         StrPrc1.Parameters.AddWithValue("@time", time);
                         StrPrc1.Parameters.AddWithValue("@date", date);
                         StrPrc1.ExecuteNonQuery();
 
-                        SqlCommand idz = new SqlCommand("select @@identity ", con);
-                        string idzak = idz.ExecuteScalar().ToString();
+                        //SqlCommand idz = new SqlCommand("select @@identity ", con);
+                        //string idzak = idz.ExecuteScalar().ToString();
 
                         SqlCommand StrPrc = new SqlCommand("zayavkast_edit", con);
                         StrPrc.CommandType = CommandType.StoredProcedure;
@@ -1606,7 +1663,7 @@ namespace Ychpo
                         izmenenie.CommandType = CommandType.StoredProcedure;
                         izmenenie.Parameters.AddWithValue("@id_lickluch", idklucha);
                         izmenenie.Parameters.AddWithValue("@statuskluch", 1);
-                        izmenenie.Parameters.AddWithValue("@zak_id", idzak);
+                        //izmenenie.Parameters.AddWithValue("@zak_id", idzak);
                         izmenenie.ExecuteNonQuery();
 
                         //удаление данных из dataGridView
@@ -1614,13 +1671,13 @@ namespace Ychpo
                         //добавление данных в dataGridView
                         addzakazi();
                         MessageBox.Show("На почту пользователя был выслан лицензионный ключ");
-            }
+                    }
 
                     catch
-            {
-                MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
-            }
-                con.Close();
+                    {
+                        MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
+                    }
+                    con.Close();
                 }
             }
             catch
@@ -1631,8 +1688,8 @@ namespace Ychpo
 
 
 
-}
-            private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
             {
             try
             {
@@ -1668,6 +1725,18 @@ namespace Ychpo
                     idpo = dataGridView1.CurrentRow.Cells[0].Value.ToString();
                     ((Controls["Box"] as GroupBox).Controls["NAME"] as TextBox).Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
                     ((Controls["Box"] as GroupBox).Controls["VERS"] as TextBox).Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
+
+                    SqlConnection con = BDconnect.GetBDConnection();
+                    con.Open();
+
+                    SqlCommand K = new SqlCommand("select kol_po from PO where id_PO = '" + idpo + "' ", con);
+                    kol = K.ExecuteScalar().ToString();
+                    SqlCommand IP = new SqlCommand("select count(*) from lickluch where pol_id = '" + idpo + "'and statuskluch = 0", con);
+                    kolich = IP.ExecuteScalar().ToString();
+
+                    kolichestvo = Convert.ToInt32(kol) - Convert.ToInt32(kolich) ;
+                    ((Controls["Box"] as GroupBox).Controls["Lickl"] as Label).Text = "Лицензионных ключей осталось добавить: "+ kolichestvo;
+                    con.Close();
                 }
                 if (menu == "polzovateli")
                 {
@@ -1677,7 +1746,7 @@ namespace Ychpo
                     ((Controls["Box"] as GroupBox).Controls["Otchestvo"] as TextBox).Text = dataGridView1.CurrentRow.Cells[3].Value.ToString();
                     ((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text = dataGridView1.CurrentRow.Cells[4].Value.ToString();
                     ((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text = dataGridView1.CurrentRow.Cells[5].Value.ToString();
-                    ((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text = DeShifrovka(dataGridView1.CurrentRow.Cells[6].Value.ToString(), "YchetPO"); ;
+                    passwordizmenenie = dataGridView1.CurrentRow.Cells[6].Value.ToString();
                 }
             }
             catch
@@ -1686,7 +1755,6 @@ namespace Ychpo
             }
 
             }
-
         private void добавлениеЛицензионныхКлючейToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menu = "dobavlenie";
@@ -1748,6 +1816,7 @@ namespace Ychpo
             (Controls["Box"] as GroupBox).Controls.Add(verst);
 
             Label kodl = new Label();
+            kodl.Name = "Lickl";
             kodl.Left = namepol.Left;
             kodl.Width = namepol.Width;
             kodl.Height = 50;
@@ -1777,7 +1846,6 @@ namespace Ychpo
 
             con.Close();
         }
-
         public void dobavlenieklucha_Click(object sender, EventArgs e)
         {
             try
@@ -1808,9 +1876,18 @@ namespace Ychpo
                         pokluch.ExecuteNonQuery();
                      
                         kolichestvo = Convert.ToInt32(kol) - Convert.ToInt32(kolich) - 1;
-                        con.Close();
+                        
                         MessageBox.Show("Лицензионный ключ успешно добавлен, осталось добавить " + kolichestvo + " ключей для данного программного продукта");
                         ((Controls["Box"] as GroupBox).Controls["LICHKL"] as TextBox).Text = "";
+
+                        SqlCommand KOL = new SqlCommand("select kol_po from PO where id_PO = '" + idpo + "' ", con);
+                        kol = KOL.ExecuteScalar().ToString();
+                        SqlCommand IPPO = new SqlCommand("select count(*) from lickluch where pol_id = '" + idpo + "'and statuskluch = 0", con);
+                        kolich = IPPO.ExecuteScalar().ToString();
+
+                        kolichestvo = Convert.ToInt32(kol) - Convert.ToInt32(kolich);
+                        ((Controls["Box"] as GroupBox).Controls["Lickl"] as Label).Text = "Лицензионных ключей осталось добавить: " + kolichestvo;
+                        con.Close();
                     }
 
                
@@ -1827,7 +1904,6 @@ namespace Ychpo
                 MessageBox.Show("Отсутствует подключение к базе данных");
             }
         }
-
         private void зарегистрироватьПользователяToolStripMenuItem_Click(object sender, EventArgs e)
         {
             delitegroupbox();
@@ -2000,13 +2076,10 @@ namespace Ychpo
                 MessageBox.Show("Отсутствует подключение к базе данных");
             }
         }
-
-
         private void dolj_SelectedIndexChanged(object sender, EventArgs e)// присвоение ID переменной 
         {
             iddolj = ((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).SelectedValue.ToString();
         }
-
         public void dobavleniepolz_Click(object sender, EventArgs e)
         {
             if ((((Controls["Box"] as GroupBox).Controls["Familia"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Imia"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Doljnost"] as ComboBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["Emailname"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["loginname"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["pass"] as TextBox).Text != ""))
@@ -2091,7 +2164,6 @@ namespace Ychpo
                 MessageBox.Show("Не все поля заполнены");
             }
         }
-
         private void выводДанныхToolStripMenuItem_Click(object sender, EventArgs e)
         {
             menu = "dobavlenie";
@@ -2164,9 +2236,6 @@ namespace Ychpo
 
             con.Close();
         }
-
-
-
         private void stat_Click(object sender, EventArgs e)
         {
 
@@ -2323,7 +2392,6 @@ namespace Ychpo
 
 
         }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
          {
             try
@@ -2417,8 +2485,6 @@ namespace Ychpo
                 SqlConnection con = BDconnect.GetBDConnection();
                 con.Open();
 
-
-
                 SqlCommand f = new SqlCommand("select F_P from polz where login = '" + Program.loginpolz + "' ", con);
                 string F = DeShifrovka(f.ExecuteScalar().ToString(), "YchetPO");
 
@@ -2428,45 +2494,49 @@ namespace Ychpo
                 SqlCommand em = new SqlCommand("select [email] from polz where login = '" + Program.loginpolz + "' ", con);
                 string emailpolz = DeShifrovka(em.ExecuteScalar().ToString(), "YchetPO");
 
+                if (((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text != "")
+                {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                    mail.From = new MailAddress("ychet.po@gmail.com");
+                    mail.To.Add(emailadmina);
+                    mail.Subject = ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text;
 
-                mail.From = new MailAddress("ychet.po@gmail.com");
-                mail.To.Add(emailadmina);
-                mail.Subject = ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text;
-
-                mail.IsBodyHtml = true;
-                string htmlBody;
-                htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
+                    mail.IsBodyHtml = true;
+                    string htmlBody;
+                    htmlBody = "<html><body><br><img src=\"https://storage.googleapis.com/thl-blog-production/2017/10/a5d6fc4b-banneri-320x110.jpg\" alt=\"ACORP\">" + @" 
                 <br><br>Здравствуйте администратор!
-                <br>Поступила жалоба от "+F+@" "+I+@", логин "+ DeShifrovka(Program.loginpolz, "YchetPO")+@", его email - "+ emailpolz + @"
+                <br>Поступила жалоба от " + F + @" " + I + @", логин " + DeShifrovka(Program.loginpolz, "YchetPO") + @", его email - " + emailpolz + @"
                 <br>                                                                                              
                 <br>Описание проблемы:       " + ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text + @"
                 <br>
                 <br>Мы рады, что вы выбрали именно наш программный продукт и желаем Вам приятого пользования!</body></html>";
 
-                mail.Body = htmlBody;
+                    mail.Body = htmlBody;
 
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("ychet.po", "Qq112233!");
-                SmtpServer.EnableSsl = true;
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("ychet.po", "Qq112233!");
+                    SmtpServer.EnableSsl = true;
 
-                SmtpServer.Send(mail);
-               
-                MessageBox.Show("Ваше сообщение было отправлено");
-                
-                con.Close();
-                ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text = "";
-                ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text = "";
+                    SmtpServer.Send(mail);
+
+                    MessageBox.Show("Ваше сообщение было отправлено");
+
+                    con.Close();
+                    ((Controls["Box"] as GroupBox).Controls["tema"] as TextBox).Text = "";
+                    ((Controls["Box"] as GroupBox).Controls["opisanie"] as TextBox).Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Пожалуйста опишите вашу проблему");
+                }               
             }
-
             catch
             {
                 MessageBox.Show("Возникла ошибка при отправке сообщения на почту");
             }
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
@@ -2486,19 +2556,82 @@ namespace Ychpo
             }
            
         }
-
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Srttings srttings = new Srttings();
             srttings.Show();
             this.Close();
         }
+        private void error_Click(object sender, EventArgs e)
+        {
+            menu = "dobavlenie";
 
+            //удаление элемента
+            delitegroupbox();
 
+            //динамическое создание 
+            creategroupbox();
 
+            //удаление данных из dataGridView
+            removedtgv();
 
+            dataGridView1.Visible = true;
+            textBox1.Visible = true;
 
+            SqlConnection con = BDconnect.GetBDConnection();
+            con.Open();
+            //динамическое создание элементов
+            dinamichsozderror();
 
-       
+            con.Close();
+        }
+        public void dobavlenieerror_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection con = BDconnect.GetBDConnection();
+                con.Open();
+
+                SqlCommand sc = new SqlCommand("Select naim_error from error where[naim_error] = '" + ((Controls["Box"] as GroupBox).Controls["NAMEERROR"] as TextBox).Text + "'", con); //выбор данных из таблицы БД 
+                SqlDataReader dr;
+                dr = sc.ExecuteReader();
+                int count = 0;
+                while (dr.Read())
+                {
+                    count += 1;
+                }
+                dr.Close();
+
+                if (count == 1)
+                {
+                    MessageBox.Show("Такое ПО уже присутствует в системе");
+                }
+                else
+                {
+                    if ((((Controls["Box"] as GroupBox).Controls["NAMEERROR"] as TextBox).Text != "") && (((Controls["Box"] as GroupBox).Controls["OPISANIE"] as TextBox).Text != ""))
+                    {
+                        SqlCommand error = new SqlCommand("error_add", con);
+                        error.CommandType = CommandType.StoredProcedure;
+                        error.Parameters.AddWithValue("@naim_error", ((Controls["Box"] as GroupBox).Controls["NAMEERROR"] as TextBox).Text);
+                        error.Parameters.AddWithValue("@opisanie", ((Controls["Box"] as GroupBox).Controls["OPISANIE"] as TextBox).Text);
+                        error.Parameters.AddWithValue("@statusError", 1);
+                        error.Parameters.AddWithValue("@sposobYstranenia", ((Controls["Box"] as GroupBox).Controls["YSTR"] as TextBox).Text);
+                        error.ExecuteNonQuery();
+                        con.Close();
+                        removedtgv();
+
+                        MessageBox.Show("Программное обеспечение успешно добавлено, теперь пожалуйста добавьте для него лицензионный ключ");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Заполните пожалуйста все данные корректно");
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Отсутствует подключение к базе данных");
+            }
+        }
     }
 }

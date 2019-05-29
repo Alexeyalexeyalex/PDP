@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
@@ -241,6 +236,37 @@ namespace Ychpo
         private void label2_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void metroTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //Ограничение на ввод всех символов кроме алфавита и ' '
+            char fio = e.KeyChar;
+            if ((fio < 'А' || fio > 'я') && fio != '\b'  && fio != ' ')
+            {
+                e.Handled = true;
+                MessageBox.Show("Поддерживаются только буквы русского алфавита");
+            }
+        }
+
+        private void metroTextBox7_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char logpas = e.KeyChar;
+            if ((logpas < 'A' || logpas > 'z') && logpas != '.' && logpas != '@' && (logpas < '0' || logpas > '9') && logpas != '\b')
+            {
+                e.Handled = true;
+                MessageBox.Show("Данный символ не поддерживается");
+            }
+        }
+
+        private void metroTextBox6_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char logpas = e.KeyChar;
+            if ((logpas < 'А' || logpas > 'я') && (logpas < 'A' || logpas > 'z') && (logpas < '0' || logpas > '9') && logpas != '\b')
+            {
+                e.Handled = true;
+                MessageBox.Show("Данный символ не поддерживается");
+            }
         }
     }
 }
