@@ -42,16 +42,16 @@
             this.добавлениеЛицензионныхКлючейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.выводДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Polz = new System.Windows.Forms.ToolStripMenuItem();
-            this.ролиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.данныеПользователейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.зарегистрироватьПользователяToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.error = new System.Windows.Forms.ToolStripMenuItem();
             this.Impolz = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.error = new System.Windows.Forms.ToolStripMenuItem();
+            this.изменениеЛицензионныхКлчейToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -118,6 +118,7 @@
             this.заказыToolStripMenuItem,
             this.добавлениеПОToolStripMenuItem,
             this.добавлениеЛицензионныхКлючейToolStripMenuItem,
+            this.изменениеЛицензионныхКлчейToolStripMenuItem,
             this.выводДанныхToolStripMenuItem});
             this.Zakazi.Name = "Zakazi";
             this.Zakazi.Size = new System.Drawing.Size(177, 25);
@@ -135,7 +136,7 @@
             // 
             this.добавлениеПОToolStripMenuItem.Name = "добавлениеПОToolStripMenuItem";
             this.добавлениеПОToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
-            this.добавлениеПОToolStripMenuItem.Text = "Добавление ПО";
+            this.добавлениеПОToolStripMenuItem.Text = "Управление ПО";
             this.добавлениеПОToolStripMenuItem.Click += new System.EventHandler(this.добавлениеПОToolStripMenuItem_Click);
             // 
             // добавлениеЛицензионныхКлючейToolStripMenuItem
@@ -155,21 +156,12 @@
             // Polz
             // 
             this.Polz.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ролиToolStripMenuItem,
             this.данныеПользователейToolStripMenuItem,
             this.зарегистрироватьПользователяToolStripMenuItem});
             this.Polz.Name = "Polz";
             this.Polz.Size = new System.Drawing.Size(228, 25);
             this.Polz.Text = "Управление пользователями";
             this.Polz.Visible = false;
-            // 
-            // ролиToolStripMenuItem
-            // 
-            this.ролиToolStripMenuItem.Name = "ролиToolStripMenuItem";
-            this.ролиToolStripMenuItem.Size = new System.Drawing.Size(311, 26);
-            this.ролиToolStripMenuItem.Text = "Роли";
-            this.ролиToolStripMenuItem.Visible = false;
-            this.ролиToolStripMenuItem.Click += new System.EventHandler(this.ролиToolStripMenuItem_Click);
             // 
             // данныеПользователейToolStripMenuItem
             // 
@@ -200,6 +192,14 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(29, 25);
             this.toolStripMenuItem1.Text = "?";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // error
+            // 
+            this.error.Name = "error";
+            this.error.Size = new System.Drawing.Size(180, 26);
+            this.error.Text = "Ошибки";
+            this.error.Visible = false;
+            this.error.Click += new System.EventHandler(this.error_Click);
             // 
             // Impolz
             // 
@@ -255,13 +255,12 @@
             this.textBox1.Visible = false;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // error
+            // изменениеЛицензионныхКлчейToolStripMenuItem
             // 
-            this.error.Name = "error";
-            this.error.Size = new System.Drawing.Size(232, 26);
-            this.error.Text = "Добавление  ошибок";
-            this.error.Visible = false;
-            this.error.Click += new System.EventHandler(this.error_Click);
+            this.изменениеЛицензионныхКлчейToolStripMenuItem.Name = "изменениеЛицензионныхКлчейToolStripMenuItem";
+            this.изменениеЛицензионныхКлчейToolStripMenuItem.Size = new System.Drawing.Size(335, 26);
+            this.изменениеЛицензионныхКлчейToolStripMenuItem.Text = "Изменение лицензионных ключей";
+            this.изменениеЛицензионныхКлчейToolStripMenuItem.Click += new System.EventHandler(this.изменениеЛицензионныхКлчейToolStripMenuItem_Click);
             // 
             // Glavnaya
             // 
@@ -301,7 +300,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ToolStripMenuItem добавлениеПОToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem заказыToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ролиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem данныеПользователейToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem добавлениеЛицензионныхКлючейToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem зарегистрироватьПользователяToolStripMenuItem;
@@ -310,5 +308,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem error;
+        private System.Windows.Forms.ToolStripMenuItem изменениеЛицензионныхКлчейToolStripMenuItem;
     }
 }

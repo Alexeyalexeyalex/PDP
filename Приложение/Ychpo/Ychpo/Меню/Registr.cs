@@ -262,7 +262,7 @@ namespace Ychpo
         private void metroTextBox6_KeyPress(object sender, KeyPressEventArgs e)
         {
             char logpas = e.KeyChar;
-            if ((logpas < 'А' || logpas > 'я') && (logpas < 'A' || logpas > 'z') && (logpas < '0' || logpas > '9') && logpas != '\b')
+            if ((logpas < 'A' || logpas > 'z') && (logpas < '0' || logpas > '9') && logpas != '\b')
             {
                 e.Handled = true;
                 MessageBox.Show("Данный символ не поддерживается");

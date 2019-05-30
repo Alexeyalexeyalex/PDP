@@ -181,13 +181,15 @@ CREATE PROCEDURE [DBO].[lickluchtd_edit]
 (
 @id_lickluch int,
 @time varchar(5),
-@date varchar(10)
+@date varchar(10),
+@statuskluch bit
 )
 AS
 	update [dbo].lickluch
 	set
 	time=@time,
-	date=@date
+	date=@date,
+	statuskluch=@statuskluch
 	where id_lickluch=@id_lickluch;
 go
 
@@ -253,17 +255,7 @@ AS
 	insert into [dbo].[lickluch]([kod],[statuskluch],[pol_id]) values((@kod),(@statuskluch),(@pol_id));
 go
 
-CREATE PROCEDURE [DBO].[kluch_update]
-(
-@id_lickluch int,
-@statuskluch bit
-)
-AS
-	update [dbo].lickluch
-	set
-	statuskluch=@statuskluch
-	where @id_lickluch = id_lickluch
-go
+
 
 CREATE PROCEDURE [DBO].[error_add]
 (
@@ -274,4 +266,42 @@ CREATE PROCEDURE [DBO].[error_add]
 )
 AS
 	insert into [dbo].[error]([naim_error],[opisanie],[statusError],[sposobYstranenia]) values((@naim_error),(@opisanie),(@statusError),(@sposobYstranenia));
+go
+
+CREATE PROCEDURE [DBO].[error_update]
+(
+@id_error int,
+@naim_error varchar(max),
+@opisanie varchar(max),
+@statusError bit,
+@sposobYstranenia varchar(max)
+)
+AS
+	update [dbo].error
+	set
+	naim_error=@naim_error,
+	opisanie=@opisanie,
+	statusError=@statusError,
+	sposobYstranenia=@sposobYstranenia
+	where @id_error = id_error
+go
+
+CREATE PROCEDURE [DBO].[error_delete]
+@id_error int
+AS
+	DELETE from dbo.error
+	where 
+	 id_error=@id_error;
+go
+
+CREATE PROCEDURE [DBO].[kluch_edit]
+@id_lickluch int,
+@kod varchar(max)
+
+AS
+	update [dbo].lickluch
+	set
+	kod=@kod
+
+	where id_lickluch=@id_lickluch;
 go
